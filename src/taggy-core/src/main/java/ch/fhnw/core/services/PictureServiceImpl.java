@@ -2,6 +2,7 @@ package ch.fhnw.core.services;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -42,6 +43,26 @@ public class PictureServiceImpl implements PictureService {
 	@Override
 	public Stream<Picture> findPictureByTags(Set<String> tags) {
 		return findPictureByTags(tags);
+	}
+
+	@Override
+	public List<Picture> findPictureByTagsAnd(List<Tag> tags) {
+		List<Picture> picNames=new ArrayList<>();
+		if(tags.size()==0){
+			return null;
+		}else if(tags.size()==1){
+			return pictRepository.findByTagsIn(tags);
+		}
+		picNames=pictRepository.findByTags(tags.get(0));
+		for(int i =1; i< tags.size() ;i++){
+			List<Integer> ids = new ArrayList<>();
+			for (Picture pic : picNames){
+				ids.add(pic.getId());
+			}
+			System.out.println(ids);
+			picNames= pictRepository.findByIdInAndTags(ids, tags.get(i));
+		}
+		return picNames;
 	}
 
 	

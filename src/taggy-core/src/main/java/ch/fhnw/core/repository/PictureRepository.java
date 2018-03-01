@@ -18,13 +18,12 @@ import ch.fhnw.core.domain.Tag;
 public interface PictureRepository extends JpaRepository<Picture, Integer>{
 
 	Picture findByComment(String pictureComment);
+	List<Picture> findByTags(Tag tag);
 	List<Picture> findByTagsIn(List<Tag>Tags); //Or solution
 	List<Picture> deleteByIdIn(List<Integer> ids);
 	
-	@Query(value= "Select p FROM  Picture p,Tag t "+
-			"WHERE (t.name  IN :names )"+
-			"GROUP BY p.id HAVING COUNT (p.id)=:count")
-	List<Picture> findByTagsAnd(@Param("names") List<String> tags, @Param("count") Long lenList);
+	List<Picture> findByIdIn(List<Integer> ids);
+	List<Picture> findByIdInAndTags(List<Integer> ids,Tag tag);
 	
 	Picture findById(Integer id);
 }

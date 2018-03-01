@@ -15,6 +15,10 @@ public interface PictureService {
 	void uptdatePicture(Picture pic);
 	Stream<Picture> findPictureByTags(Set<String> tags);
 	
+	List<Picture> findPictureByTagsAnd(List<Tag> tags);
+	
+	
+	
 	
 	
 	
