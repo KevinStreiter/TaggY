@@ -19,7 +19,7 @@ public class Tag {
 	private Integer id;
 	
 	@Column(nullable = false, unique = true)
-	private String TagName;
+	private String name;
 	
 	@ManyToMany(mappedBy ="tags")
 	private Set<Picture> pictures = new HashSet<Picture>();
@@ -27,12 +27,12 @@ public class Tag {
 	public Tag(){}
 	
 	public Tag(String TagName){
-		this.TagName=TagName;
+		this.name=TagName;
 	}
 
 	@Override
 	public String toString() {
-		return "Tag [id=" + id + ", TagName=" + TagName + ", pictures=" + pictures + "]";
+		return "Tag [id=" + id + ", TagName=" + name + ", pictures=" + pictures + "]";
 	}
 
 	public Integer getId() {
@@ -44,11 +44,11 @@ public class Tag {
 	}
 
 	public String getTagName() {
-		return TagName;
+		return name;
 	}
 
 	public void setTagName(String tagName) {
-		TagName = tagName;
+		name = tagName;
 	}
 
 	public Set<Picture> getPictures() {

@@ -8,7 +8,7 @@ import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.repository.TagsRepository;
 @Transactional
 @Service("tagsService")
-public class TagsServiceImp implements TagsService{
+public class TagsServiceImpl implements TagsService{
 	@Autowired
 	TagsRepository tagsRepository;
 
