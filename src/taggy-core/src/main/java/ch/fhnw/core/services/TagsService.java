@@ -4,7 +4,9 @@ import ch.fhnw.core.domain.Tag;
 
 public interface TagsService {
 	
-	Tag findByName(String tagname);
+	Tag findByName(String tagName);
 	Tag save(Tag tag);
+	public Tag addTagToPicture(Integer pictureID, String tagName);
+	public Boolean deleteTagFromBook(Integer pictureID, Integer tagID);
 
 }

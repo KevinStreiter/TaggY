@@ -42,7 +42,7 @@ public class Picture {
 
 	@Override
 	public String toString() {
-		return "Picture [id=" + id + ", uri=" + uri + ", comment=" + comment + ", tags=" + tags + "]";
+		return "Picture [id=" + id + ", uri=" + uri + ", comment=" + comment +"]";
 	}
 
 	public Integer getId() {
