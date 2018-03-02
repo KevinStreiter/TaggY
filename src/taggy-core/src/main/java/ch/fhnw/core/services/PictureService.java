@@ -10,19 +10,12 @@ import ch.fhnw.core.domain.Tag;
 
 public interface PictureService {
 	
-	Picture findByComment(String pictureName);
+	Stream<Picture> findByComment(String pictureName);
 	Picture findById(Integer id);
-	void uptdatePicture(Picture pic);
+	Stream<Picture> findByTag_id(Integer id);
 	Stream<Picture> findPictureByTags(Set<String> tags);
-	
 	List<Picture> findPictureByTagsAnd(List<Tag> tags);
-	
-	
-	
-	
-	
-	
-	
+	void save(Picture pic);
 	
 
 }

@@ -22,15 +22,17 @@ import ch.fhnw.core.domain.Picture;
 import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.repository.PictureRepository;
 import ch.fhnw.core.repository.TagsRepository;
+import ch.fhnw.core.services.PictureService;
+import ch.fhnw.core.services.TagsService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @SpringBootTest(classes = App.class)
 public class PictureRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests{
 @Autowired
-PictureRepository picRepository;
+PictureService picService;
 @Autowired
-TagsRepository tagsRepository;
+TagsService tagService;
 
 Picture pic1;
 Tag tag1;
@@ -46,22 +48,33 @@ public void setup(){
 	pic1.addTag(tag1);
 	pic1.addTag(tag2);
 	
-	tagsRepository.save(tag1);
-	tagsRepository.save(tag2);
+	tagService.save(tag1);
+	tagService.save(tag2);
 	
-	picRepository.save(pic1);
+	picService.save(pic1);
 }
 @Test
 public void testSave(){
-	Picture picTest = picRepository.findByComment("Kapuutes Bild");
-	assertEquals("Picture sace Test", pic1.getId(), picTest.getId());
+	Stream<Picture> picTest = picService.findByComment("Kapuutes Bild");
+	assertEquals("Picture sace Test", pic1.getId(), picTest.findFirst().get().getId());
 }
 @Test
-public void testfindByTags(){
-	Set<String> suche = new HashSet<>();
-	suche.add("schön");
-	suche.add("Landschaft");
+public void testfindByTagsAnd(){
+	List<Tag> suche = new ArrayList<>();
+	suche.add(tag1);
+	suche.add(tag2);
+	List<Picture> foundPic=picService.findPictureByTagsAnd(suche);
+	assertEquals("Picture Search and querry", pic1.getId(), foundPic.get(0).getId());
 	
+}
+@Test
+public void testFindByTagsOR(){
+	
+}
+@Test
+public void deleteTags(){
+	tagService.deleteTagFromBook(pic1.getId(), tag1.getId());
+	picService.findByTag_id(tag1.getId());
 }
 
 }

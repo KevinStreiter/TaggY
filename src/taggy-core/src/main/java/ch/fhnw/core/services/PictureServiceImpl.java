@@ -4,7 +4,8 @@ package ch.fhnw.core.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Set;import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class PictureServiceImpl implements PictureService {
 	PictureRepository pictRepository;
 
 	@Override
-	public Picture findByComment(String pictureComment) {
+	public Stream<Picture> findByComment(String pictureComment) {
 		return pictRepository.findByComment(pictureComment);
 	}
 
@@ -30,15 +31,6 @@ public class PictureServiceImpl implements PictureService {
 		return pictRepository.findById(id);
 	}
 
-	@Transactional
-	public void uptdatePicture(Picture pic) {
-		Picture target = pictRepository.findOne(pic.getId());
-		if(target == null){
-			throw new RuntimeException("No Books found");
-		}else{
-			pictRepository.save(pic);
-		}
-	}
 
 	@Override
 	public Stream<Picture> findPictureByTags(Set<String> tags) {
@@ -47,22 +39,33 @@ public class PictureServiceImpl implements PictureService {
 
 	@Override
 	public List<Picture> findPictureByTagsAnd(List<Tag> tags) {
-		List<Picture> picNames=new ArrayList<>();
+		List<Picture> picList=new ArrayList<>();
 		if(tags.size()==0){
 			return null;
 		}else if(tags.size()==1){
-			return pictRepository.findByTagsIn(tags);
+			return pictRepository.findByTagsIn(tags).collect(Collectors.toList());
 		}
-		picNames=pictRepository.findByTags(tags.get(0));
+		picList=pictRepository.findByTags(tags.get(0)).collect(Collectors.toList());
 		for(int i =1; i< tags.size() ;i++){
 			List<Integer> ids = new ArrayList<>();
-			for (Picture pic : picNames){
+			for (Picture pic : picList){
 				ids.add(pic.getId());
 			}
-			System.out.println(ids);
-			picNames= pictRepository.findByIdInAndTags(ids, tags.get(i));
+			picList=pictRepository.findByIdInAndTags(ids, tags.get(i)).collect(Collectors.toList());
 		}
-		return picNames;
+		return picList;
+		
+	}
+
+	@Override
+	public void save(Picture pic) {
+		pictRepository.save(pic);
+		
+	}
+
+	@Override
+	public Stream<Picture> findByTag_id(Integer id) {
+		return pictRepository.findByTags_id(id);
 	}
 
 	
