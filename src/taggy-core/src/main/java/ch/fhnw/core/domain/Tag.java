@@ -3,6 +3,7 @@ package ch.fhnw.core.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -73,6 +74,12 @@ public class Tag {
 		}
 		if (picture.getTags().contains(this)){
 			picture.getTags().remove(this);
+		}
+	}
+	
+	public void removePicsFromTag(){
+		for (Picture pic : pictures){
+			pic.removeTag(this);
 		}
 	}
 	

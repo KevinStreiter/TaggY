@@ -2,10 +2,11 @@ package ch.fhnw.taggy.core.repository;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import org.junit.Before;
-
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,44 +19,48 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.fhnw.core.App;
 import ch.fhnw.core.domain.Picture;
 import ch.fhnw.core.domain.Tag;
-import ch.fhnw.core.repository.PictureRepository;
-import ch.fhnw.core.repository.TagsRepository;
+import ch.fhnw.core.services.PictureService;
+import ch.fhnw.core.services.TagsService;
+import ch.fhnw.taggy.core.config.TestDataBuilder;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @SpringBootTest(classes = App.class)
 public class TagRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests{
 	@Autowired
-	TagsRepository tagsRepository;
+	TagsService tagService;
 	@Autowired
-	PictureRepository picRepository;
+	PictureService picService;
+	TestDataBuilder testData;
+	
+	
 	@Before
 	public void setup(){
-		Picture pic1 = new Picture("ch.fhnw", "Kapuutes Bild", 1);
-		
-		Tag tag1 = new Tag("schön");
-		Tag tag2 = new Tag("Landschaft");
-		
-		pic1.addTag(tag1);
-		pic1.addTag(tag2);
-		
-		tagsRepository.save(tag1);
-		tagsRepository.save(tag2);
-		
-		picRepository.save(pic1);
+		testData = new TestDataBuilder(picService, tagService);
+		testData.makeTestSituation();
 	}
 	
 	@Test
-	public void testSave(){
-		Tag tag = new Tag("Weiblich");
-		assertNull("epmty dp",tag.getId());
-		tag = tagsRepository.save(tag);
-		System.out.println(tag.getTagName()+tag.getId());
-		assertNotNull("generatet pk in dp", tag.getId());
+	public void deleteTagsOnPicture(){
+		Picture testPic=testData.getTestPics().get(0);
+		List<Tag> testPicTags = tagService.findByPicture(testPic);
+		assertTrue(tagService.deleteTagFromPicture(testPic.getId(), testPicTags.get(0).getId()));
+		Stream<Picture> foundPic = picService.findByTag_id(testPicTags.get(0).getId());
+		assertNotEquals("Looks if tag can be disconnectet", testPic.getId(), foundPic.findFirst().get().getId());
 	}
 	@Test
-	public void checkTag(){
-		int count_all_Tag = (int) tagsRepository.count();
-		assertEquals("Count Tags is right", 3, count_all_Tag);
+	public void deleteTag(){
+		Picture testPic=testData.getTestPics().get(0);
+		List<Tag> tagsToDelete =tagService.findByPicture(testPic);
+		Tag tagToDelete = tagsToDelete.get(0);
+		tagService.deleteTag(tagToDelete);
+		assertNull(tagService.findByName(tagToDelete.getTagName()));
+		assertEquals("check if tag still exist",Optional.empty(),picService.findPictureByTag(tagToDelete).findFirst());
+		assertEquals("check if picture still exisr",testPic.getId(),picService.findById(testPic.getId()).getId());
+
+		tagsToDelete.remove(0);
+		tagService.deleteTagIn(tagsToDelete);
+		assertEquals("Check if all Tags are Delete and not linked",Optional.empty(), picService.findPictureByTagsOr(tagsToDelete).findFirst());
+	
 	}
 
 }

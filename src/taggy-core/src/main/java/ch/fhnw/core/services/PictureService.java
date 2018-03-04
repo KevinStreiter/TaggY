@@ -2,7 +2,6 @@ package ch.fhnw.core.services;
 
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import ch.fhnw.core.domain.Picture;
@@ -13,9 +12,10 @@ public interface PictureService {
 	Stream<Picture> findByComment(String pictureName);
 	Picture findById(Integer id);
 	Stream<Picture> findByTag_id(Integer id);
-	Stream<Picture> findPictureByTags(Set<String> tags);
+	Stream<Picture> findPictureByTag(Tag tag);
 	List<Picture> findPictureByTagsAnd(List<Tag> tags);
-	void save(Picture pic);
+	Stream<Picture> findPictureByTagsOr(List<Tag> tags);
+	PictureService save(Picture pic);
 	
 
 }

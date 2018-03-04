@@ -1,5 +1,7 @@
 package ch.fhnw.core.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,30 +25,62 @@ public class TagsServiceImpl implements TagsService{
 	}
 
 	@Override
-	public Tag save(Tag tag) {
-		return tagsRepository.save(tag);
+	public TagsService save(Tag tag) {
+		tagsRepository.save(tag);
+		return this;
 	}
 
 	@Override
-	public Tag addTagToPicture(Integer pictureID, String tagName) {
+	public TagsService addTagToPicture(Integer pictureID, String tagName) {
 		Tag t = tagsRepository.findByName(tagName);
 		Picture pic = picRepository.findOne(pictureID);
 		if(t==null){
 			throw new RuntimeException("Tag not found");
 		}
 		if(t.getPictures().contains(pic)){
-			return null;
+			return this;
 		}else{
+			
 			t.addPicture(pic);
-			return tagsRepository.save(t);
+			tagsRepository.save(t);
+			return this;
 		}
 		
 	}
 
 	@Override
-	public Boolean deleteTagFromBook(Integer pictureID, Integer tagID) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean deleteTagFromPicture(Integer pictureID, Integer tagID) {
+		Tag tag = tagsRepository.findOne(tagID);
+		Picture pic = picRepository.findOne(pictureID);
+		if (tag== null){
+			return false;
+		}
+		if(!tag.getPictures().contains(pic)){
+			return false;
+		}else{
+			tag.removePicture(pic);
+			tagsRepository.save(tag);
+			return true;
+		}
+	}
+
+	@Override
+	public List<Tag> findByPicture(Picture picture) {
+		return tagsRepository.findByPictures(picture);
+	}
+
+	@Override
+	public void deleteTag(Tag tag) {
+		tag.removePicsFromTag();
+		tagsRepository.delete(tag);
+	}
+
+	@Override
+	public void deleteTagIn(List<Tag> tags) {
+		for (Tag tag : tags){
+			tag.removePicsFromTag();
+		}
+		tagsRepository.delete(tags);
 	}
 
 }

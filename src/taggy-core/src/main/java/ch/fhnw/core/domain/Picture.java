@@ -1,7 +1,7 @@
 package ch.fhnw.core.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,7 +30,7 @@ public class Picture {
 	@JoinTable(name = "pictures_tags", joinColumns = {@JoinColumn(name = "pictue_id", referencedColumnName = "id")},
 	inverseJoinColumns = {@JoinColumn(name = "tag_id", referencedColumnName = "id")})
 	@OrderBy("name ASC")
-	private Set<Tag> tags = new HashSet<>();
+	private List<Tag> tags = new ArrayList<>();
 	
 	public Picture(){}
 	
@@ -69,11 +69,11 @@ public class Picture {
 		this.comment = comment;
 	}
 
-	public Set<Tag> getTags() {
+	public List<Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(Set<Tag> tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 	public void addTag(Tag tag){
