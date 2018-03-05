@@ -55,7 +55,7 @@ public class TagRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
 		tagService.deleteTag(tagToDelete);
 		assertNull(tagService.findByName(tagToDelete.getTagName()));
 		assertEquals("check if tag still exist",Optional.empty(),picService.findPictureByTag(tagToDelete).findFirst());
-		assertEquals("check if picture still exisr",testPic.getId(),picService.findById(testPic.getId()).getId());
+		assertEquals("check if picture still exist",testPic.getId(),picService.findById(testPic.getId()).getId());
 
 		tagsToDelete.remove(0);
 		tagService.deleteTagIn(tagsToDelete);
