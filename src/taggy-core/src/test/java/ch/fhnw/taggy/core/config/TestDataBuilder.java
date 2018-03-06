@@ -18,9 +18,7 @@ import ch.fhnw.core.services.TagsService;
  */
 @Transactional
 public class TestDataBuilder {
-	@Autowired
 	PictureService picService;
-	@Autowired
 	TagsService tagService;
 	private List<Picture> testPics;
 	

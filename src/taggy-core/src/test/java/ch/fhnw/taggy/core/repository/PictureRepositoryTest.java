@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -22,10 +24,10 @@ import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.services.PictureService;
 import ch.fhnw.core.services.TagsService;
 import ch.fhnw.taggy.core.config.TestDataBuilder;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @SpringBootTest(classes = App.class)
+@AutoConfigureTestDatabase
 public class PictureRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests{
 	@Autowired
 	PictureService picService;
