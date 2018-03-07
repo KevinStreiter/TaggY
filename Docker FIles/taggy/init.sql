@@ -1,0 +1,3 @@
+
+create database taggyDB;
+\l

@@ -22,4 +22,6 @@ public interface PictureRepository extends JpaRepository<Picture, Integer>{
 	Stream<Picture> findByIdInAndTags(List<Integer> ids,Tag tag);
 	Picture findById(Integer id);
 	Stream<Picture> findByTags_id(Integer id);
+	Stream<Picture> findByCommentContaining(String partComment);
+	Stream<Picture> findByDescriptionContaining(String partDescription);
 }
