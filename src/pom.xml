@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ch.fhnw</groupId>
   <artifactId>taggy</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Taggy</name>
   <description>Program to Tag Picture in a hospital</description>
@@ -19,6 +19,7 @@
   </properties>
 
   <modules>
-  	<module>taggy-core</module>
+      <module>taggy-core</module>
+      <module>taggy-web</module>
   </modules>
 </project>

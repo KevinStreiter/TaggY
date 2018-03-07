@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import ch.fhnw.core.repository.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.fhnw.core.domain.Picture;
 import ch.fhnw.core.domain.Tag;
-import ch.fhnw.core.repository.PictureRepository;
+
 @Transactional
 @Service("pictureService")
 public class PictureServiceImpl implements PictureService {

@@ -1,17 +1,11 @@
 package ch.fhnw.core;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import ch.fhnw.core.domain.Picture;
-import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.repository.PictureRepository;
 import ch.fhnw.core.repository.TagsRepository;
 import ch.fhnw.core.services.PictureService;
 import ch.fhnw.core.services.TagsService;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

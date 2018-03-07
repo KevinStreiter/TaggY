@@ -14,5 +14,5 @@ public interface TagsService {
 	Boolean deleteTagFromPicture(Integer pictureID, Integer tagID);
 	void deleteTag(Tag tag);
 	void deleteTagIn(List<Tag> tags);
-
+	List<Tag> findAll();
 }

@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+				template="templates/main.xhtml">
+
+<ui:define name="content">
+    <h:form>
+      <h:panelGrid columns="1">
+	<p:dataTable id="tags" value="#{tagController.tag}"
+		     var="tag" >
+
+	  <p:column>
+	    <p:commandButton action="#{tagController.edit(tag.name)}"
+			     value="Edit" icon="fa fa-fw fa-edit"/>
+	  </p:column>
+	</p:dataTable>
+	<h:commandButton id="newButton" value="New Tag"
+			 action="editTags" />
+      </h:panelGrid>
+    </h:form>
+</ui:define>
+</ui:composition>
