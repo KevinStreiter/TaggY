@@ -1,9 +1,9 @@
 package ch.fhnw.taggy.core.config;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.fhnw.core.domain.Picture;
@@ -18,9 +18,10 @@ import ch.fhnw.core.services.TagsService;
  */
 @Transactional
 public class TestDataBuilder {
-	PictureService picService;
-	TagsService tagService;
+	private PictureService picService;
+	private TagsService tagService;
 	private List<Picture> testPics;
+	private HashMap<String, Integer> descriptionTimes;
 	
 	public TestDataBuilder(PictureService picService, TagsService tagService){
 		this.picService = picService;
@@ -28,13 +29,19 @@ public class TestDataBuilder {
 	}
 	
 	private void insertPicture(){
-		Picture pic1 = new Picture("picture1.fhnw.ch", "Best Pick ever", 1101);
-		Picture pic2 = new Picture("picture2,fhnw.ch", "Good Pick good", 1114);
-		Picture pic3 = new Picture("picture3.fhwn.ch", "Shower Pick", 112);
+		descriptionTimes=new HashMap<>();
+		descriptionTimes.put("unge", 1); descriptionTimes.put("eber", 1);
+		Picture pic1 = new Picture("picture1.fhnw.ch", "Best Pick ever", 1101,"Herz in Diagnose");
+		Picture pic2 = new Picture("picture2,fhnw.ch", "Good Pick good Leber", 1114,"Drinker Leber");
+		Picture pic3 = new Picture("picture3.fhwn.ch", "Shower Pick Lunge", 112,"Raucher Lunge");
 		testPics = new ArrayList<>();
 		testPics.add(pic1);testPics.add(pic2);testPics.add(pic3);
 		picService.save(pic1).save(pic2).save(pic3);
 	}
+	public HashMap<String, Integer> getDescriptionTimes() {
+		return descriptionTimes;
+	}
+
 	private void insertTags(){
 		Tag tag1 = new Tag("Schön");
 		Tag tag2 = new Tag("Brutal");

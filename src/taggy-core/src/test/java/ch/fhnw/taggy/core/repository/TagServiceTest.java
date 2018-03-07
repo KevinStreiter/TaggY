@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,8 @@ import ch.fhnw.taggy.core.config.TestDataBuilder;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @SpringBootTest(classes = App.class)
-public class TagRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests{
+@AutoConfigureTestDatabase
+public class TagServiceTest{
 	@Autowired
 	TagsService tagService;
 	@Autowired
@@ -38,6 +39,9 @@ public class TagRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
 		testData = new TestDataBuilder(picService, tagService);
 		testData.makeTestSituation();
 	}
+	@Test
+	public void startUP(){
+	}
 	
 	@Test
 	public void deleteTagsOnPicture(){
@@ -48,7 +52,7 @@ public class TagRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
 		assertNotEquals("Looks if tag can be disconnectet", testPic.getId(), foundPic.findFirst().get().getId());
 	}
 	@Test
-	public void deleteTag(){
+	public void deleteTagFromList(){
 		Picture testPic=testData.getTestPics().get(0);
 		List<Tag> tagsToDelete =tagService.findByPicture(testPic);
 		Tag tagToDelete = tagsToDelete.get(0);
