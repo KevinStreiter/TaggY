@@ -2,6 +2,7 @@ package ch.fhnw.taggy.core.repository;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,9 +11,11 @@ import java.util.stream.Stream;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,15 +25,17 @@ import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.services.PictureService;
 import ch.fhnw.core.services.TagsService;
 import ch.fhnw.taggy.core.config.TestDataBuilder;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @SpringBootTest(classes = App.class)
-public class PictureRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests{
+@AutoConfigureTestDatabase
+public class PictureServiceTest {
 	@Autowired
 	PictureService picService;
 	@Autowired
 	TagsService tagService;
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	TestDataBuilder testData;
 	@Before
@@ -55,8 +60,18 @@ public class PictureRepositoryTest extends AbstractTransactionalJUnit4SpringCont
 		tags.remove(1);
 		Stream<Picture> istPics = picService.findPictureByTagsOr(tags);
 		Set<Picture> istListPic= istPics.collect(Collectors.toSet());
-		assertEquals("find Pics by Tags Or function", 2,istListPic.size());
+		assertEquals("find Pics by Tags Or function", 2,istListPic.size());	
+	}
+	@Test
+	public void testFindByComments(){
+		HashMap<String, Integer> commentList = testData.getDescriptionTimes();
+		String comment1 = commentList.keySet().iterator().next();
 		
+		List<Picture> pics = picService.findByCommentContaining(comment1).collect(Collectors.toList());
+		logger.info("Test find By Comment"+pics.get(0));
+		assertEquals("Find comment like",1, pics.size());
+		pics = picService.findByDescriptionContaining(comment1).collect(Collectors.toList());
+		assertEquals("Find description like",1, pics.size());
 	}
 	
 	

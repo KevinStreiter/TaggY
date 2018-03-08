@@ -79,4 +79,16 @@ public class PictureServiceImpl implements PictureService {
 		return picRepository.findByTagsIn(tags);
 	}
 
+	@Override
+	public Stream<Picture> findByCommentContaining(String partComment) {
+		return picRepository.findByCommentContaining(partComment);
+	}
+
+	@Override
+	public Stream<Picture> findByDescriptionContaining(String partDescription) {
+		return picRepository.findByDescriptionContaining(partDescription);
+	}
+
+	
+
 }

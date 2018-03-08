@@ -51,7 +51,7 @@ public class App implements CommandLineRunner{
 		tagServices.addTagToPicture(1, "hässlich");
 		List<Tag> se = new ArrayList<>();
 		se.add(tag); se.add(tag2);
-		
+		"
 		List<Picture> picstream = picService.findPictureByTagsAnd(se);
 		System.out.println(picstream);
 

@@ -20,11 +20,13 @@ public class Picture {
 	@Id
 	private Integer id;
 	
-	@Column(nullable=false)
-	private String uri;
+
 	
 	@Column(nullable=true)
 	private String comment;
+	
+	@Column(nullable=true)
+	private String description;
 	
 	@ManyToMany(targetEntity = Tag.class, cascade =CascadeType.ALL)
 	@JoinTable(name = "pictures_tags", joinColumns = {@JoinColumn(name = "pictue_id", referencedColumnName = "id")},
@@ -34,15 +36,25 @@ public class Picture {
 	
 	public Picture(){}
 	
-	public Picture(String uri, String comment, Integer id){
-		this.uri=uri;
+
+	
+	public Picture(String comment, Integer id, String description){
 		this.comment=comment;
 		this.id=id;
+		this.description=description;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
 	public String toString() {
-		return "Picture [id=" + id + ", uri=" + uri + ", comment=" + comment +"]";
+		return "Picture [id=" + id + ", comment=" + comment +", description="+description+"]";
 	}
 
 	public Integer getId() {
@@ -53,13 +65,6 @@ public class Picture {
 		this.id = id;
 	}
 
-	public String getUri() {
-		return uri;
-	}
-
-	public void setUri(String uri) {
-		this.uri = uri;
-	}
 
 	public String getComment() {
 		return comment;
