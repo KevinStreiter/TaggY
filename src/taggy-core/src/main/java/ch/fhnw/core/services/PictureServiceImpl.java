@@ -60,6 +60,11 @@ public class PictureServiceImpl implements PictureService {
 	}
 
 	@Override
+	public List<Picture> findAll() {
+		return picRepository.findAll();
+	}
+
+	@Override
 	public Stream<Picture> findByTag_id(Integer id) {
 		return picRepository.findByTags_id(id);
 	}
@@ -73,7 +78,5 @@ public class PictureServiceImpl implements PictureService {
 	public Stream<Picture> findPictureByTagsOr(List<Tag> tags) {
 		return picRepository.findByTagsIn(tags);
 	}
-
-	
 
 }

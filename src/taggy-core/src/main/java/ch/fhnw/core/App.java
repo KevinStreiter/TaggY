@@ -1,5 +1,7 @@
 package ch.fhnw.core;
 
+import ch.fhnw.core.domain.Picture;
+import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.repository.PictureRepository;
 import ch.fhnw.core.repository.TagsRepository;
 import ch.fhnw.core.services.PictureService;
@@ -10,6 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class App implements CommandLineRunner{
@@ -28,7 +33,7 @@ public class App implements CommandLineRunner{
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		/*
+
 		Tag tag = new Tag("Weiblich");
 		Tag tag2 = new Tag("mänlich");
 		Tag tag3 = new Tag("hässlich");
@@ -37,8 +42,10 @@ public class App implements CommandLineRunner{
 		tagsRepository.save(tag2);
 		tagsRepository.save(tag3);
 		System.out.println(("generatet pk in dp"+ tag.getId()));
-		Picture p1 = new Picture("ch.fhnw", "schrecklich", 1);
-		picRepository.save(p1);
+		for(int i = 1; i <= 50; i++){
+			Picture p1 = new Picture("ch.fhnw", "schrecklich"+ i, i);
+			picRepository.save(p1);
+		}
 		tagServices.addTagToPicture(1, "mänlich");
 		tagServices.addTagToPicture(1, "Weiblich");
 		tagServices.addTagToPicture(1, "hässlich");
@@ -47,7 +54,7 @@ public class App implements CommandLineRunner{
 		
 		List<Picture> picstream = picService.findPictureByTagsAnd(se);
 		System.out.println(picstream);
-		*/
+
 	}
 
 }

@@ -11,7 +11,7 @@
 		  <h:outputLabel for="tagname" value="Tags" />
 		  <p:inputText id="tagname" size="10"
 					   value="#{tagController.tag.tagName}"
-					   required="true" maxlength="20"/>
+					   required="true" maxlength="40"/>
 		  <h:commandButton value="save" type="submit" action="#{tagController.save}"/>
 		  <h:dataTable value="#{tagController.tags}" var="tag" selectionMode="single" rowKey="#{tagController.tag.id}" editable="true">
 			  <!--<p:ajax event="rowSelect" listener="#{tagController.onRowSelect}"/>
@@ -28,16 +28,10 @@
 
 <ui:define name="images">
 	<h:form>
-		<h:panelGrid id="imageView" columns="10" rules="all">
-			<c:forEach var="images" items="#{pictureController.pictures}">
-				<h:panelGrid columns="1" rules="none">
-					<h:commandLink action="#{pictureController.selectImage}">
-						<h:graphicImage
-							value="app11he.jpg"
-							style="width:100px;" />
-					</h:commandLink>
-				</h:panelGrid>
-			</c:forEach>
+		<h:panelGrid id="imageView" columns="1" rules="all">
+				<h:graphicImage
+						value="app11he.jpg"
+						style="width:800px;" />
 		</h:panelGrid>
 	</h:form>
 </ui:define>

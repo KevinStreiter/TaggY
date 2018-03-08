@@ -16,6 +16,5 @@ public interface PictureService {
 	List<Picture> findPictureByTagsAnd(List<Tag> tags);
 	Stream<Picture> findPictureByTagsOr(List<Tag> tags);
 	PictureService save(Picture pic);
-	
-
+	List<Picture> findAll();
 }
