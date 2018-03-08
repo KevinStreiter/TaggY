@@ -20,8 +20,7 @@ public class Picture {
 	@Id
 	private Integer id;
 	
-	@Column(nullable=false)
-	private String uri;
+
 	
 	@Column(nullable=true)
 	private String comment;
@@ -39,8 +38,7 @@ public class Picture {
 	
 
 	
-	public Picture(String uri, String comment, Integer id, String description){
-		this.uri=uri;
+	public Picture(String comment, Integer id, String description){
 		this.comment=comment;
 		this.id=id;
 		this.description=description;
@@ -56,7 +54,7 @@ public class Picture {
 
 	@Override
 	public String toString() {
-		return "Picture [id=" + id + ", uri=" + uri + ", comment=" + comment +", description="+description+"]";
+		return "Picture [id=" + id + ", comment=" + comment +", description="+description+"]";
 	}
 
 	public Integer getId() {
@@ -67,13 +65,6 @@ public class Picture {
 		this.id = id;
 	}
 
-	public String getUri() {
-		return uri;
-	}
-
-	public void setUri(String uri) {
-		this.uri = uri;
-	}
 
 	public String getComment() {
 		return comment;
