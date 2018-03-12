@@ -43,7 +43,7 @@ public class App implements CommandLineRunner{
 		tagsRepository.save(tag3);
 		System.out.println(("generatet pk in dp"+ tag.getId()));
 		for(int i = 1; i <= 50; i++){
-			Picture p1 = new Picture("ch.fhnw", "schrecklich"+ i, i);
+			Picture p1 = new Picture( "schrecklich"+ i, i,"ich mag es");
 			picRepository.save(p1);
 		}
 		tagServices.addTagToPicture(1, "mänlich");
@@ -51,7 +51,6 @@ public class App implements CommandLineRunner{
 		tagServices.addTagToPicture(1, "hässlich");
 		List<Tag> se = new ArrayList<>();
 		se.add(tag); se.add(tag2);
-		"
 		List<Picture> picstream = picService.findPictureByTagsAnd(se);
 		System.out.println(picstream);
 

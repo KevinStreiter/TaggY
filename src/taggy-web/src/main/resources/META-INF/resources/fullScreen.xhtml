@@ -6,24 +6,7 @@
 				template="templates/main.xhtml">
 
 <ui:define name="tags">
-    <h:form>
-      <h:panelGrid columns="1">
-		  <h:outputLabel for="tagname" value="Tags" />
-		  <p:inputText id="tagname" size="10"
-					   value="#{tagController.tag.tagName}"
-					   required="true" maxlength="40"/>
-		  <h:commandButton value="save" type="submit" action="#{tagController.save}"/>
-		  <h:dataTable value="#{tagController.tags}" var="tag" selectionMode="single" rowKey="#{tagController.tag.id}" editable="true">
-			  <!--<p:ajax event="rowSelect" listener="#{tagController.onRowSelect}"/>
-			  <p:ajax event="rowUnselect" listener="#{tagController.onRowUnselect}"/>-->
-			  <h:column>
-				  <h:link value="#{tag.tagName}" outcome="tag">
-					  <f:param name="id" value="#{tag.id}" />
-				  </h:link>
-			  </h:column>
-		  </h:dataTable>
-      </h:panelGrid>
-    </h:form>
+    <ui:include src="/templates/tagController.xhtml" />
 </ui:define>
 
 <ui:define name="images">
