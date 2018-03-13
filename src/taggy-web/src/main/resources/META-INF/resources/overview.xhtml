@@ -16,8 +16,7 @@
 		<h:commandButton value="quer" action="#{pictureController.textQuery(text.value)}"/>
 		<p:dataGrid value="#{pictureController.pictures}" var="picture" columns="10" layout="grid" style="width: 99%;">			 
 			<h:commandLink action ="#{pictureController.selectImage(picture.id)}">
-				<h:graphicImage  value="app11he.jpg"   style="width:100px;" />
-				"http://192.168.1.102:8042/wado?objectUID=1.2.826.0.1.3680043.8.654.50.2010.#{picture.uid}
+				<h:graphicImage  value="#{pictureController.picture.wadoUrl}"   style="width:100px;" />
 			</h:commandLink>
 		</p:dataGrid>
 	</h:form>

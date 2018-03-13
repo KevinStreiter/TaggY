@@ -33,6 +33,7 @@ public class App implements CommandLineRunner{
 
 	@Override
 	public void run(String... arg0) throws Exception {
+/*
 
 		Tag tag = new Tag("Weiblich");
 		Tag tag2 = new Tag("mänlich");
@@ -55,6 +56,7 @@ public class App implements CommandLineRunner{
 		se.add(tag); se.add(tag2);
 		List<Picture> picstream = picService.findPictureByTagsAnd(se);
 		System.out.println(picstream);
+*/
 
 	}
 

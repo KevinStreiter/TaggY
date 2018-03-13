@@ -88,9 +88,4 @@ public class PictureServiceImpl implements PictureService {
 	public List<Picture> findByDescriptionContaining(String partDescription) {
 		return picRepository.findByDescriptionContaining(partDescription);
 	}
-
-	
-
-	
-
 }

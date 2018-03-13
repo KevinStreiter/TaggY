@@ -15,19 +15,19 @@ def connect():
     return conn
 
 INSERT_STRING = """
-insert into "pictures" (id, comment, description)
-values (%s,%s,%s)
+insert into "pictures" (id, comment, description, uid)
+values (%s,%s,%s,%s)
 """
-def insert(id,comment,description, cur):
+def insert(id,comment,description, cur, uid):
     
-    cur.execute(INSERT_STRING,(id, comment, description))
+    cur.execute(INSERT_STRING,(id, comment, description, uid))
     cur.connection.commit()
     
 def parseXML(file,cur):
     tree = ET.parse(file)
     root = tree.getroot()
     for child in root:
-        insert(child.find("uid").text, "", child.find("description").text, cur)
+        insert(child.find("uid").text, "", child.find("description").text, cur, child.find("uid").text)
         
         
         
