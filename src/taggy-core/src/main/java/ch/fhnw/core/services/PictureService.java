@@ -16,7 +16,7 @@ public interface PictureService {
 	List<Picture> findPictureByTagsAnd(List<Tag> tags);
 	Stream<Picture> findPictureByTagsOr(List<Tag> tags);
 	PictureService save(Picture pic);
-	Stream<Picture> findByCommentContaining(String partComment);
-	Stream<Picture> findByDescriptionContaining(String partDescription);
+	List<Picture> findByCommentContaining(String partComment);
+	List<Picture> findByDescriptionContaining(String partDescription);
 	List<Picture> findAll();
 }

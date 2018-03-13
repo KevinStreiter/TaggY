@@ -39,7 +39,7 @@ public class TagController {
         else {
             tag = tagsService.findByName(tagName);
         }
-        return "listTags";
+        return "overwiev";
     }
 
     public String save(){
@@ -47,11 +47,11 @@ public class TagController {
         List<Tag> tags = getTags();
         for(Tag tag : tags){
             if((tag.getTagName().equals(tagTemp.getTagName()))){
-                return "listTags";
+                return "overwiev";
             }
         }
         tagsService.save(tagTemp);
-        return "listTags";
+        return "overwiev";
     }
 
     public void onRowSelect(SelectEvent event) {

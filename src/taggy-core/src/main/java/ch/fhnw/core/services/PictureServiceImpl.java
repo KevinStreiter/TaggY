@@ -80,14 +80,16 @@ public class PictureServiceImpl implements PictureService {
 	}
 
 	@Override
-	public Stream<Picture> findByCommentContaining(String partComment) {
+	public List<Picture> findByCommentContaining(String partComment) {
 		return picRepository.findByCommentContaining(partComment);
 	}
 
 	@Override
-	public Stream<Picture> findByDescriptionContaining(String partDescription) {
+	public List<Picture> findByDescriptionContaining(String partDescription) {
 		return picRepository.findByDescriptionContaining(partDescription);
 	}
+
+	
 
 	
 
