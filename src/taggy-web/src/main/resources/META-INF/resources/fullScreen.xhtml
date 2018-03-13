@@ -4,17 +4,26 @@
 				xmlns:h="http://java.sun.com/jsf/html"
 				xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core"
 				template="templates/main.xhtml">
+<head></head>
 
 <ui:define name="tags">
     <ui:include src="/templates/tagController.xhtml" />
 </ui:define>
 
 <ui:define name="images">
+	
 	<h:form>
-		<h:panelGrid id="imageView" columns="1" rules="all">
-				<h:graphicImage
-						value="app11he.jpg"
-						style="width:800px;" />
+		<h:panelGrid id="imageView" columns="2" rules="all" columnClasses="topAligned,topAligned">
+				<h:graphicImage	value="app11he.jpg" />
+				<h:panelGrid rows="2" >
+				
+					<p:panel id="description" header="Description"  toggleable="true">
+				    	<h:outputText value= "#{pictureController.description}" />
+				    </p:panel>
+				    <p:panel style="height: 200%;" id="comment" header="Comment" toggleable="true">
+				    	<p:inputTextarea rows="3" cols="30" value="#{pictureController.comment}" />
+				    </p:panel>
+				</h:panelGrid>
 		</h:panelGrid>
 	</h:form>
 </ui:define>
