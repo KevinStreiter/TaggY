@@ -12,17 +12,17 @@ import ch.fhnw.core.domain.Tag;
 
 @Repository
 @Transactional
-public interface PictureRepository extends JpaRepository<Picture, Integer>{
+public interface PictureRepository extends JpaRepository<Picture, Long>{
 	
 	
   	Stream<Picture> findByComment(String pictureComment);
 	Stream<Picture> findByTags(Tag tag);
 	Stream<Picture> findByTagsIn(List<Tag>Tags); //Or solution
-	Stream<Picture> deleteByIdIn(List<Integer> ids);
-	Stream<Picture> findByIdIn(List<Integer> ids);
-	Stream<Picture> findByIdInAndTags(List<Integer> ids,Tag tag);
-	Picture findById(Integer id);
-	Stream<Picture> findByTags_id(Integer id);
+	Stream<Picture> deleteByIdIn(List<Long> ids);
+	Stream<Picture> findByIdIn(List<Long> ids);
+	Stream<Picture> findByIdInAndTags(List<Long> ids,Tag tag);
+	Picture findById(Long id);
+	Stream<Picture> findByTags_id(Long id);
 	List<Picture> findByCommentContaining(String partComment);
 	List<Picture> findByDescriptionContaining(String partDescription);
 

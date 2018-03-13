@@ -32,7 +32,7 @@ public class TagsServiceImpl implements TagsService{
 	}
 
 	@Override
-	public TagsService addTagToPicture(Integer pictureID, String tagName) {
+	public TagsService addTagToPicture(Long pictureID, String tagName) {
 		Tag t = tagsRepository.findByName(tagName);
 		Picture pic = picRepository.findOne(pictureID);
 		if(t==null){
@@ -50,7 +50,7 @@ public class TagsServiceImpl implements TagsService{
 	}
 
 	@Override
-	public Boolean deleteTagFromPicture(Integer pictureID, Integer tagID) {
+	public Boolean deleteTagFromPicture(Long pictureID, Long tagID) {
 		Tag tag = tagsRepository.findOne(tagID);
 		Picture pic = picRepository.findOne(pictureID);
 		if (tag== null){

@@ -27,7 +27,7 @@ public class PictureServiceImpl implements PictureService {
 	}
 
 	@Override
-	public Picture findById(Integer id) {
+	public Picture findById(Long id) {
 		return picRepository.findById(id);
 	}
 
@@ -42,7 +42,7 @@ public class PictureServiceImpl implements PictureService {
 		}
 		picList=picRepository.findByTags(tags.get(0)).collect(Collectors.toList());
 		for(int i =1; i< tags.size() ;i++){
-			List<Integer> ids = new ArrayList<>();
+			List<Long> ids = new ArrayList<>();
 			for (Picture pic : picList){
 				ids.add(pic.getId());
 			}
@@ -65,7 +65,7 @@ public class PictureServiceImpl implements PictureService {
 	}
 
 	@Override
-	public Stream<Picture> findByTag_id(Integer id) {
+	public Stream<Picture> findByTag_id(Long id) {
 		return picRepository.findByTags_id(id);
 	}
 

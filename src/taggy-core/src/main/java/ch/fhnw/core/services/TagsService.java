@@ -10,8 +10,8 @@ public interface TagsService {
 	Tag findByName(String tagName);
 	List<Tag> findByPicture(Picture picture);
 	TagsService save(Tag tag);
-	TagsService addTagToPicture(Integer pictureID, String tagName);
-	Boolean deleteTagFromPicture(Integer pictureID, Integer tagID);
+	TagsService addTagToPicture(Long pictureID, String tagName);
+	Boolean deleteTagFromPicture(Long pictureID, Long tagID);
 	void deleteTag(Tag tag);
 	void deleteTagIn(List<Tag> tags);
 	List<Tag> findAll();

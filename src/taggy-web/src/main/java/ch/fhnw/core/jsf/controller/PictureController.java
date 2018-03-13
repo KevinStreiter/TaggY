@@ -54,7 +54,7 @@ public class PictureController {
     	return "overwiev";
     }
 
-    public String selectImage(Integer id) {
+    public String selectImage(Long id) {
     	if(id == null){
     		logger.info("given id: "+id);
     		return "overwiev";

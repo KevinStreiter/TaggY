@@ -18,9 +18,10 @@ import javax.persistence.Table;
 public class Picture {
 	
 	@Id
-	private Integer id;
+	private Long id;
 	
-
+	@Column(nullable=false)
+	private String uid;
 	
 	@Column(nullable=true)
 	private String comment;
@@ -36,9 +37,14 @@ public class Picture {
 	
 	public Picture(){}
 	
-
+	public Picture(String comment, Long id, String description, String uid){
+		this.uid = uid;
+		this.comment=comment;
+		this.id=id;
+		this.description=description;
+	}
 	
-	public Picture(String comment, Integer id, String description){
+	public Picture(String comment, Long id, String description){
 		this.comment=comment;
 		this.id=id;
 		this.description=description;
@@ -57,11 +63,11 @@ public class Picture {
 		return "Picture [id=" + id + ", comment=" + comment +", description="+description+"]";
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -72,6 +78,13 @@ public class Picture {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	public List<Tag> getTags() {
