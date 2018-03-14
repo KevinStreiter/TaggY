@@ -10,20 +10,15 @@
     <ui:include src="/templates/tagController.xhtml" />
 </ui:define>
 
+<ui:define name="details" >
+    <ui:include src="templates/pictureDetails.xhtml" />
+</ui:define>
+
 <ui:define name="images">
 	<h:form>
         <h:panelGrid>
             <h:panelGrid id="imageView" columns="1" rules="all" columnClasses="topAligned,topAligned">
                 <h:graphicImage	value="http://192.168.1.102:8042/wado?objectUID=1.2.826.0.1.3680043.8.654.50.2010.0000000000#{pictureController.picture.id}&#38;requestType=WADO" style="text-align:center"/>
-            </h:panelGrid>
-            <h:panelGrid columns="2">
-                <p:panel  id="description" header="Description" toggleable="true" style="float: left;">
-                    <h:outputText value= "#{pictureController.description}" />
-                </p:panel>
-                <p:panel  id="comment" header="Comment" toggleable="true" style="float: right;">
-                    <p:inputText value="#{pictureController.comment}" binding="#{comment}" />
-                    <h:commandButton value="edit" action="#{pictureController.editComment(comment.value)}" style="display: none"/>
-                </p:panel>
             </h:panelGrid>
         </h:panelGrid>
 	</h:form>

@@ -1,3 +1,11 @@
 .topAligned {
     vertical-align: top;
 }
+
+.columnSize {
+    width: 50%;
+}
+
+.noBorders tr, .noBorders td {
+    border: none !important;
+}

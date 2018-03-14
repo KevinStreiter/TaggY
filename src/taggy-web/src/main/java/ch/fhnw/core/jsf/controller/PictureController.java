@@ -24,9 +24,6 @@ public class PictureController {
     private Picture picture = new Picture();
     private List<Picture> pictures;
     
-    
-
-
     public Picture getPicture() {
         return picture; }
 
@@ -49,7 +46,7 @@ public class PictureController {
     	logger.info(query);
     	pictures = pictureService.findByCommentOrDescription(query, orderBy());
     	logger.info(""+pictures);
-    	return "overwiev";
+    	return "overview";
     }
 
     public String selectImage(Long id) {
