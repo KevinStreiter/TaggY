@@ -23,7 +23,7 @@ public class PictureController {
 
     private Picture picture = new Picture();
     private List<Picture> pictures;
-    
+
     public Picture getPicture() {
         return picture; }
 

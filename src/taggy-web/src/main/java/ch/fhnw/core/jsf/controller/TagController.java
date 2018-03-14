@@ -19,6 +19,9 @@ public class TagController {
     @Autowired
     private TagsService tagsService;
 
+    private Tag selectedTag;
+    private List<Tag> selectedTags;
+
     private Tag tag = new Tag();
 
     public Tag getTag() {
@@ -39,7 +42,7 @@ public class TagController {
         else {
             tag = tagsService.findByName(tagName);
         }
-        return "overwiev";
+        return "overview";
     }
 
     public String save(){
@@ -47,11 +50,31 @@ public class TagController {
         List<Tag> tags = getTags();
         for(Tag tag : tags){
             if((tag.getTagName().equals(tagTemp.getTagName()))){
-                return "overwiev";
+                return "overview";
             }
         }
         tagsService.save(tagTemp);
-        return "overwiev";
+        return "overview";
+    }
+
+    public Tag getSelectedTag() {
+        return selectedTag;
+    }
+
+    public void setSelectedTag(Tag selectedTag) {
+        this.selectedTag = selectedTag;
+    }
+
+    public List<Tag> getSelectedTags() {
+        return selectedTags;
+    }
+
+    public void setSelectedTags(List<Tag> selectedTags) {
+        this.selectedTags = selectedTags;
+    }
+
+    public void setService(TagsService tagsService) {
+        this.tagsService = tagsService;
     }
 
     public void onRowSelect(SelectEvent event) {

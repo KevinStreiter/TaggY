@@ -11,13 +11,11 @@ xmlns="http://www.w3.org/1999/xhtml"
 					   value="#{tagController.tag.tagName}"
 					   required="true" maxlength="20"/>
 		  <h:commandButton value="save" type="submit" action="#{tagController.save}" style="display: none"/>
-		  <h:dataTable value="#{tagController.tags}" var="tag" selectionMode="single" rowKey="#{tagController.tag.id}" editable="true">
-			  <!--<p:ajax event="rowSelect" listener="#{tagController.onRowSelect}"/>
-			  <p:ajax event="rowUnselect" listener="#{tagController.onRowUnselect}"/>-->
-			  <h:column>
+		  <p:dataTable value="#{tagController.tags}" var="tag" selectionMode="multiple" selection="#{tagController.selectedTags}" rowKey="#{tag.id}" >
+			  <p:column>
 				   #{tag.tagName}
-			  </h:column>
-		  </h:dataTable>
+			  </p:column>
+		  </p:dataTable>
       </h:panelGrid>
     </h:form>
  </ui:composition>
