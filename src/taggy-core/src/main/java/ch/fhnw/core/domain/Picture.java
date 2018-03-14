@@ -110,6 +110,4 @@ public class Picture {
 			tag.getPictures().remove(tag);
 		}
 	}
-	
-
 }

@@ -13,11 +13,10 @@
 <ui:define name="images">
 	<h:form>
 		<p:inputText style="width: 99%;" autoResize="false" binding="#{text}" />
-		<h:commandButton value="quer" action="#{pictureController.textQuery(text.value)}"/>
-		<p:dataGrid value="#{pictureController.pictures}" var="picture" columns="10" layout="grid" style="width: 99%;">			 
+		<h:commandButton value="quer" action="#{pictureController.textQuery(text.value)}" style="display: none"/>
+		<p:dataGrid value="#{pictureController.pictures}" var="picture" columns="11" layout="grid" style="width: 99%;">
 			<h:commandLink action ="#{pictureController.selectImage(picture.id)}">
-				<h:graphicImage  value="app11he.jpg"   style="width:100px;" />
-				#{picture.id}
+				<h:graphicImage  value="http://192.168.1.102:8042/wado?objectUID=1.2.826.0.1.3680043.8.654.50.2010.0000000000#{picture.id}&#38;requestType=WADO" style="width:100px;" />
 			</h:commandLink>
 		</p:dataGrid>
 	</h:form>

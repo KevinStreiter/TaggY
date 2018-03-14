@@ -22,6 +22,7 @@ public class PictureController {
     PictureService pictureService;
 
     private Picture picture = new Picture();
+    private Set<Picture> pictures;
     
     List<Picture> pictures;
     
@@ -42,6 +43,9 @@ public class PictureController {
     public String getComment(){
     	return picture.getComment();
     }
+    public void setComment(String comment){
+        picture.setComment(comment);
+    }
     public String textQuery(String query){
     	logger.info(query);
     	pictures = pictureService.findByCommentOrDescription(query, orderBy());
@@ -52,13 +56,20 @@ public class PictureController {
     public String selectImage(Long id) {
     	if(id == null){
     		logger.info("given id: "+id);
-    		return "overwiev";
+    		return "overview";
+
     	}else{
     		picture = pictureService.findById(id);
     		logger.info("given id: "+id);
     		return "fullScreen";
     	}
+    }
         
+    public String editComment(String comment){
+        picture.setComment(comment);
+        logger.info(picture.toString());
+        pictureService.save(picture);
+        return "fullScreen";
     }
     private Sort orderBy() {
         return new Sort(Sort.Direction.DESC, "Id");
