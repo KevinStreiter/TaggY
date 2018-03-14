@@ -14,14 +14,14 @@
 	
 	<h:form>
 		<h:panelGrid id="imageView" columns="2" rules="all" columnClasses="topAligned,topAligned">
-				<h:graphicImage	value="app11he.jpg" />
+				<h:graphicImage	value="http://192.168.1.102:8042/wado?objectUID=1.2.826.0.1.3680043.8.654.50.2010.0000000000#{pictureController.picture.id}&#38;requestType=WADO"  />
 				<h:panelGrid rows="2" >
 				
 					<p:panel id="description" header="Description"  toggleable="true">
 				    	<h:outputText value= "#{pictureController.description}" />
 				    </p:panel>
 				    <p:panel style="height: 200%;" id="comment" header="Comment" toggleable="true">
-				    	<p:inputTextarea rows="3" cols="30" value="#{pictureController.comment}" />
+				    	<p:inputText rows="3" cols="30" value="#{pictureController.comment}" />
 				    </p:panel>
 				</h:panelGrid>
 		</h:panelGrid>

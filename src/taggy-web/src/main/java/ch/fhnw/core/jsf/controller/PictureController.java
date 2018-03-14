@@ -25,8 +25,7 @@ public class PictureController {
     PictureService pictureService;
 
     private Picture picture = new Picture();
-    
-    Set<Picture> pictures;
+    private Set<Picture> pictures;
 
     public Picture getPicture() {
         return picture; }
@@ -49,7 +48,6 @@ public class PictureController {
     	picturesList.addAll(pictureService.findByDescriptionContaining(query));
     	pictures = new HashSet<>(picturesList);
     	logger.info(""+pictures);
-    	setUrl();
     	return "overview";
     }
 
@@ -63,16 +61,7 @@ public class PictureController {
     		logger.info("given id: "+id);
     		return "fullScreen";
     	}
-        
     }
-
-    private void setUrl(){
-    	for (Picture picture : pictures) {
-    		picture.setWadoUrl("http://192.168.1.102:8042/wado?objectUID=1.2.826.0.1.3680043.8.654.50.2010.0000000000"
-					+ picture.getId() + "&requestType=WADO");
-			logger.info(picture.getWadoUrl());
-		}
-	}
 }
 
 
