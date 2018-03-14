@@ -8,7 +8,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import ch.fhnw.core.repository.PictureRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +24,8 @@ import ch.fhnw.core.domain.Tag;
 public class PictureServiceImpl implements PictureService {
 	@Autowired
 	PictureRepository picRepository;
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public Stream<Picture> findByComment(String pictureComment) {
@@ -89,8 +95,32 @@ public class PictureServiceImpl implements PictureService {
 		return picRepository.findByDescriptionContaining(partDescription);
 	}
 
-	
+	@Override
+	public List<Picture> findAll(Sort sort) {
+		return picRepository.findAll(sort);
+	}
 
-	
+	@Override
+	public List<Picture> findByCommentOrDescription(String query, Sort sort) {
+		String[] queryParts = query.split(" ");
+		List<Picture> pictures = new ArrayList<>();
+		for (String part:queryParts) {
+			List<Picture> picturesTmp = picRepository.findByCommentContainingOrDescriptionContaining(part, part, sort);
+			if(pictures.size()==0) {
+				pictures=picturesTmp;
+			}else {
+				List<Picture> result=new ArrayList<>();
+				for (Picture pic :picturesTmp) {
+					if (pictures.contains(pic)) {
+					result.add(pic);
+					}
+				}
+				pictures=result;
+				logger.info("Query Text-Search: "+pictures.toString());
+			}
+		}
+		return pictures;
+	}
+
 
 }

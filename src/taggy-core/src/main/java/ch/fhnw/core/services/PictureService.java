@@ -4,6 +4,8 @@ package ch.fhnw.core.services;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.springframework.data.domain.Sort;
+
 import ch.fhnw.core.domain.Picture;
 import ch.fhnw.core.domain.Tag;
 
@@ -19,4 +21,7 @@ public interface PictureService {
 	List<Picture> findByCommentContaining(String partComment);
 	List<Picture> findByDescriptionContaining(String partDescription);
 	List<Picture> findAll();
+	List<Picture> findAll(Sort sort);
+	List<Picture> findByCommentOrDescription(String query, Sort sort);
+	
 }

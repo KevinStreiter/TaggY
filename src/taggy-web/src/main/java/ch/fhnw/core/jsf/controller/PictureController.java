@@ -7,13 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Scope(value = "session")
 @Component(value = "pictureController")
@@ -26,16 +23,16 @@ public class PictureController {
 
     private Picture picture = new Picture();
     
-    Set<Picture> pictures;
+    List<Picture> pictures;
     
 
 
     public Picture getPicture() {
         return picture; }
 
-    public Set<Picture> getPictures(){
+    public List<Picture> getPictures(){
     	if(pictures==null){
-    		pictures = new HashSet<>(pictureService.findAll());
+    		pictures = pictureService.findAll(orderBy());
     	}
         return pictures;
     }
@@ -47,9 +44,7 @@ public class PictureController {
     }
     public String textQuery(String query){
     	logger.info(query);
-    	List<Picture> picturesList = pictureService.findByCommentContaining(query);
-    	picturesList.addAll(pictureService.findByDescriptionContaining(query));
-    	pictures = new HashSet<>(picturesList);
+    	pictures = pictureService.findByCommentOrDescription(query, orderBy());
     	logger.info(""+pictures);
     	return "overwiev";
     }
@@ -64,6 +59,9 @@ public class PictureController {
     		return "fullScreen";
     	}
         
+    }
+    private Sort orderBy() {
+        return new Sort(Sort.Direction.DESC, "Id");
     }
 }
 
