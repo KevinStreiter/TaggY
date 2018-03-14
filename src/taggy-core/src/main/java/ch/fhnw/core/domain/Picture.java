@@ -19,8 +19,6 @@ public class Picture {
 	
 	@Id
 	private Long id;
-
-	private String wadoUrl;
 	
 	@Column(nullable=false)
 	private String uid;
@@ -111,13 +109,5 @@ public class Picture {
 		if(tag.getPictures().contains(tag)){
 			tag.getPictures().remove(tag);
 		}
-	}
-
-	public String getWadoUrl(){
-		return wadoUrl;
-	}
-
-	public void setWadoUrl(String url) {
-		this.wadoUrl = url;
 	}
 }

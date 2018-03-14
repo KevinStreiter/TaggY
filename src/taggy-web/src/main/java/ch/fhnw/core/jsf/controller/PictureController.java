@@ -42,6 +42,9 @@ public class PictureController {
     public String getComment(){
     	return picture.getComment();
     }
+    public void setComment(String comment){
+        picture.setComment(comment);
+    }
     public String textQuery(String query){
     	logger.info(query);
     	List<Picture> picturesList = pictureService.findByCommentContaining(query);
@@ -61,6 +64,13 @@ public class PictureController {
     		logger.info("given id: "+id);
     		return "fullScreen";
     	}
+    }
+
+    public String editComment(String comment){
+        picture.setComment(comment);
+        logger.info(picture.toString());
+        pictureService.save(picture);
+        return "fullScreen";
     }
 }
 
