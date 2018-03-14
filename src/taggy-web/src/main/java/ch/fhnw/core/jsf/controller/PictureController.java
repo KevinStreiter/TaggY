@@ -22,9 +22,8 @@ public class PictureController {
     PictureService pictureService;
 
     private Picture picture = new Picture();
-    private Set<Picture> pictures;
+    private List<Picture> pictures;
     
-    List<Picture> pictures;
     
 
 
