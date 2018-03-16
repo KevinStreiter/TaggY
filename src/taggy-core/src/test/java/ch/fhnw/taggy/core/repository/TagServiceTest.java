@@ -47,24 +47,28 @@ public class TagServiceTest{
 	public void deleteTagsOnPicture(){
 		Picture testPic=testData.getTestPics().get(0);
 		List<Tag> testPicTags = tagService.findByPicture(testPic);
-		assertTrue(tagService.deleteTagFromPicture(testPic.getId(), testPicTags.get(0).getId()));
+		Tag deletedTag = testPicTags.get(0);
+		assertTrue("checks return of the service",tagService.deleteTagFromPicture(testPic.getId(), deletedTag.getId()));
 		Stream<Picture> foundPic = picService.findByTag_id(testPicTags.get(0).getId());
-		assertNotEquals("Looks if tag can be disconnectet", testPic.getId(), foundPic.findFirst().get().getId());
+		assertNotEquals("Looks if tag is discounnecet to the picture", testPic.getId(), foundPic.findFirst().get().getId());
+		
 	}
 	@Test
 	public void deleteTagFromList(){
 		Picture testPic=testData.getTestPics().get(0);
 		List<Tag> tagsToDelete =tagService.findByPicture(testPic);
+		int allBefore = tagService.findAll().size();
+		int numberDeleted = tagsToDelete.size();
 		Tag tagToDelete = tagsToDelete.get(0);
 		tagService.deleteTag(tagToDelete);
-		assertNull(tagService.findByName(tagToDelete.getTagName()));
-		assertEquals("check if tag still exist",Optional.empty(),picService.findPictureByTag(tagToDelete).findFirst());
+		assertNull("looks if deleted tag excists",tagService.findByName(tagToDelete.getTagName()));
+		assertEquals("check if you not able to find pic with deleted Tag",Optional.empty(),picService.findPictureByTag(tagToDelete).findFirst());
 		assertEquals("check if picture still exist",testPic.getId(),picService.findById(testPic.getId()).getId());
 
 		tagsToDelete.remove(0);
 		tagService.deleteTagIn(tagsToDelete);
-		assertEquals("Check if all Tags are Delete and not linked",Optional.empty(), picService.findPictureByTagsOr(tagsToDelete).findFirst());
-	
+		assertEquals("Check if all Tags are Delete and not linked to a picture",Optional.empty(), picService.findPictureByTagsOr(tagsToDelete).findFirst());
+		assertEquals("Check if number of Tags is correct", allBefore-numberDeleted,tagService.findAll().size());
 	}
 
 }
