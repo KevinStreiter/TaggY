@@ -1,6 +1,7 @@
 package ch.fhnw.core.jsf.controller;
 
 import ch.fhnw.core.domain.Picture;
+import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.services.PictureService;
 
 import org.slf4j.Logger;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+
 @Scope(value = "session")
 @Component(value = "pictureController")
 public class PictureController {
@@ -20,9 +24,11 @@ public class PictureController {
 
     @Autowired
     PictureService pictureService;
-
+    private long clickTime=0L;
     private Picture picture = new Picture();
     private List<Picture> pictures;
+    private List<Picture> selecetedPicture;
+    private String selectedList="hello World";
     
     
 
@@ -53,15 +59,36 @@ public class PictureController {
     }
 
     public String selectImage(Long id) {
-    	if(id == null){
-    		logger.info("given id: "+id);
-    		return "overview";
-
-    	}else{
-    		picture = pictureService.findById(id);
-    		logger.info("given id: "+id);
-    		return "fullScreen";
+    	if(clickTime == 0L) {
+    		clickTime=System.currentTimeMillis();
+    	}else if((clickTime +3000)>=System.currentTimeMillis()) {
+    		logger.info("double click");
+    		clickTime=0L;
+    		if(id == null){
+        		logger.info("given id: "+id);
+        		return "overview";
+        	}else{
+        		picture = pictureService.findById(id);
+        		logger.info("given id: "+id);
+        		return "fullScreen";
+        	}
+    	}else {
+    		clickTime=0L;
+    		logger.info("Single Click");
     	}
+    	return null;
+    }
+    
+    public void selectedAction() {
+    	String value = FacesContext.getCurrentInstance().
+    			getExternalContext().getRequestParameterMap().get("selectedPics");
+    	logger.info(value);
+    }
+    public void printOut() {
+    	String value = FacesContext.getCurrentInstance().
+    			getExternalContext().getRequestParameterMap().get("selectedPics");
+    	logger.info(value);
+    	logger.info(selectedList);
     }
         
     public String editComment(String comment){
@@ -73,6 +100,23 @@ public class PictureController {
     private Sort orderBy() {
         return new Sort(Sort.Direction.DESC, "Id");
     }
+
+	public List<Picture> getSelecetedPicture() {
+		return selecetedPicture;
+	}
+
+	public void setSelecetedPicture(List<Picture> selecetedPicture) {
+		this.selecetedPicture = selecetedPicture;
+	}
+
+	public String getSelectedList() {
+		return selectedList;
+	}
+
+	public void setSelectedList(String selectedList) {
+		this.selectedList = selectedList;
+	}
+   
 }
 
 

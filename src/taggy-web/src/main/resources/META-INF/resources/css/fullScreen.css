@@ -1,3 +1,6 @@
 .topAligned {
     vertical-align: top;
 }
+.ui-noborder{
+	border-style: hidden !important;
+}
