@@ -9,8 +9,6 @@ function show(input,text){
     if (clickCount === 1) {
         singleClickTimer = setTimeout(function() {
             clickCount = 0;
-            singleClick(text);
-            
         }, 400);
     } else if (clickCount === 2) {
         clearTimeout(singleClickTimer);

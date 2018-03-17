@@ -1,8 +1,11 @@
 package ch.fhnw.core.services;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import ch.fhnw.core.repository.TagsRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +17,9 @@ import ch.fhnw.core.repository.PictureRepository;
 @Transactional
 @Service("tagsService")
 public class TagsServiceImpl implements TagsService{
+
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	TagsRepository tagsRepository;
 	
@@ -72,7 +78,10 @@ public class TagsServiceImpl implements TagsService{
 
 	@Override
 	public void deleteTag(Tag tag) {
-		tag.removePicsFromTag();
+		Stream<Picture> tempPictures = picRepository.findByTags(tag);
+		if(tempPictures != null){
+			tag.removePicsFromTag();
+		}
 		tagsRepository.delete(tag);
 	}
 

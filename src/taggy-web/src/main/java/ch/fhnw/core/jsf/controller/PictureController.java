@@ -13,9 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-
 @Scope(value = "session")
 @Component(value = "pictureController")
 public class PictureController {
@@ -24,15 +21,11 @@ public class PictureController {
 
     @Autowired
     PictureService pictureService;
-    private long clickTime=0L;
     private Picture picture = new Picture();
     private List<Picture> pictures;
     private List<Picture> selecetedPicture;
     private String selectedList="hello World";
     
-    
-
-
     public Picture getPicture() {
         return picture; }
 
@@ -55,15 +48,10 @@ public class PictureController {
     	logger.info(query);
     	pictures = pictureService.findByCommentOrDescription(query, orderBy());
     	logger.info(""+pictures);
-    	return "overwiev";
+    	return "overview";
     }
 
     public String selectImage(Long id) {
-    	if(clickTime == 0L) {
-    		clickTime=System.currentTimeMillis();
-    	}else if((clickTime +3000)>=System.currentTimeMillis()) {
-    		logger.info("double click");
-    		clickTime=0L;
     		if(id == null){
         		logger.info("given id: "+id);
         		return "overview";
@@ -72,9 +60,6 @@ public class PictureController {
         		logger.info("given id: "+id);
         		return "fullScreen";
         	}
-    	}else {
-    		clickTime=0L;
-    		logger.info("Single Click");
     	}
     	return null;
     }
