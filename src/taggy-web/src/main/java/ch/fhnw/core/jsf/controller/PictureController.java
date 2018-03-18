@@ -12,6 +12,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.LongFunction;
+
+import javax.faces.context.FacesContext;
 
 @Scope(value = "session")
 @Component(value = "pictureController")
@@ -52,7 +56,9 @@ public class PictureController {
     }
 
     public String selectImage(Long id) {
-    		if(id == null){
+    	String selected =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedPic");
+    	id =Long.parseLong( selected);	
+    	if(id == null){
         		logger.info("given id: "+id);
         		return "overview";
         	}else{
@@ -60,8 +66,6 @@ public class PictureController {
         		logger.info("given id: "+id);
         		return "fullScreen";
         	}
-    	}
-    	return null;
     }
     
     public void selectedAction() {

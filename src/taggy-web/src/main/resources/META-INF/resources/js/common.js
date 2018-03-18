@@ -8,18 +8,17 @@ function show(input,text){
 	clickCount++;
     if (clickCount === 1) {
         singleClickTimer = setTimeout(function() {
-            clickCount = 0;
+        clickCount = 0;
+        singleClick(text);
         }, 400);
     } else if (clickCount === 2) {
         clearTimeout(singleClickTimer);
         clickCount = 0;
-        doubleClick();
+        doubleClick(text);
     }
 }
 function setList(){
-	
 	document.getElementById("selectedPics").value=selected;
-	alert(document.getElementById("selectedPics").value);
 }
 function singleClick(text) {
 	if(the_div.style.borderStyle=="solid"){
@@ -32,10 +31,10 @@ function singleClick(text) {
 	}
 }
 
-function doubleClick() {
-    alert("double")
+function doubleClick(text) {
+	document.getElementById("selectedPic").value=text;
+    goToFullScreen();
 }
 function showHiddenValue() { 
-    alert(document.getElementById('hiddenField').value);	
     document.getElementById('hiddenField').value="hello";
  }
