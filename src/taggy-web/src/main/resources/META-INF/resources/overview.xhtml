@@ -12,17 +12,17 @@
 <ui:define name="images">
 	<h:form id="hfrom">
 		<p:inputText style="width: 99%;" autoResize="false" binding="#{text}" />
-		<h:commandButton value="quer" action="#{pictureController.textQuery(text.value)}" style="display: none"/>
-		<p:dataGrid value="#{pictureController.pictures}" var="picture" columns="11" layout="grid" style="width: 99%;">
-			
-				<h:graphicImage id="picture"  value="https://www.wegschamane.ch/wp-content/uploads/2017/12/pexels-photo.jpg" style="width:100px;" onclick="show(this,'#{picture.id}');" />
-			
+		<h:commandButton value="quer"  actionListener="#{pictureController.textQuery(text.value)}"  style="display: none">
+			<f:ajax execute="@form" render="@form" />
+		</h:commandButton>
+		<p:dataGrid id="pictureGrid" value="#{pictureController.pictures}" var="picture" columns="11" layout="grid" style="width: 99%;">
+			<h:graphicImage id="picture"  value="https://www.wegschamane.ch/wp-content/uploads/2017/12/pexels-photo.jpg" style="width:100px;" onclick="show(this,'#{picture.id}');" />
 		</p:dataGrid>
 			
 	</h:form>
 	<h:form id="hidden">
 		<input type="hidden" name="selectedPic" id="selectedPic" />
-		<p:remoteCommand name="goToFullScreen" action="#{pictureController.selectImage(pictureID)}"  immediate="true"/>
+		<p:remoteCommand name="goToFullScreen" action="#{pictureController.selectImage}"  immediate="true"/>
 		<input type="hidden" name="selectedPics" id="selectedPics" />
 		<h:commandButton value = "Show Hidden Value" onclick = "setList()" action="#{pictureController.printOut}"  immediate="true" />
 	</h:form>

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -61,24 +63,20 @@ public class TagController {
         tagsService.save(tagTemp);
         return "overview";
     }
-    public List<Tag> getSelectedTags(){
-    	return selectedTags;
-    }
+
     
     public void deleteSelectedTag(String name){
         Tag tempTag = tagsService.findByName(name);
         if(tempTag != null) {
             logger.info(tempTag.toString());
             tagsService.deleteTag(tempTag);
-    public void setSelectedTags(List<Tag> selectedTags) {
-    	this.selectedTags=selectedTags;
+        }
     }
-
     public void onRowSelect(SelectEvent event) {
         FacesMessage msg = new FacesMessage("Tag Selected", ((Tag) event.getObject()).getTagName());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    }
+    
 
     public Tag getSelectedTag() {
         return selectedTag;
@@ -99,7 +97,6 @@ public class TagController {
     public void setService(TagsService tagsService) {
         this.tagsService = tagsService;
     }
-}
 
     public void buttonAction(ActionEvent actionEvent) {
         logger.info("Welcome to Primefaces!!");

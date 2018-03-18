@@ -8,7 +8,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 	<h:form>
 		<p:panelGrid id ="detailsGrid" columns="2" style="width: 100%;" columnClasses="columnSize" styleClass="noBorders">
 			<p:panel  id="description" header="Description" style="height: 100px;" >
-				<h:outputText value= "#{pictureController.description}" />
+				<h:outputText value= "#{pictureController.description}+#{picture.id}" />
 			</p:panel>
 			<p:panel  id="comment" header="Comment" style="height: 100px;">
 				<p:inputText value="#{pictureController.comment}" binding="#{comment}" style="width: 100%;" />

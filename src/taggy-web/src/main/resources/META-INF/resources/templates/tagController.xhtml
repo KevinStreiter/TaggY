@@ -10,7 +10,9 @@ xmlns="http://www.w3.org/1999/xhtml"
 		  <p:inputText id="tagname" size="10"
 					   value="#{tagController.tag.tagName}"
 					   required="true" maxlength="20"/>
-		  <h:commandButton value="save" type="submit" action="#{tagController.save}" style="display: none"/>
+		  <h:commandButton value="save" type="submit" action="#{tagController.save}" style="display: none">
+		  	<f:ajax execute="@form" render="@form" />
+		  </h:commandButton>
 		  <p:dataTable id="tags" value="#{tagController.tags}" var="tag" selectionMode="multiple" selection="#{tagController.selectedTags}" rowKey="#{tag.id}">
 		  <p:ajax event="rowDblselect" listener="#{tagController.doubleCLick}" 
    			  />

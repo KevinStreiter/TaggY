@@ -48,31 +48,19 @@ public class PictureController {
     public void setComment(String comment){
         picture.setComment(comment);
     }
-    public String textQuery(String query){
+    public void textQuery(String query){
     	logger.info(query);
     	pictures = pictureService.findByCommentOrDescription(query, orderBy());
     	logger.info(""+pictures);
-    	return "overview";
     }
-
-    public String selectImage(Long id) {
+    public String selectImage() {
     	String selected =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedPic");
-    	id =Long.parseLong( selected);	
-    	if(id == null){
-        		logger.info("given id: "+id);
-        		return "overview";
-        	}else{
-        		picture = pictureService.findById(id);
-        		logger.info("given id: "+id);
-        		return "fullScreen";
-        	}
+    	Long id =Long.parseLong( selected);	
+    	picture = pictureService.findById(id);
+        logger.info("given id: "+id);
+        return "fullScreen";
     }
     
-    public void selectedAction() {
-    	String value = FacesContext.getCurrentInstance().
-    			getExternalContext().getRequestParameterMap().get("selectedPics");
-    	logger.info(value);
-    }
     public void printOut() {
     	String value = FacesContext.getCurrentInstance().
     			getExternalContext().getRequestParameterMap().get("selectedPics");
