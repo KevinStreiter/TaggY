@@ -20,7 +20,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 				   #{tag.tagName}
 			  </p:column>
 			  <p:column style="text-align: center">
-				  <p:commandButton update="tags" icon="ui-icon-trash" title="Delete" action="#{tagController.deleteSelectedTag(tag.tagName)}" style="align-content: center"/>
+				  <p:commandButton update="tags" icon="ui-icon-trash" title="Delete" action="#{tagController.deleteSelectedTag(tag.tagName)}" style="align-content: center" immediate="true"/>
 			  </p:column>
 		  </p:dataTable>
       </h:panelGrid>
