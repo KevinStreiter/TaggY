@@ -18,7 +18,11 @@ xmlns="http://www.w3.org/1999/xhtml"
 				   <h:outputText value="#{tag.tagName}"/>
 			  </p:column>
 			  <p:column style="text-align: center">
+<<<<<<< .mine
 				  <p:commandButton update="tags" icon="ui-icon-trash" title="Delete" action="#{tagController.deleteSelectedTag(tag.tagName)}" style="align-content: center" immediate="true" />
+=======
+				  <p:commandButton update="tags" icon="ui-icon-trash" title="Delete" action="#{tagController.deleteSelectedTag(tag.tagName)}" style="align-content: center" immediate="true"/>
+>>>>>>> .theirs
 			  </p:column>
 		  </p:dataTable>
       </h:panelGrid>

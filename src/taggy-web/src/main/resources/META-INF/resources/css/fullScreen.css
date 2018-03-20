@@ -8,7 +8,9 @@
 
 .noBorders tr, .noBorders td {
     border: none !important;
+    vertical-align: top;
 }
+
 .ui-noborder{
 	border-style: hidden !important;
 }

@@ -14,7 +14,7 @@
 <h:outputStylesheet library="css" name="fullScreen.css"  />
 <h:outputScript library="js" name="common.js" />
 <p:layout id="main" fullPage="true">
-  <p:layoutUnit position="north" size="75">
+  <p:layoutUnit position="north" size="60">
 	      <h:form id="title">
 	      <h:panelGrid columns="2" columnClasses="column1,column2" style="width: 100%;">
 	      <h:commandLink action="#{pictureController.resetSerach}">
@@ -38,12 +38,6 @@
         </f:view>
     </p:layoutUnit>
 
-    <p:layoutUnit position="south">
-        <h:form>
-            <ui:insert name="details">Details</ui:insert>
-        </h:form>
-    </p:layoutUnit>
-    
 </p:layout>
 
 </h:body>
