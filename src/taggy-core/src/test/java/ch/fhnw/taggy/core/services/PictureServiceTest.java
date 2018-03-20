@@ -1,4 +1,4 @@
-package ch.fhnw.taggy.core.repository;
+package ch.fhnw.taggy.core.services;
 
 import static org.junit.Assert.*;
 
@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,15 +64,17 @@ public class PictureServiceTest {
 		assertEquals("find Pics by Tags Or function", 2,istListPic.size());	
 	}
 	@Test
-	public void testFindByComments(){
+	public void testFindByCommentsAndDescription(){
 		HashMap<String, Integer> commentList = testData.getDescriptionTimes();
 		String comment1 = commentList.keySet().iterator().next();
 		
-		/**List<Picture> pics = picService.findByCommentContaining(comment1).collect(Collectors.toList());
+		List<Picture> pics = picService.findByCommentOrDescription(comment1,  new Sort(Sort.Direction.DESC, "Id"));
 		logger.info("Test find By Comment"+pics.get(0));
-		assertEquals("Find comment like",1, pics.size());
-		pics = picService.findByDescriptionContaining(comment1).collect(Collectors.toList());
-		assertEquals("Find description like",1, pics.size());**/
+		assertEquals("Find comment like",2, pics.size());
+		pics=picService.findByCommentOrDescription("L d",  new Sort(Sort.Direction.DESC, "Id"));
+		assertEquals("multiple word query", 1, pics.size());
+		pics=picService.findByCommentOrDescription("L x d L",  new Sort(Sort.Direction.DESC, "Id"));
+		assertTrue("checks if multiple search is working",pics.isEmpty());
 	}
 	
 	

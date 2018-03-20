@@ -1,4 +1,4 @@
-From tomcat:8-jre8 
+From tomcat:9.0.6-jre8
 
 MAINTAINER Joel Zimmerli
 

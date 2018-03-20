@@ -14,13 +14,11 @@ xmlns="http://www.w3.org/1999/xhtml"
 		  	<f:ajax execute="@form" render="@form" />
 		  </h:commandButton>
 		  <p:dataTable id="tags" value="#{tagController.tags}" var="tag" selectionMode="multiple" selection="#{tagController.selectedTags}" rowKey="#{tag.id}">
-		  <p:ajax event="rowDblselect" listener="#{tagController.doubleCLick}" 
-   			  />
 			  <p:column>
-				   #{tag.tagName}
+				   <h:outputText value="#{tag.tagName}"/>
 			  </p:column>
 			  <p:column style="text-align: center">
-				  <p:commandButton update="tags" icon="ui-icon-trash" title="Delete" action="#{tagController.deleteSelectedTag(tag.tagName)}" style="align-content: center"/>
+				  <p:commandButton update="tags" icon="ui-icon-trash" title="Delete" action="#{tagController.deleteSelectedTag(tag.tagName)}" style="align-content: center" immediate="true" />
 			  </p:column>
 		  </p:dataTable>
       </h:panelGrid>

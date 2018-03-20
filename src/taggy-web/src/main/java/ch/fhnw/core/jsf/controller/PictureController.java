@@ -35,8 +35,11 @@ public class PictureController {
 
     public List<Picture> getPictures(){
     	if(pictures==null){
+    		logger.info("null");
     		pictures = pictureService.findAll(orderBy());
+    		
     	}
+    	logger.info(pictures.toString() + pictures.size());
         return pictures;
     }
     public String getDescription(){
@@ -53,6 +56,11 @@ public class PictureController {
     	pictures = pictureService.findByCommentOrDescription(query, orderBy());
     	logger.info(""+pictures);
     }
+    public String resetSerach() {
+    	pictures=null;
+    	return "overview";
+    }
+    
     public String selectImage() {
     	String selected =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedPic");
     	Long id =Long.parseLong( selected);	
