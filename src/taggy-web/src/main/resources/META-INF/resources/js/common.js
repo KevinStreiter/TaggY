@@ -19,6 +19,7 @@ function show(input,text){
 }
 function setList(){
 	document.getElementById("selectedPics").value=selected;
+	alert(document.getElementById("selectedPics").value);
 }
 function singleClick(text) {
 	if(the_div.style.borderStyle=="solid"){

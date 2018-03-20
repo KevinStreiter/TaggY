@@ -4,6 +4,7 @@ import ch.fhnw.core.domain.Picture;
 import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.services.PictureService;
 
+import ch.fhnw.core.services.TagsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,14 @@ public class PictureController {
 
     @Autowired
     PictureService pictureService;
+
+    @Autowired
+    TagsService tagsService;
+
     private Picture picture = new Picture();
     private List<Picture> pictures;
-    private List<Picture> selecetedPicture;
+    private List<Picture> selectedPicture;
+    private List<Tag> tags;
     private String selectedList="hello World";
     
     public Picture getPicture() {
@@ -55,9 +61,10 @@ public class PictureController {
     }
     public String selectImage() {
     	String selected =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedPic");
-    	Long id =Long.parseLong( selected);	
+    	Long id = Long.parseLong( selected);
     	picture = pictureService.findById(id);
         logger.info("given id: "+id);
+        tags = picture.getTags();
         return "fullScreen";
     }
     
@@ -66,6 +73,7 @@ public class PictureController {
     			getExternalContext().getRequestParameterMap().get("selectedPics");
     	logger.info(value);
     	logger.info(selectedList);
+        logger.info(FacesContext.getCurrentInstance().getExternalContext().toString());
     }
         
     public String editComment(String comment){
@@ -78,12 +86,12 @@ public class PictureController {
         return new Sort(Sort.Direction.DESC, "Id");
     }
 
-	public List<Picture> getSelecetedPicture() {
-		return selecetedPicture;
+	public List<Picture> getSelectedPicture() {
+		return selectedPicture;
 	}
 
-	public void setSelecetedPicture(List<Picture> selecetedPicture) {
-		this.selecetedPicture = selecetedPicture;
+	public void setSelectedPicture(List<Picture> selectedPicture) {
+		this.selectedPicture = selectedPicture;
 	}
 
 	public String getSelectedList() {
@@ -93,7 +101,21 @@ public class PictureController {
 	public void setSelectedList(String selectedList) {
 		this.selectedList = selectedList;
 	}
-   
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public String deleteTagOnPicture(Long tagId){
+        logger.info(tagId.toString());
+        tagsService.deleteTagFromPicture(picture.getId(),tagId);
+        picture = pictureService.findById(picture.getId());
+        return "pictureDetails";
+    }
 }
 
 

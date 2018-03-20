@@ -26,8 +26,7 @@
 	<h:form id="hidden">
 		<input type="hidden" name="selectedPic" id="selectedPic" />
 		<p:remoteCommand name="goToFullScreen" action="#{pictureController.selectImage}"  immediate="true"/>
-		<input type="hidden" name="selectedPics" id="selectedPics" />
-		<h:commandButton value = "Show Hidden Value" onclick = "setList()" action="#{pictureController.printOut}"  immediate="true" />
+		<p:remoteCommand name="getSelectedPics" value = "ShowHiddenValue" onclick = "setList()" immediate="true" />
 	</h:form>
 </ui:define>
 
