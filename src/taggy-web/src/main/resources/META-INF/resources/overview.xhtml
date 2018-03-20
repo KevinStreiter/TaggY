@@ -30,7 +30,7 @@
 
 <ui:define name="searchHeader">
 		<h:panelGroup>
-			<h:panelGrid columns="2" style="width: 100%;">
+			<h:panelGrid columns="2" style=" width: 100%;" columnClasses="textRight">
 				<h:outputText value="Text search"/>
 				<p:inputText id="queryInput" style="width: 99%;"  binding="#{text}" />
 				<h:commandButton value="quer"  actionListener="#{pictureController.textQuery(text.value)}"  style="display: none">

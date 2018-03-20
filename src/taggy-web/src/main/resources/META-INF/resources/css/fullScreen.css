@@ -14,3 +14,13 @@
 .ui-noborder{
 	border-style: hidden !important;
 }
+.column1 {
+	width: 30%;
+}
+
+.column2{
+	width: 70%;
+}
+.textRight {
+	text-align: right;
+}
