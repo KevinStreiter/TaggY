@@ -16,7 +16,7 @@
 	<h:form id="hfrom">
 		
 		<p:dataGrid id="pictureGrid" value="#{pictureController.pictures}" var="picture" columns="11" layout="grid" style="width: 99%;">
-			<h:graphicImage id="picture"  value="https://npr.news.eulu.info/wp-content/uploads/2017/07/Russischer-B%C3%A4r.jpg" style="width:100px;" onclick="show(this,'#{picture.id}');" />
+			<h:graphicImage id="picture"  value="http://192.168.1.102:8042/wado?objectUID=1.2.826.0.1.3680043.8.654.50.2010.0000000000#{picture.id}&#38;requestType=WADO" style="width:100px;" onclick="show(this,'#{picture.id}');" />
 		</p:dataGrid>
 			
 	</h:form>

@@ -24,3 +24,7 @@
 .textRight {
 	text-align: right;
 }
+
+.image {
+    object-fit: contain;
+}
