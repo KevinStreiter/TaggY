@@ -67,15 +67,19 @@ public class TagController {
     
     public void deleteSelectedTag(String name){
         Tag tempTag = tagsService.findByName(name);
-        logger.info(tempTag.toString());
+        logger.info(tempTag.toString()+"\t"+getSelectedTags().size());
         if(tempTag != null) {
             
             tagsService.deleteTag(tempTag);
         }
     }
     public void onRowSelect(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Tag Selected", ((Tag) event.getObject()).getTagName());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+        logger.info("row Select "+((Tag) event.getObject()).getTagName());
+    }
+    
+    public void onRowUnselect(UnselectEvent event) {
+        logger.info("row Unselect "+((Tag) event.getObject()).getTagName());
     }
     
 
