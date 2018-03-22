@@ -89,7 +89,7 @@ public class PictureController {
     private Sort orderBy() {
         return new Sort(Sort.Direction.DESC, "Id");
     }
-    public String resetSerach() {
+    public String resetSearch() {
     	pictures=null;
     	return "overview";
     }
