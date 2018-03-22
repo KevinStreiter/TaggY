@@ -11,6 +11,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 				<h:outputText value= "#{pictureController.description}+#{picture.id}" />
 			</p:panel>
 			<p:panel  id="comment" header="Comment">
+                <p:growl id="growlComment" showDetail="true"/>
 				<p:inputText value="#{pictureController.comment}" binding="#{comment}" style="width: 100%;" />
 				<p:commandButton update=":fullscreen:comment" value="edit" actionListener="#{pictureController.editComment(comment.value)}" style="display: none"/>
 			</p:panel>
@@ -21,7 +22,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 								#{imageTags.tagName}
 						</p:column>
 						<p:column style="text-align: center">
-								<p:commandButton  update=":fullscreen" icon="ui-icon-trash" title="DeleteTagFromPicture" actionListener="#{pictureController.deleteTagOnPicture(imageTags.id)}" style="align-content: center" immediate="true" />
+                            <p:commandButton  update=":fullscreen" icon="ui-icon-trash" title="DeleteTagFromPicture" actionListener="#{pictureController.deleteTagOnPicture(imageTags.id)}" style="align-content: center" immediate="true" />
 						</p:column>
 					</p:dataTable>
 				</h:panelGrid>

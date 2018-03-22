@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.LongFunction;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 @Scope(value = "session")
@@ -88,6 +89,8 @@ public class PictureController {
         picture.setComment(comment);
         logger.info(picture.toString());
         pictureService.save(picture);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                FacesMessage.SEVERITY_INFO, "Info", "Comment has been saved"));
     }
 
     private Sort orderBy() {
@@ -137,17 +140,24 @@ public class PictureController {
     public void addTagToPictures(String tagName){
         String selectedPicturesIds = FacesContext.getCurrentInstance().
                 getExternalContext().getRequestParameterMap().get("selectedPics");
-        logger.info("SelectedPics:" + selectedPicturesIds);
-        if(selectedPicturesIds != null) {
+        if(selectedPicturesIds.length() != 0) {
             String[] pictureIds = selectedPicturesIds.split(",");
-            logger.info(tagName);
+            logger.info("SelectedPics:" + selectedPicturesIds);
 
             for (String pictureId : pictureIds) {
                 logger.info(pictureId);
                 tagsService.addTagToPicture(Long.parseLong(pictureId), tagName);
                 logger.info(tagsService.findByName(tagName).getPictures().toString());
             }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                    FacesMessage.SEVERITY_INFO, "Info", "Image-Id(s): " +
+                    selectedPicturesIds + " saved to Tag: " + tagName));
         }
+        else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                    FacesMessage.SEVERITY_INFO, "Info", "No Images selected"));
+        }
+
     }
 }
 
