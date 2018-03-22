@@ -59,9 +59,8 @@ public class PictureServiceTest {
 		Picture testPic = testData.getTestPics().get(1);
 		List<Tag> tags = tagService.findByPicture(testPic);
 		tags.remove(1);
-		Stream<Picture> istPics = picService.findPictureByTagsOr(tags);
-		Set<Picture> istListPic= istPics.collect(Collectors.toSet());
-		assertEquals("find Pics by Tags Or function", 2,istListPic.size());	
+		List<Picture> istPics = picService.findPictureByTagsOr(tags);
+		assertEquals("find Pics by Tags Or function", 2,istPics.size());	
 	}
 	@Test
 	public void testFindByCommentsAndDescription(){

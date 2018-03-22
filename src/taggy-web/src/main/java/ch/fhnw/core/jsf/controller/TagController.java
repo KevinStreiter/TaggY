@@ -15,7 +15,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Scope(value = "session")
 @Component(value = "tagController")
@@ -28,6 +30,7 @@ public class TagController {
 
     private Tag selectedTag;
     private List<Tag> selectedTags;
+    
 
     private Tag tag = new Tag();
 
@@ -73,14 +76,7 @@ public class TagController {
             tagsService.deleteTag(tempTag);
         }
     }
-    public void onRowSelect(SelectEvent event) {
-        
-        logger.info("row Select "+((Tag) event.getObject()).getTagName());
-    }
     
-    public void onRowUnselect(UnselectEvent event) {
-        logger.info("row Unselect "+((Tag) event.getObject()).getTagName());
-    }
     
 
     public Tag getSelectedTag() {
