@@ -17,12 +17,12 @@ xmlns="http://www.w3.org/1999/xhtml"
 			<h:panelGrid>
 				<p:panel id="tagPanel" header="Image Tags">
 					<h:panelGroup id="picTags">
-						<p:dataTable value="#{pictureController.tags}" var="tag" selectionMode="multiple" selection="#{tagController.selectedTags}" rowKey="#{tag.id}">/>
+						<p:dataTable id="tags" value="#{pictureController.tags}" var="tag" selectionMode="multiple" selection="#{tagController.selectedTags}" rowKey="#{tag.id}">/>
 							<p:column>
 								#{tag.tagName}
 							</p:column>
 							<p:column style="text-align: center">
-								<p:commandButton update="picForm" icon="ui-icon-trash" title="DeleteTagFromPicture" action="#{pictureController.deleteTagOnPicture(tag.id)}" style="align-content: center" immediate="true" />
+								<p:commandButton update="tags" icon="ui-icon-trash" title="DeleteTagFromPicture" action="#{pictureController.deleteTagOnPicture(tag.id)}" style="align-content: center" immediate="true" />
 							</p:column>
 						</p:dataTable>
 					</h:panelGroup>
