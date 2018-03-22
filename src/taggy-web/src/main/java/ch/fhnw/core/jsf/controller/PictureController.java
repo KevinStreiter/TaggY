@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
-import java.util.Map;
-import java.util.function.LongFunction;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -47,6 +44,7 @@ public class PictureController {
     		pictures = pictureService.findAll(orderBy());
     	}
     	logger.info(pictures.toString() + pictures.size());
+    	picture = null;
         return pictures;
     }
     public String getDescription(){
@@ -132,19 +130,20 @@ public class PictureController {
     }
 
     public void deleteTagOnPicture(Long tagId){
-        logger.info(tagId.toString());
+        logger.info("Deleted Image Tag: " + tagId.toString());
         tagsService.deleteTagFromPicture(picture.getId(),tagId);
         picture = pictureService.findById(picture.getId());
         tags = picture.getTags();
     }
 
     public void addTagToPictures(String tagName){
+        logger.info(tagName);
         if(picture == null) {
             String selectedPicturesIds = FacesContext.getCurrentInstance().
                     getExternalContext().getRequestParameterMap().get("selectedPics");
             if (selectedPicturesIds.length() != 0) {
                 String[] pictureIds = selectedPicturesIds.split(",");
-                logger.info("SelectedPics:" + selectedPicturesIds);
+                logger.info("SelectedPics: " + selectedPicturesIds);
 
                 for (String pictureId : pictureIds) {
                     logger.info(pictureId);
@@ -160,9 +159,10 @@ public class PictureController {
             }
         } else {
             Long selectedPictureId = picture.getId();
-            tagsService.addTagToPicture(selectedPictureId, tagName);
-            picture = pictureService.findById(picture.getId());
-            tags = picture.getTags();
+            tagsService.addTagToPicture(selectedPictureId,tagName);
+            tags = tagsService.findByPicture(picture);
+            picture = pictureService.findById(selectedPictureId);
+            logger.info("Image Tags: "+tagsService.findByPicture(picture).toString());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                     FacesMessage.SEVERITY_INFO, "Info", "Image-Id: " +
                      picture.getId() + " saved to Tag: " + tagName));

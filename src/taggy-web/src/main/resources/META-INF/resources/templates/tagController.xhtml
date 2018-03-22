@@ -1,36 +1,40 @@
-<ui:composition 
-xmlns="http://www.w3.org/1999/xhtml"
-				xmlns:ui="http://java.sun.com/jsf/facelets"
-				xmlns:p="http://primefaces.org/ui"
-				xmlns:h="http://java.sun.com/jsf/html"
-				xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-      <h:panelGrid columns="1" >
-		  <p:inputText id="tagname" size="10"
-					   value="#{tagController.tag.tagName}"
-					   required="true" maxlength="20"/>
-		  <h:selectOneRadio value="#{pictureController.chose}">
-		  	<f:selectItem itemValue = "or" itemLabel="or"/>
-		  	<f:selectItem itemValue = "and" itemLabel="and"/>
-		  </h:selectOneRadio>
-		  <h:commandButton value="save" type="submit" action="#{tagController.save}" style="display: none">
-		  	<f:ajax execute="@form" render="@form" />
-		  </h:commandButton>
-		  <p:dataTable id="tags" value="#{tagController.tags}" var="tag" rowSelectMode="add" selection="#{tagController.selectedTags}" rowKey="#{tag.id}" >
-			  <p:ajax event="rowSelectCheckbox" listener="#{tagController.onRowSelect}" update="@form"/>
-			  <p:ajax event="rowUnselectCheckbox" listener="#{tagController.onRowUnselect}" update="@form"/>
-			  <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-			  <p:column>
-				   <h:outputText value="#{tag.tagName}"/>
-			  </p:column>
-			  <p:column style="text-align: center">
-				  <ui:insert name="deleteTags"/>
-				  <p:commandButton update="@form" icon="ui-icon-plus" title="AddTagToPictures" onclick = "setList()" action="#{pictureController.addTagToPictures(tag.tagName)}" style="align-content: center" immediate="true">
-                        <ui:insert name="updateAddButton"/>
-                  </p:commandButton>
-                  <p:growl id="growlAddTagsToPics" showDetail="true"/>
-			  </p:column>
-		  </p:dataTable>
-      </h:panelGrid>
-        <input type="hidden" name="selectedPics" id="selectedPics" />
- </ui:composition>
+    <h:panelGrid columns="1">
+        <p:inputText id="tagname" size="10"
+                     value="#{tagController.tag.tagName}"
+                     required="true" maxlength="20"/>
+        <h:selectOneRadio value="#{pictureController.chose}">
+            <f:selectItem itemValue="or" itemLabel="or"/>
+            <f:selectItem itemValue="and" itemLabel="and"/>
+        </h:selectOneRadio>
+        <p:growl id="growlAddTags" showDetail="true"/>
+        <h:commandButton value="save" type="submit" action="#{tagController.save}" style="display: none">
+            <f:ajax execute="@form growlAddTags" render="@form" />
+        </h:commandButton>
+        <p:dataTable id="tags" value="#{tagController.tags}" var="tag" rowSelectMode="add"
+                     selection="#{tagController.selectedTags}" rowKey="#{tag.id}">
+            <p:ajax event="rowSelectCheckbox" listener="#{tagController.onRowSelect}" update="@form"/>
+            <p:ajax event="rowUnselectCheckbox" listener="#{tagController.onRowUnselect}" update="@form"/>
+            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+            <p:column>
+                <h:outputText value="#{tag.tagName}"/>
+            </p:column>
+            <p:column style="text-align: center">
+                <ui:insert name="deleteTags"/>
+                <p:commandButton update="@form" icon="ui-icon-plus" title="AddTagToPictures" onclick="setList()"
+                                 actionListener="#{pictureController.addTagToPictures(tag.tagName)}"
+                                 style="align-content: center" immediate="true">
+                    <ui:insert name="updateAddButton"/>
+                </p:commandButton>
+                <p:growl id="growlAddTagsToPics" showDetail="true"/>
+            </p:column>
+        </p:dataTable>
+    </h:panelGrid>
+    <input type="hidden" name="selectedPics" id="selectedPics"/>
+</ui:composition>

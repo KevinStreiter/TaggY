@@ -1,42 +1,42 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<title>TaggY</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	
+    <title>TaggY</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
 </h:head>
 <h:body>
-<h:outputStylesheet library="css" name="fullScreen.css"  />
-<h:outputScript library="js" name="common.js" />
-<p:layout id="main" fullPage="true">
-  <p:layoutUnit position="north" size="60">
-	      <h:form id="title">
-	      <h:panelGrid columns="2" columnClasses="column1,column2" style="width: 100%;">
-	      <h:commandLink action="#{pictureController.resetSerach}">
-	        <span style="font-size: 38px">TaggY</span>
-	        <p:resetInput target="main" />
-	        </h:commandLink>
-	      	<ui:insert name="searchHeader">Search</ui:insert>
-	      </h:panelGrid>
-	      </h:form>      
-  </p:layoutUnit>
+    <h:outputStylesheet library="css" name="fullScreen.css"/>
+    <h:outputScript library="js" name="common.js"/>
+    <p:layout id="main" fullPage="true">
+        <p:layoutUnit position="north" size="60">
+            <h:form id="title">
+                <h:panelGrid columns="2" columnClasses="column1,column2" style="width: 100%;">
+                    <h:commandLink action="#{pictureController.resetSerach}">
+                        <span style="font-size: 38px">TaggY</span>
+                        <p:resetInput target="main"/>
+                    </h:commandLink>
+                    <ui:insert name="searchHeader">Search</ui:insert>
+                </h:panelGrid>
+            </h:form>
+        </p:layoutUnit>
 
-    <p:layoutUnit id="taglist" position="east" size="300" header="Tags">
-      <h:form>
-          <ui:insert name="tags">Tags</ui:insert>
-      </h:form>
-    </p:layoutUnit>
+        <p:layoutUnit position="east" size="300" header="Tags">
+            <h:form id="tagList">
+                <ui:insert name="tags">Tags</ui:insert>
+            </h:form>
+        </p:layoutUnit>
 
-    <p:layoutUnit id="imageview" position="center">
+        <p:layoutUnit position="center">
             <ui:insert name="images">Images</ui:insert>
-    </p:layoutUnit>
+        </p:layoutUnit>
 
-</p:layout>
+    </p:layout>
 
 </h:body>
 </html>

@@ -15,8 +15,6 @@ import org.springframework.stereotype.Component;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-
-import java.io.Serializable;
 import java.util.List;
 
 @Scope(value = "session")
@@ -48,34 +46,29 @@ public class TagController {
         return tagsService.findAll();
     }
 
-    public String edit(String tagName){
-        if(tagName.isEmpty()){
-            tag = new Tag();
-        } else {
-            tag = tagsService.findByName(tagName);
-        }
-        return "overview";
-    }
-
     public String save(){
         Tag tagTemp = new Tag (tag.getTagName());
+        tag.setTagName(null);
         List<Tag> tags = getTags();
         for(Tag tag : tags){
             if((tag.getTagName().equals(tagTemp.getTagName()))){
-                return "overview";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                        FacesMessage.SEVERITY_INFO, "Info", "Tag: "
+                        + tagTemp.getTagName() + " already exists"));
+                return "tagController";
             }
         }
         tagsService.save(tagTemp);
-        return "overview";
+        return "tagController";
     }
 
     
     public void deleteSelectedTag(String name){
         Tag tempTag = tagsService.findByName(name);
-        logger.info(tempTag.toString()+"\t"+getSelectedTags().size());
-        if(tempTag != null) {
-            
+        logger.info(tempTag.toString());
+        if(tempTag.getTagName() != null) {
             tagsService.deleteTag(tempTag);
+            getTags();
         }
     }
     public void onRowSelect(SelectEvent event) {
