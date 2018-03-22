@@ -52,4 +52,8 @@
     display: inline-block;
     flex: 1;
 }
+.tagsTable thead{
+	display: none;
+	
+}
 

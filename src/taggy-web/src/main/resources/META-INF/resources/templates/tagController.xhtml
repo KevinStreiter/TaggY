@@ -19,7 +19,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 		  <h:commandButton value="save" type="submit" actionListener="#{tagController.save}" style="display: none">
 		  	<f:ajax execute="@form" render="@form" />
 		  </h:commandButton>
-		  <p:dataTable id="tags" value="#{tagController.tags}" var="tag" rowSelectMode="checkbox" selection="#{tagController.selectedTags}" rowKey="#{tag.id}" >
+		  <p:dataTable id="tags" value="#{tagController.tags}" styleClass="tagsTable" var="tag" rowSelectMode="checkbox" selection="#{tagController.selectedTags}" rowKey="#{tag.id}" >
 			  <ui:insert name="searchComponent"/>
 			  <p:column>
 				   <h:outputText value="#{tag.tagName}"/>
