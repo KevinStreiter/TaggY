@@ -2,6 +2,7 @@ package ch.fhnw.core.jsf.controller;
 
 import ch.fhnw.core.domain.Picture;
 import ch.fhnw.core.domain.Tag;
+import ch.fhnw.core.services.PictureService;
 import ch.fhnw.core.services.TagsService;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -26,6 +27,9 @@ public class TagController {
 
     @Autowired
     private TagsService tagsService;
+
+    @Autowired
+    PictureService pictureService;
 
     private Tag selectedTag;
     private List<Tag> selectedTags;
@@ -106,22 +110,6 @@ public class TagController {
 
     public void buttonAction(ActionEvent actionEvent) {
         logger.info("Welcome to Primefaces!!");
-    }
-
-    public void addTagToPictures(String tagName){
-        String selectedPicturesIds = FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap().get("selectedPics");
-        logger.info("SelectedPics:" + selectedPicturesIds);
-        if(selectedPicturesIds != null) {
-            String[] pictureIds = selectedPicturesIds.split(",");
-            logger.info(tagName);
-
-            for (String pictureId : pictureIds) {
-                logger.info(pictureId);
-                tagsService.addTagToPicture(Long.parseLong(pictureId), tagName);
-                logger.info(tagsService.findByName(tagName).getPictures().toString());
-            }
-        }
     }
 }
 

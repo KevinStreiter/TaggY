@@ -84,12 +84,12 @@ public class PictureController {
         logger.info(FacesContext.getCurrentInstance().getExternalContext().toString());
     }
         
-    public String editComment(String comment){
+    public void editComment(String comment){
         picture.setComment(comment);
         logger.info(picture.toString());
         pictureService.save(picture);
-        return "fullScreen";
     }
+
     private Sort orderBy() {
         return new Sort(Sort.Direction.DESC, "Id");
     }
@@ -127,11 +127,27 @@ public class PictureController {
         this.tags = tags;
     }
 
-    public String deleteTagOnPicture(Long tagId){
+    public void deleteTagOnPicture(Long tagId){
         logger.info(tagId.toString());
         tagsService.deleteTagFromPicture(picture.getId(),tagId);
         picture = pictureService.findById(picture.getId());
-        return "pictureDetails";
+        tags = picture.getTags();
+    }
+
+    public void addTagToPictures(String tagName){
+        String selectedPicturesIds = FacesContext.getCurrentInstance().
+                getExternalContext().getRequestParameterMap().get("selectedPics");
+        logger.info("SelectedPics:" + selectedPicturesIds);
+        if(selectedPicturesIds != null) {
+            String[] pictureIds = selectedPicturesIds.split(",");
+            logger.info(tagName);
+
+            for (String pictureId : pictureIds) {
+                logger.info(pictureId);
+                tagsService.addTagToPicture(Long.parseLong(pictureId), tagName);
+                logger.info(tagsService.findByName(tagName).getPictures().toString());
+            }
+        }
     }
 }
 

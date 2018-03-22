@@ -20,13 +20,13 @@ xmlns="http://www.w3.org/1999/xhtml"
 		  <p:dataTable id="tags" value="#{tagController.tags}" var="tag" rowSelectMode="add" selection="#{tagController.selectedTags}" rowKey="#{tag.id}" >
 			  <p:ajax event="rowSelectCheckbox" listener="#{tagController.onRowSelect}" update="@form"/>
 			  <p:ajax event="rowUnselectCheckbox" listener="#{tagController.onRowUnselect}" update="@form"/>
-			  <p:column selectionMode="multiple" style="width:16px;text-align;center"/>
+			  <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 			  <p:column>
 				   <h:outputText value="#{tag.tagName}"/>
 			  </p:column>
-			  <p:column columns="2" style="text-align: center">
-				  <p:commandButton update="tags" icon="ui-icon-trash" title="Delete" action="#{tagController.deleteSelectedTag(tag.tagName)}" style="align-content: center" immediate="true"/>
-                  <p:commandButton icon="ui-icon-plus" title="AddTagToPictures" onclick = "setList()" action="#{tagController.addTagToPictures(tag.tagName)}" style="align-content: center" immediate="true"/>
+			  <p:column style="text-align: center">
+				  <ui:insert name="deleteTags"/>
+				  <p:commandButton icon="ui-icon-plus" title="AddTagToPictures" onclick = "setList()" action="#{pictureController.addTagToPictures(tag.tagName)}" style="align-content: center" immediate="true"/>
 			  </p:column>
 		  </p:dataTable>
       </h:panelGrid>
