@@ -64,7 +64,8 @@ public class PictureController {
     	logger.info(""+pictures);
     }
     public String resetSerach() {
-    	pictures=null;
+    	pictures = null;
+    	picture = null;
     	return "overview";
     }
 
@@ -138,24 +139,33 @@ public class PictureController {
     }
 
     public void addTagToPictures(String tagName){
-        String selectedPicturesIds = FacesContext.getCurrentInstance().
-                getExternalContext().getRequestParameterMap().get("selectedPics");
-        if(selectedPicturesIds.length() != 0) {
-            String[] pictureIds = selectedPicturesIds.split(",");
-            logger.info("SelectedPics:" + selectedPicturesIds);
+        if(picture == null) {
+            String selectedPicturesIds = FacesContext.getCurrentInstance().
+                    getExternalContext().getRequestParameterMap().get("selectedPics");
+            if (selectedPicturesIds.length() != 0) {
+                String[] pictureIds = selectedPicturesIds.split(",");
+                logger.info("SelectedPics:" + selectedPicturesIds);
 
-            for (String pictureId : pictureIds) {
-                logger.info(pictureId);
-                tagsService.addTagToPicture(Long.parseLong(pictureId), tagName);
-                logger.info(tagsService.findByName(tagName).getPictures().toString());
+                for (String pictureId : pictureIds) {
+                    logger.info(pictureId);
+                    tagsService.addTagToPicture(Long.parseLong(pictureId), tagName);
+                    logger.info(tagsService.findByName(tagName).getPictures().toString());
+                }
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                        FacesMessage.SEVERITY_INFO, "Info", "Image-Id(s): " +
+                        selectedPicturesIds + " saved to Tag: " + tagName));
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                        FacesMessage.SEVERITY_INFO, "Info", "No Images selected"));
             }
+        } else {
+            Long selectedPictureId = picture.getId();
+            tagsService.addTagToPicture(selectedPictureId, tagName);
+            picture = pictureService.findById(picture.getId());
+            tags = picture.getTags();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-                    FacesMessage.SEVERITY_INFO, "Info", "Image-Id(s): " +
-                    selectedPicturesIds + " saved to Tag: " + tagName));
-        }
-        else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-                    FacesMessage.SEVERITY_INFO, "Info", "No Images selected"));
+                    FacesMessage.SEVERITY_INFO, "Info", "Image-Id: " +
+                     picture.getId() + " saved to Tag: " + tagName));
         }
 
     }

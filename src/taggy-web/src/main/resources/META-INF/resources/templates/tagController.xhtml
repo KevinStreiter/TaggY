@@ -25,7 +25,9 @@ xmlns="http://www.w3.org/1999/xhtml"
 			  </p:column>
 			  <p:column style="text-align: center">
 				  <ui:insert name="deleteTags"/>
-				  <p:commandButton update="@form" icon="ui-icon-plus" title="AddTagToPictures" onclick = "setList()" action="#{pictureController.addTagToPictures(tag.tagName)}" style="align-content: center" immediate="true"/>
+				  <p:commandButton update="@form" icon="ui-icon-plus" title="AddTagToPictures" onclick = "setList()" action="#{pictureController.addTagToPictures(tag.tagName)}" style="align-content: center" immediate="true">
+                        <ui:insert name="updateAddButton"/>
+                  </p:commandButton>
                   <p:growl id="growlAddTagsToPics" showDetail="true"/>
 			  </p:column>
 		  </p:dataTable>

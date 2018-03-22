@@ -34,6 +34,7 @@ function singleClick(text) {
 
 function doubleClick(text) {
 	document.getElementById("selectedPic").value=text;
+    document.getElementById("selectedPics").value=text;
     goToFullScreen();
 }
 function showHiddenValue() { 
