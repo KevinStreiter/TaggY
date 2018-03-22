@@ -29,6 +29,7 @@ public class PictureController {
     private List<Picture> pictures;
     private List<Picture> selecetedPicture;
     private String selectedList="hello World";
+    private String chose;
     
     public Picture getPicture() {
         return picture; }
@@ -52,7 +53,7 @@ public class PictureController {
         picture.setComment(comment);
     }
     public void textQuery(String query){
-    	logger.info(query);
+    	logger.info(query+"\t"+chose);
     	pictures = pictureService.findByCommentOrDescription(query, orderBy());
     	logger.info(""+pictures);
     }
@@ -100,6 +101,14 @@ public class PictureController {
 
 	public void setSelectedList(String selectedList) {
 		this.selectedList = selectedList;
+	}
+
+	public String getChose() {
+		return chose;
+	}
+
+	public void setChose(String chose) {
+		this.chose = chose;
 	}
    
 }
