@@ -20,11 +20,11 @@
 </ui:define>
 
 <ui:define name="images">
-	<h:form id="hfrom">
+	<h:form id="hfrom" styleClass="ui-noborder">
 		
-		<p:dataGrid id="pictureGrid" value="#{pictureController.pictures}" var="picture" columns="11" layout="grid" style="width: 99%;">
-			<h:graphicImage id="picture"  value="http://www.proengineering.ch/images/projekte/fhnw.jpg" style="width:100px;" onclick="show(this,'#{picture.id}');" />
-		</p:dataGrid>
+		<p:dataScroller id="pictureGrid" value="#{pictureController.pictures}" var="picture">
+			<h:graphicImage id="picture"  value="http://www.proengineering.ch/images/projekte/fhnw.jpg" styleClass="imageOverView" onclick="show(this,'#{picture.id}');" />
+		</p:dataScroller>
 			
 	</h:form>
 	<h:form id="hidden">

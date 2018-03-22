@@ -37,4 +37,19 @@
   width: auto;
   height: auto;
 }
+.imageOverView{
+	margin: 0px;
+	border: 3px solid black; 
+	display: block;
+  	max-width:80%;
+  	max-height:80%;
+  	width: auto;
+  	height: auto;
+	
+}
+.ui-datascroller .ui-datascroller-item {
+    width: 10%;
+    display: inline-block;
+    flex: 1;
+}
 
