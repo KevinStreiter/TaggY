@@ -133,6 +133,15 @@ public class PictureServiceImpl implements PictureService {
 		if(tags.size()==0) {
 			return findByCommentOrDescription(textQuery, sort);
 		}
+		logger.info("Search by Tag " + textQuery.split(" ").length);
+		if(textQuery.length()==0) {
+			if (andOr.equals("or")) {
+				return findPictureByTagsOr(tags);				
+			}else {
+				return findPictureByTagsAnd(tags);
+			}
+		}
+		
 		if (andOr.equals("or")) {
 			result.addAll(findPictureByTagsOr(tags));
 			result.addAll(findByCommentOrDescription(textQuery, sort));
