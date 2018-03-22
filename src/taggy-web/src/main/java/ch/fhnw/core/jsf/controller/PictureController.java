@@ -4,6 +4,8 @@ import ch.fhnw.core.domain.Picture;
 import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.services.PictureService;
 
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.function.LongFunction;
+import java.util.Set;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
 @Scope(value = "session")
 @Component(value = "pictureController")
@@ -27,20 +31,21 @@ public class PictureController {
     PictureService pictureService;
     private Picture picture = new Picture();
     private List<Picture> pictures;
-    private List<Picture> selecetedPicture;
-    private String selectedList="hello World";
-    private String chose;
+    private String selectedPicturesList;
+    private String andOrChose ="or";
+    private String textQuery="";
+    private Set<Tag> searchTags= new HashSet<>();
     
     public Picture getPicture() {
         return picture; }
 
     public List<Picture> getPictures(){
     	if(pictures==null){
-    		logger.info("null");
+    		logger.info("getPictres is == null");
     		pictures = pictureService.findAll(orderBy());
     		
     	}
-    	logger.info(pictures.toString() + pictures.size());
+    	logger.info("getPictures "+pictures.toString() + "Number of Picutres" + pictures.size());
         return pictures;
     }
     public String getDescription(){
@@ -52,12 +57,36 @@ public class PictureController {
     public void setComment(String comment){
         picture.setComment(comment);
     }
-    public void textQuery(String query){
-    	logger.info(query+"\t"+chose);
-    	pictures = pictureService.findByCommentOrDescription(query, orderBy());
-    	logger.info(""+pictures);
+    private void pictureQuery() {
+    	List<Tag> tags = new ArrayList<>();
+    	tags.addAll(searchTags);
+    	pictures=pictureService.searchByTextCombinedTag(textQuery, tags, orderBy(), andOrChose);
+    	
     }
-    public String resetSerach() {
+    public void changeChose(ValueChangeEvent e) {
+    	andOrChose=e.getNewValue().toString();
+    }
+    
+    public void textQuery(String query){
+    	textQuery=query;
+    	pictureQuery();
+    	logger.info("TextQuerry "+ query);
+    }
+    public void onRowSelect(SelectEvent event) {
+        searchTags.add(((Tag) event.getObject()));
+        pictureQuery();
+        logger.info("row Select "+((Tag) event.getObject()).getTagName());
+    }
+   
+    public void onRowUnselect(UnselectEvent event) {
+    	searchTags.remove(((Tag) event.getObject()));
+    	pictureQuery();
+        logger.info("row Unselect "+((Tag) event.getObject()).getTagName());
+    }
+    private Sort orderBy() {
+        return new Sort(Sort.Direction.DESC, "Id");
+    }
+    public String resetSearch() {
     	pictures=null;
     	return "overview";
     }
@@ -66,49 +95,38 @@ public class PictureController {
     	String selected =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedPic");
     	Long id =Long.parseLong( selected);	
     	picture = pictureService.findById(id);
-        logger.info("given id: "+id);
+        logger.info("Seleceted Image given id: "+id);
         return "fullScreen";
     }
     
     public void printOut() {
     	String value = FacesContext.getCurrentInstance().
     			getExternalContext().getRequestParameterMap().get("selectedPics");
-    	logger.info(value);
-    	logger.info(selectedList);
+    	logger.info("printOut" + value);
+    	logger.info(selectedPicturesList);
     }
         
     public String editComment(String comment){
         picture.setComment(comment);
-        logger.info(picture.toString());
         pictureService.save(picture);
         return "fullScreen";
     }
-    private Sort orderBy() {
-        return new Sort(Sort.Direction.DESC, "Id");
-    }
-
-	public List<Picture> getSelecetedPicture() {
-		return selecetedPicture;
-	}
-
-	public void setSelecetedPicture(List<Picture> selecetedPicture) {
-		this.selecetedPicture = selecetedPicture;
-	}
+   
 
 	public String getSelectedList() {
-		return selectedList;
+		return selectedPicturesList;
 	}
 
 	public void setSelectedList(String selectedList) {
-		this.selectedList = selectedList;
+		this.selectedPicturesList = selectedList;
 	}
 
 	public String getChose() {
-		return chose;
+		return andOrChose;
 	}
 
 	public void setChose(String chose) {
-		this.chose = chose;
+		this.andOrChose = chose;
 	}
    
 }

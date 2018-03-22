@@ -21,12 +21,12 @@ function setList(){
 	document.getElementById("selectedPics").value=selected;
 }
 function singleClick(text) {
-	if(the_div.style.borderStyle=="solid"){
+	if(the_div.style.borderColor=="darkgreen"){
 		var index = selected.indexOf(text);
 		selected.splice(index,1);
-		the_div.style.border = "thin none green";		
+		the_div.style.border = "3px solid black";		
 	}else{
-		the_div.style.border = "thin solid green";
+		the_div.style.border = "3px solid darkGreen";
 		selected.push(text);
 	}
 }

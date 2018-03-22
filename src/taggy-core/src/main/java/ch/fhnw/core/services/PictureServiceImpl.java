@@ -3,7 +3,9 @@ package ch.fhnw.core.services;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,7 +46,7 @@ public class PictureServiceImpl implements PictureService {
 		if(tags.size()==0){
 			return picList;
 		}else if(tags.size()==1){
-			return picRepository.findByTagsIn(tags).collect(Collectors.toList());
+			return picRepository.findByTagsIn(tags);
 		}
 		picList=picRepository.findByTags(tags.get(0)).collect(Collectors.toList());
 		for(int i =1; i< tags.size() ;i++){
@@ -81,7 +83,7 @@ public class PictureServiceImpl implements PictureService {
 	}
 
 	@Override
-	public Stream<Picture> findPictureByTagsOr(List<Tag> tags) {
+	public List<Picture> findPictureByTagsOr(List<Tag> tags) {
 		return picRepository.findByTagsIn(tags);
 	}
 
@@ -122,6 +124,35 @@ public class PictureServiceImpl implements PictureService {
 			}
 		}
 		return pictures;
+	}
+
+	@Override
+	public List<Picture> searchByTextCombinedTag(String textQuery, List<Tag> tags, Sort sort, String andOr) {
+		Set<Picture> result= new HashSet<>();
+		List<Picture> endList= new ArrayList<>();
+		if(tags.size()==0) {
+			return findByCommentOrDescription(textQuery, sort);
+		}
+		logger.info("Search by Tag " + textQuery.split(" ").length);
+		if(textQuery.length()==0) {
+			if (andOr.equals("or")) {
+				return findPictureByTagsOr(tags);				
+			}else {
+				return findPictureByTagsAnd(tags);
+			}
+		}
+		
+		if (andOr.equals("or")) {
+			result.addAll(findPictureByTagsOr(tags));
+			result.addAll(findByCommentOrDescription(textQuery, sort));
+			endList.addAll(result);
+			return endList;
+		}else {
+			result.addAll(findByCommentOrDescription(textQuery, sort));
+			result.addAll(findPictureByTagsAnd(tags));
+			endList.addAll(result);
+			return endList;
+		}
 	}
 
 

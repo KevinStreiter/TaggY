@@ -1,4 +1,4 @@
-package ch.fhnw.taggy.core.repository;
+package ch.fhnw.taggy.core.services;
 
 import static org.junit.Assert.*;
 
@@ -67,7 +67,7 @@ public class TagServiceTest{
 
 		tagsToDelete.remove(0);
 		tagService.deleteTagIn(tagsToDelete);
-		assertEquals("Check if all Tags are Delete and not linked to a picture",Optional.empty(), picService.findPictureByTagsOr(tagsToDelete).findFirst());
+		assertEquals("Check if all Tags are Delete and not linked to a picture",Optional.empty(), picService.findPictureByTagsOr(tagsToDelete).get(0));
 		assertEquals("Check if number of Tags is correct", allBefore-numberDeleted,tagService.findAll().size());
 	}
 
