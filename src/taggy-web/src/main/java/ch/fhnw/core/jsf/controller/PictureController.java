@@ -35,14 +35,17 @@ public class PictureController {
     private List<Picture> selectedPicture;
     private List<Tag> tags;
     private String selectedList="hello World";
-    
+    private String chose;
+
     public Picture getPicture() {
         return picture; }
 
     public List<Picture> getPictures(){
     	if(pictures==null){
+    		logger.info("null");
     		pictures = pictureService.findAll(orderBy());
     	}
+    	logger.info(pictures.toString() + pictures.size());
         return pictures;
     }
     public String getDescription(){
@@ -55,10 +58,15 @@ public class PictureController {
         picture.setComment(comment);
     }
     public void textQuery(String query){
-    	logger.info(query);
+    	logger.info(query+"\t"+chose);
     	pictures = pictureService.findByCommentOrDescription(query, orderBy());
     	logger.info(""+pictures);
     }
+    public String resetSerach() {
+    	pictures=null;
+    	return "overview";
+    }
+
     public String selectImage() {
     	String selected =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedPic");
     	Long id = Long.parseLong( selected);
@@ -101,6 +109,15 @@ public class PictureController {
 	public void setSelectedList(String selectedList) {
 		this.selectedList = selectedList;
 	}
+
+	public String getChose() {
+		return chose;
+	}
+
+	public void setChose(String chose) {
+		this.chose = chose;
+	}
+
 
     public List<Tag> getTags() {
         return tags;

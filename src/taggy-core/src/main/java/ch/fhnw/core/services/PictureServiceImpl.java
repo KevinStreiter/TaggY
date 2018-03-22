@@ -103,20 +103,22 @@ public class PictureServiceImpl implements PictureService {
 	@Override
 	public List<Picture> findByCommentOrDescription(String query, Sort sort) {
 		String[] queryParts = query.split(" ");
-		List<Picture> pictures = new ArrayList<>();
+		logger.info("Length of splited query: "+queryParts.length+" "+queryParts.toString());
+		List<Picture> pictures = null;
 		for (String part:queryParts) {
 			List<Picture> picturesTmp = picRepository.findByCommentContainingOrDescriptionContaining(part, part, sort);
-			if(pictures.size()==0) {
+			if(pictures==null) {
 				pictures=picturesTmp;
 			}else {
 				List<Picture> result=new ArrayList<>();
+				logger.info("Comparation: "+picturesTmp.toString()+" has list "+pictures.toString());
 				for (Picture pic :picturesTmp) {
 					if (pictures.contains(pic)) {
 					result.add(pic);
 					}
 				}
 				pictures=result;
-				logger.info("Query Text-Search: "+pictures.toString());
+				logger.info("Query Text-Search: "+pictures.toString()+query);
 			}
 		}
 		return pictures;

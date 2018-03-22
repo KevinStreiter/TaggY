@@ -31,7 +31,7 @@ public class TestDataBuilder {
 	private void insertPicture(){
 		descriptionTimes=new HashMap<>();
 		descriptionTimes.put("unge", 1); descriptionTimes.put("eber", 1);
-		Picture pic1 = new Picture( "Best Pick ever", 1101L,"Herz in Diagnose","0003");
+		Picture pic1 = new Picture( "Best Lunge Pick ever", 1101L,"Herz in Diagnose","0003");
 		Picture pic2 = new Picture( "Good Pick good Leber", 1114L,"Drinker Leber","00503");
 		Picture pic3 = new Picture( "Shower Pick Lunge", 112L,"Raucher Lunge","00063");
 		testPics = new ArrayList<>();

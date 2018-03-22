@@ -39,3 +39,4 @@ function doubleClick(text) {
 function showHiddenValue() { 
     document.getElementById('hiddenField').value="hello";
  }
+

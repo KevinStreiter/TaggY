@@ -1,0 +1,2 @@
+docker build -t tomcat --rm .
+docker run -d --name tomcatTaggy -p 8080:8080 tomcat

@@ -14,12 +14,9 @@
 
 <ui:define name="images">
 	<h:form id="hfrom">
-		<p:inputText style="width: 99%;" autoResize="false" binding="#{text}" />
-		<h:commandButton value="quer"  actionListener="#{pictureController.textQuery(text.value)}"  style="display: none">
-			<f:ajax execute="@form" render="@form" />
-		</h:commandButton>
+		
 		<p:dataGrid id="pictureGrid" value="#{pictureController.pictures}" var="picture" columns="11" layout="grid" style="width: 99%;">
-			<h:graphicImage id="picture"  value="https://npr.news.eulu.info/wp-content/uploads/2017/07/Russischer-B%C3%A4r.jpg" style="width:100px;" onclick="show(this,'#{picture.id}');" />
+			<h:graphicImage id="picture"  value="http://192.168.1.102:8042/wado?objectUID=1.2.826.0.1.3680043.8.654.50.2010.0000000000#{picture.id}&#38;requestType=WADO" style="width:100px;" onclick="show(this,'#{picture.id}');" />
 		</p:dataGrid>
 			
 	</h:form>
@@ -29,5 +26,19 @@
 		<p:remoteCommand name="getSelectedPics" value = "ShowHiddenValue" onclick = "setList()" immediate="true" />
 	</h:form>
 </ui:define>
+
+<ui:define name="searchHeader">
+		<h:panelGroup>
+			<h:panelGrid columns="2" style=" width: 100%;" columnClasses="textRight">
+				<h:outputText value="Text search"/>
+				<p:inputText id="queryInput" style="width: 99%;"  binding="#{text}" />
+				<h:commandButton value="quer"  actionListener="#{pictureController.textQuery(text.value)}"  style="display: none">
+				<f:ajax execute="@form" render="hfrom:pictureGrid" />
+				 </h:commandButton>
+			</h:panelGrid>
+		</h:panelGroup>
+</ui:define>
+
+<ui:define name="details"></ui:define>
 
 </ui:composition>

@@ -10,12 +10,19 @@ xmlns="http://www.w3.org/1999/xhtml"
 		  <p:inputText id="tagname" size="10"
 					   value="#{tagController.tag.tagName}"
 					   required="true" maxlength="20"/>
+		  <h:selectOneRadio value="#{pictureController.chose}">
+		  	<f:selectItem itemValue = "or" itemLabel="or"/>
+		  	<f:selectItem itemValue = "and" itemLabel="and"/>
+		  </h:selectOneRadio>
 		  <h:commandButton value="save" type="submit" action="#{tagController.save}" style="display: none">
 		  	<f:ajax execute="@form" render="@form" />
 		  </h:commandButton>
-		  <p:dataTable id="tags" value="#{tagController.tags}" var="tag" selectionMode="multiple" selection="#{tagController.selectedTags}" rowKey="#{tag.id}">
+		  <p:dataTable id="tags" value="#{tagController.tags}" var="tag" rowSelectMode="add" selection="#{tagController.selectedTags}" rowKey="#{tag.id}" >
+			  <p:ajax event="rowSelectCheckbox" listener="#{tagController.onRowSelect}" update="@form"/>
+			  <p:ajax event="rowUnselectCheckbox" listener="#{tagController.onRowUnselect}" update="@form"/>
+			  <p:column selectionMode="multiple" style="width:16px;text-align;center"/>
 			  <p:column>
-				   #{tag.tagName}
+				   <h:outputText value="#{tag.tagName}"/>
 			  </p:column>
 			  <p:column columns="2" style="text-align: center">
 				  <p:commandButton update="tags" icon="ui-icon-trash" title="Delete" action="#{tagController.deleteSelectedTag(tag.tagName)}" style="align-content: center" immediate="true"/>

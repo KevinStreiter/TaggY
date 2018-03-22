@@ -15,13 +15,18 @@
 <h:outputScript library="js" name="common.js" />
 <p:layout id="main" fullPage="true">
   <p:layoutUnit position="north" size="60">
-      <h:panelGroup>
-        <span style="font-size: 38px">TaggY</span>
-            Searching Pictures with Tags
-      </h:panelGroup>
+	      <h:form id="title">
+	      <h:panelGrid columns="2" columnClasses="column1,column2" style="width: 100%;">
+	      <h:commandLink action="#{pictureController.resetSerach}">
+	        <span style="font-size: 38px">TaggY</span>
+	        <p:resetInput target="main" />
+	        </h:commandLink>
+	      	<ui:insert name="searchHeader">Search</ui:insert>
+	      </h:panelGrid>
+	      </h:form>      
   </p:layoutUnit>
 
-    <p:layoutUnit id="taglist" position="east" size="140" header="Tags">
+    <p:layoutUnit id="taglist" position="east" size="300" header="Tags">
       <h:form>
           <ui:insert name="tags">Tags</ui:insert>
       </h:form>
