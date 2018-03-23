@@ -10,9 +10,9 @@
 </ui:define>
 
 <ui:define name="searchComponent">
-	<p:ajax event="rowSelectCheckbox" listener="#{pictureController.onRowSelect}" update=":hfrom:pictureGrid" />
-			  <p:ajax event="rowUnselectCheckbox" listener="#{pictureController.onRowUnselect}" update=":hfrom:pictureGrid" />
-			  <p:column selectionMode="multiple" style="width:16px;text-align;center"/>
+		<p:ajax event="rowSelectCheckbox" listener="#{pictureController.onRowSelect}" update=":hfrom:pictureGrid" />
+		<p:ajax event="rowUnselectCheckbox" listener="#{pictureController.onRowUnselect}" update=":hfrom:pictureGrid" />
+		<p:column selectionMode="multiple" style="width:16px;text-align;center"/>
 			  
 </ui:define>
 
@@ -22,7 +22,7 @@
 <ui:define name="images">
 	<h:form id="hfrom" styleClass="ui-noborder">
 		
-		<p:dataScroller id="pictureGrid" value="#{pictureController.pictures}" var="picture">
+		<p:dataScroller id="pictureGrid" value="#{pictureController.pictures}" var="picture" chunkSize="15" scrollHeight="50" mode="inline">
 			<h:graphicImage id="picture"  value="http://www.proengineering.ch/images/projekte/fhnw.jpg" styleClass="imageOverView" onclick="show(this,'#{picture.id}');" />
 		</p:dataScroller>
 			
