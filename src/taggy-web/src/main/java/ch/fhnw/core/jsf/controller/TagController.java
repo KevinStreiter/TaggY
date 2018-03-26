@@ -29,7 +29,7 @@ public class TagController {
     private TagsService tagsService;
 
     private Tag selectedTag;
-    private List<Tag> selectedTags;
+   
     
 
     private Tag tag = new Tag();
@@ -52,19 +52,17 @@ public class TagController {
         } else {
             tag = tagsService.findByName(tagName);
         }
-        return "overview";
+        return "overview?faces-redirect=true";
     }
 
-    public String save(){
+    public void save(){
         Tag tagTemp = new Tag (tag.getTagName());
         List<Tag> tags = getTags();
         for(Tag tag : tags){
             if((tag.getTagName().equals(tagTemp.getTagName()))){
-                return "overview";
             }
         }
         tagsService.save(tagTemp);
-        return "overview";
     }
 
     
@@ -87,13 +85,6 @@ public class TagController {
         this.selectedTag = selectedTag;
     }
     
-    public List<Tag> getSelectedTags() {
-        return selectedTags;
-    }
-
-    public void setSelectedTags(List<Tag> selectedTags) {
-        this.selectedTags = selectedTags;
-    }
 
     public void setService(TagsService tagsService) {
         this.tagsService = tagsService;

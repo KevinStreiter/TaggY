@@ -3,6 +3,7 @@ package ch.fhnw.core.jsf.controller;
 import ch.fhnw.core.domain.Picture;
 import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.services.PictureService;
+import ch.fhnw.core.services.TagsService;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -24,101 +25,105 @@ import javax.faces.event.ValueChangeEvent;
 @Scope(value = "session")
 @Component(value = "pictureController")
 public class PictureController {
-	
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    PictureService pictureService;
-    private Picture picture = new Picture();
-    private List<Picture> pictures;
-    private String selectedPicturesList;
-    private String andOrChose ="or";
-    private String textQuery="";
-    private Set<Tag> searchTags= new HashSet<>();
-    
-    public Picture getPicture() {
-        return picture; }
+	@Autowired
+	PictureService pictureService;
+	@Autowired
+	TagsService tagService;
+	private Picture picture = new Picture();
+	private List<Picture> pictures;
+	private String selectedPicturesList;
+	private String andOrChose = "or";
+	private List<Tag> selectedTags = new ArrayList<>();
+	private String searchText = "";
 
-    public List<Picture> getPictures(){
-    	if(pictures==null){
-    		logger.info("getPictres is == null");
-    		pictures = pictureService.findAll(orderBy());
-    		
-    	}
-    	logger.info("getPictures "+pictures.toString() + "Number of Picutres" + pictures.size());
-        return pictures;
-    }
-    public String getDescription(){
-    	return picture.getDescription();
-    }
-    public String getComment(){
-    	return picture.getComment();
-    }
-    public void setComment(String comment){
-        picture.setComment(comment);
-    }
-    private void pictureQuery() {
-    	List<Tag> tags = new ArrayList<>();
-    	tags.addAll(searchTags);
-    	pictures=pictureService.searchByTextCombinedTag(textQuery, tags, orderBy(), andOrChose);
-    	
-    }
-    public void changeChose(ValueChangeEvent e) {
-    	andOrChose=e.getNewValue().toString();
-    }
-    
-    public void textQuery(String query){
-    	textQuery=query;
-    	pictureQuery();
-    	logger.info("TextQuerry "+ query);
-    }
-    public void onRowSelect(SelectEvent event) {
-        searchTags.add(((Tag) event.getObject()));
-        pictureQuery();
-        logger.info("row Select "+((Tag) event.getObject()).getTagName());
-    }
-   
-    public void onRowUnselect(UnselectEvent event) {
-    	searchTags.remove(((Tag) event.getObject()));
-    	pictureQuery();
-        logger.info("row Unselect "+((Tag) event.getObject()).getTagName());
-    }
-    private Sort orderBy() {
-        return new Sort(Sort.Direction.DESC, "Id");
-    }
-    public String resetSearch() {
-    	pictures=null;
-    	return "overview";
-    }
-    
-    public String selectImage() {
-    	String selected =  FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedPic");
-    	Long id =Long.parseLong( selected);	
-    	picture = pictureService.findById(id);
-        logger.info("Seleceted Image given id: "+id);
-        return "fullScreen";
-    }
-    
-    public void printOut() {
-    	String value = FacesContext.getCurrentInstance().
-    			getExternalContext().getRequestParameterMap().get("selectedPics");
-    	logger.info("printOut" + value);
-    	logger.info(selectedPicturesList);
-    }
-        
-    public String editComment(String comment){
-        picture.setComment(comment);
-        pictureService.save(picture);
-        return "fullScreen";
-    }
-   
+	private void pictureQuery() {
+		pictures = pictureService.searchByTextCombinedTag(searchText, selectedTags, orderBy(), andOrChose);
 
-	public String getSelectedList() {
-		return selectedPicturesList;
+	}
+
+	private Sort orderBy() {
+		return new Sort(Sort.Direction.DESC, "Id");
+	}
+
+	public void changeChose(ValueChangeEvent e) {
+		andOrChose = e.getNewValue().toString();
+	}
+
+	public void textQuery() {
+		pictureQuery();
+	}
+	
+	public void toggleAll() {
+		pictureQuery();
+		logger.info("Toggle All " +selectedTags);
+	}
+
+	public void onRowSelect(SelectEvent event) {
+		pictureQuery();
+		logger.info("row Select " + ((Tag) event.getObject()).getTagName() + " " + getSelectedTags().toString());
+	}
+
+	public void onRowUnselect(UnselectEvent event) {
+		pictureQuery();
+		logger.info("row Unselect " + ((Tag) event.getObject()).getTagName());
+	}
+
+	public String resetSearch() {
+		pictures = null;
+		searchText="";
+		selectedTags = new ArrayList<>();
+		return "overview?faces-redirect=true";
+	}
+
+	public String selectImage() {
+		String selected = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+				.get("selectedPic");
+		Long id = Long.parseLong(selected);
+		picture = pictureService.findById(id);
+		logger.info("Seleceted Image given id: " + id);
+		return "fullScreen?faces-redirect=true";
+	}
+
+	public String editComment(String comment) {
+		picture.setComment(comment);
+		pictureService.save(picture);
+		return "fullScreen?faces-redirect=true";
+	}
+
+	public void setComment(String comment) {
+		picture.setComment(comment);
+	}
+
+	public String getComment() {
+		return picture.getComment();
+	}
+
+	public Picture getPicture() {
+		return picture;
+	}
+
+	public List<Picture> getPictures() {
+		if (pictures == null) {
+			logger.info("getPictres is == null");
+			pictures = pictureService.findAll(orderBy());
+		}
+		logger.info("getPictures Number of Picutres: " + pictures.size() +"Ausgewählte Bilder: " + pictures.toString() );
+		return pictures;
+	}
+
+	public String getDescription() {
+		return picture.getDescription();
 	}
 
 	public void setSelectedList(String selectedList) {
 		this.selectedPicturesList = selectedList;
+	}
+
+	public String getSelectedList() {
+		return selectedPicturesList;
 	}
 
 	public String getChose() {
@@ -128,7 +133,21 @@ public class PictureController {
 	public void setChose(String chose) {
 		this.andOrChose = chose;
 	}
-   
+
+	public List<Tag> getSelectedTags() {
+		return selectedTags;
+	}
+
+	public void setSelectedTags(List<Tag> selectedTags) {
+		this.selectedTags = selectedTags;
+	}
+
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
+
 }
-
-
