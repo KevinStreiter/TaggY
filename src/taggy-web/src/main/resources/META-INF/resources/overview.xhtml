@@ -32,26 +32,6 @@
 			style="align-content: center" immediate="true" />
 	</ui:define>
 
-	<ui:define name="images">
-		<h:form id="hfrom">
-
-			<p:dataGrid id="pictureGrid" value="#{pictureController.pictures}"
-				var="picture" columns="11" layout="grid" style="width: 99%;">
-				<h:graphicImage id="picture"
-					value="https://42796r1ctbz645bo223zkcdl-wpengine.netdna-ssl.com/wp-content/uploads/2016/07/1260x485-bass-guitar-1281x612.jpg"
-					style="width:100px;" onclick="show(this,'#{picture.id}');" />
-			</p:dataGrid>
-
-		</h:form>
-		<h:form id="hidden">
-			<input type="hidden" name="selectedPic" id="selectedPic" />
-			<p:remoteCommand name="goToFullScreen"
-				action="#{pictureController.selectImage}" immediate="true" />
-			<p:remoteCommand name="getSelectedPics" value="ShowHiddenValue"
-				onclick="setList()" immediate="true" />
-		</h:form>
-	</ui:define>
-
 	<ui:define name="systemButtons">
 		<h:commandLink action="#{pictureController.resetSearch}">
 			<span>Reset</span>
