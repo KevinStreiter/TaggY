@@ -32,12 +32,13 @@ public class PictureController {
 	PictureService pictureService;
 	@Autowired
 	TagsService tagService;
-	private Picture picture = new Picture();
+	private Picture picture =null;
 	private List<Picture> pictures;
 	private String selectedPicturesList;
 	private String andOrChose = "or";
 	private List<Tag> selectedTags = new ArrayList<>();
 	private String searchText = "";
+	private List<Tag> tags;
 
 	private void pictureQuery() {
 		pictures = pictureService.searchByTextCombinedTag(searchText, selectedTags, orderBy(), andOrChose);
@@ -46,10 +47,7 @@ public class PictureController {
 	private Sort orderBy() {
 		return new Sort(Sort.Direction.DESC, "Id");
 	}
-    	logger.info(pictures.toString() + pictures.size());
-    	picture = null;
-        return pictures;
-}
+
 
 	public void changeChose(ValueChangeEvent e) {
 		andOrChose = e.getNewValue().toString();
@@ -86,40 +84,29 @@ public class PictureController {
 				.get("selectedPic");
     	Long id = Long.parseLong( selected);
 		picture = pictureService.findById(id);
-		logger.info("Seleceted Image given id: " + id);
-		tags = picture.getTags();
+		tags = tagService.findByPicture(picture);
+		logger.info("Seleceted Image given id: ");
+		
 		return "fullScreen?faces-redirect=true";
 	}
 
-    public void printOut() {
-    	String value = FacesContext.getCurrentInstance().
-    			getExternalContext().getRequestParameterMap().get("selectedPics");
-    	logger.info(value);
-    	logger.info(selectedList);
-        logger.info(FacesContext.getCurrentInstance().getExternalContext().toString());
-    }
         
     public void editComment(String comment){
 		picture.setComment(comment);
 		pictureService.save(picture);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                 FacesMessage.SEVERITY_INFO, "Info", "Comment has been saved"));
-		return "fullScreen?faces-redirect=true";
 	}
-}
+
 
 	public void setComment(String comment) {
 		picture.setComment(comment);
 	}
 
-	public List<Picture> getSelectedPicture() {
-		return selectedPicture;
 	public String getComment() {
 		return picture.getComment();
 	}
 
-	public void setSelectedPicture(List<Picture> selectedPicture) {
-		this.selectedPicture = selectedPicture;
 	public Picture getPicture() {
 		return picture;
 	}
@@ -129,7 +116,8 @@ public class PictureController {
 			logger.info("getPictres is == null");
 			pictures = pictureService.findAll(orderBy());
 		}
-		logger.info("getPictures Number of Picutres: " + pictures.size() +"Ausgewählte Bilder: " + pictures.toString() );
+		logger.info("getPictures Number of Picutres: " + pictures.size() +"Ausgewï¿½hlte Bilder: " + pictures.toString() );
+		picture=null;
 		return pictures;
 	}
 
@@ -154,22 +142,22 @@ public class PictureController {
 	}
 
 
-    public List<Tag> getTags() {
-        return tags;
-	public List<Tag> getSelectedTags() {
+    public List<Tag> getSelectedTags() {
 		return selectedTags;
 	}
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
-	public void setSelectedTags(List<Tag> selectedTags) {
+    public void setSelectedTags(List<Tag> selectedTags) {
 		this.selectedTags = selectedTags;
 	}
-
-    public void deleteTagOnPicture(Long tagId){
+	public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+	public List<Tag> getTags() {
+	    return tags;
+	}
+	public void deleteTagOnPicture(Long tagId){
         logger.info("Deleted Image Tag: " + tagId.toString());
-        tagsService.deleteTagFromPicture(picture.getId(),tagId);
+        tagService.deleteTagFromPicture(picture.getId(),tagId);
         picture = pictureService.findById(picture.getId());
         tags = picture.getTags();
     }
@@ -185,8 +173,8 @@ public class PictureController {
 
                 for (String pictureId : pictureIds) {
                     logger.info(pictureId);
-                    tagsService.addTagToPicture(Long.parseLong(pictureId), tagName);
-                    logger.info(tagsService.findByName(tagName).getPictures().toString());
+                    tagService.addTagToPicture(Long.parseLong(pictureId), tagName);
+                    logger.info(tagService.findByName(tagName).getPictures().toString());
                 }
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_INFO, "Info", "Image-Id(s): " +
@@ -197,17 +185,17 @@ public class PictureController {
             }
         } else {
             Long selectedPictureId = picture.getId();
-            tagsService.addTagToPicture(selectedPictureId,tagName);
-            tags = tagsService.findByPicture(picture);
+            tagService.addTagToPicture(selectedPictureId,tagName);
+            tags = tagService.findByPicture(picture);
             picture = pictureService.findById(selectedPictureId);
-            logger.info("Image Tags: "+tagsService.findByPicture(picture).toString());
+            logger.info("Image Tags: "+tagService.findByPicture(picture).toString());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                     FacesMessage.SEVERITY_INFO, "Info", "Image-Id: " +
                      picture.getId() + " saved to Tag: " + tagName));
         }
 
     }
-}
+
 
 
 	public String getSearchText() {

@@ -67,11 +67,9 @@ public class TagController {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_INFO, "Info", "Tag: "
                         + tagTemp.getTagName() + " already exists"));
-                return "tagController";
             }
         }
         tagsService.save(tagTemp);
-        return "tagController";
     }
 
     
