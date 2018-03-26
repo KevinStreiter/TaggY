@@ -8,37 +8,38 @@
 <h:head>
 	<title>TaggY</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	
+
 </h:head>
 <h:body>
-<h:outputStylesheet library="css" name="fullScreen.css"  />
-<h:outputScript library="js" name="common.js" />
-<p:layout id="main" fullPage="true">
-  <p:layoutUnit position="north" size="60">
-	      <h:form id="title">
-	      <h:panelGrid columns="2" columnClasses="column1,column2" style="width: 100%;">
-	      <h:commandLink action="#{pictureController.resetSearch}">
-	        <span style="font-size: 38px">TaggY</span>
-	        <p:resetInput target="main" />
-	        </h:commandLink>
-	      	<ui:insert name="searchHeader"/>
-	      </h:panelGrid>
-	      </h:form>      
-  </p:layoutUnit>
+	<h:outputStylesheet library="css" name="fullScreen.css" />
+	<h:outputScript library="js" name="common.js" />
+	<p:layout id="main" fullPage="true">
+		<p:layoutUnit position="north" size="60">
+			<h:form id="title">
+				<h:panelGrid columns="2" columnClasses="column1,column2"
+					style="width: 100%;">
+					<h:panelGroup>
+						<span style="font-size: 38px">TaggY</span>
+						<ui:insert name="systemButtons" />
+					</h:panelGroup>
+					<ui:insert name="searchHeader" />
+				</h:panelGrid>
+			</h:form>
+		</p:layoutUnit>
 
-    <p:layoutUnit id="taglist" position="east" size="300" header="Tags">
-      <h:form>
-          <ui:insert name="tags">Tags</ui:insert>
-      </h:form>
-    </p:layoutUnit>
+		<p:layoutUnit id="taglist" position="east" size="300" header="Tags">
+			<h:form>
+				<ui:insert name="tags">Tags</ui:insert>
+			</h:form>
+		</p:layoutUnit>
 
-    <p:layoutUnit id="imageview" position="center">
-        <f:view>
-            <ui:insert name="images">Images</ui:insert>
-        </f:view>
-    </p:layoutUnit>
+		<p:layoutUnit id="imageview" position="center">
+			<f:view>
+				<ui:insert name="images">Images</ui:insert>
+			</f:view>
+		</p:layoutUnit>
 
-</p:layout>
+	</p:layout>
 
 </h:body>
 </html>

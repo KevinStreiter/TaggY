@@ -52,8 +52,24 @@
     display: inline-block;
     flex: 1;
 }
-.tagsTable thead{
-	display: none;
-	
+
+.DataScroller{
+	flex: 1; height: 100%;
 }
+.ui-datascroller .ui-datascroller-content{
+	list-style-type: none;
+	height: 98%;
+	border-style: hidden !important;
+}
+ .ui-datatable-scrollable-body{
+ height: auto;
+ max-height: 500px;
+ overflow-y: scroll
+ }
+  .ui-datatable-scrollable-header{
+  width: calc(100% - 1.4em);
+  }
+ .tagsTable{
+ 	flex: 1; height: 80%;
+ }
 
