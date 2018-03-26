@@ -13,12 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
@@ -32,21 +32,22 @@ public class PictureController {
 	PictureService pictureService;
 	@Autowired
 	TagsService tagService;
-	private Picture picture = new Picture();
+	private Picture picture =null;
 	private List<Picture> pictures;
 	private String selectedPicturesList;
 	private String andOrChose = "or";
 	private List<Tag> selectedTags = new ArrayList<>();
 	private String searchText = "";
+	private List<Tag> tags;
 
 	private void pictureQuery() {
 		pictures = pictureService.searchByTextCombinedTag(searchText, selectedTags, orderBy(), andOrChose);
 
 	}
-
 	private Sort orderBy() {
 		return new Sort(Sort.Direction.DESC, "Id");
 	}
+
 
 	public void changeChose(ValueChangeEvent e) {
 		andOrChose = e.getNewValue().toString();
@@ -81,17 +82,22 @@ public class PictureController {
 	public String selectImage() {
 		String selected = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
 				.get("selectedPic");
-		Long id = Long.parseLong(selected);
+    	Long id = Long.parseLong( selected);
 		picture = pictureService.findById(id);
-		logger.info("Seleceted Image given id: " + id);
+		tags = tagService.findByPicture(picture);
+		logger.info("Seleceted Image given id: ");
+		
 		return "fullScreen?faces-redirect=true";
 	}
 
-	public String editComment(String comment) {
+        
+    public void editComment(String comment){
 		picture.setComment(comment);
 		pictureService.save(picture);
-		return "fullScreen?faces-redirect=true";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                FacesMessage.SEVERITY_INFO, "Info", "Comment has been saved"));
 	}
+
 
 	public void setComment(String comment) {
 		picture.setComment(comment);
@@ -110,7 +116,8 @@ public class PictureController {
 			logger.info("getPictres is == null");
 			pictures = pictureService.findAll(orderBy());
 		}
-		logger.info("getPictures Number of Picutres: " + pictures.size() +"Ausgewählte Bilder: " + pictures.toString() );
+		logger.info("getPictures Number of Picutres: " + pictures.size() +"Ausgew�hlte Bilder: " + pictures.toString() );
+		picture=null;
 		return pictures;
 	}
 
@@ -134,13 +141,62 @@ public class PictureController {
 		this.andOrChose = chose;
 	}
 
-	public List<Tag> getSelectedTags() {
+
+    public List<Tag> getSelectedTags() {
 		return selectedTags;
 	}
 
-	public void setSelectedTags(List<Tag> selectedTags) {
+    public void setSelectedTags(List<Tag> selectedTags) {
 		this.selectedTags = selectedTags;
 	}
+	public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+	public List<Tag> getTags() {
+	    return tags;
+	}
+	public void deleteTagOnPicture(Long tagId){
+        logger.info("Deleted Image Tag: " + tagId.toString());
+        tagService.deleteTagFromPicture(picture.getId(),tagId);
+        picture = pictureService.findById(picture.getId());
+        tags = picture.getTags();
+    }
+
+    public void addTagToPictures(String tagName){
+        logger.info(tagName);
+        if(picture == null) {
+            String selectedPicturesIds = FacesContext.getCurrentInstance().
+                    getExternalContext().getRequestParameterMap().get("selectedPics");
+            if (selectedPicturesIds.length() != 0) {
+                String[] pictureIds = selectedPicturesIds.split(",");
+                logger.info("SelectedPics: " + selectedPicturesIds);
+
+                for (String pictureId : pictureIds) {
+                    logger.info(pictureId);
+                    tagService.addTagToPicture(Long.parseLong(pictureId), tagName);
+                    logger.info(tagService.findByName(tagName).getPictures().toString());
+                }
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                        FacesMessage.SEVERITY_INFO, "Info", "Image-Id(s): " +
+                        selectedPicturesIds + " saved to Tag: " + tagName));
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                        FacesMessage.SEVERITY_INFO, "Info", "No Images selected"));
+            }
+        } else {
+            Long selectedPictureId = picture.getId();
+            tagService.addTagToPicture(selectedPictureId,tagName);
+            tags = tagService.findByPicture(picture);
+            picture = pictureService.findById(selectedPictureId);
+            logger.info("Image Tags: "+tagService.findByPicture(picture).toString());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                    FacesMessage.SEVERITY_INFO, "Info", "Image-Id: " +
+                     picture.getId() + " saved to Tag: " + tagName));
+        }
+
+    }
+
+
 
 	public String getSearchText() {
 		return searchText;

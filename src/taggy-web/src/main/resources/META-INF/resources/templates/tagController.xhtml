@@ -17,10 +17,10 @@
 				<f:selectItem itemValue="or" itemLabel="or" />
 				<f:selectItem itemValue="and" itemLabel="and" />
 			</h:selectOneRadio>
-
+			<p:growl id="growlAddTags" showDetail="true" />
 			<h:commandButton value="save" type="submit"
 				actionListener="#{tagController.save}" style="display: none">
-				<f:ajax execute="@form" render="@form" />
+				<f:ajax execute="@form growlAddTags" render="@form" />
 			</h:commandButton>
 			<p:dataTable id="tags" value="#{tagController.tags}" var="tag"
 				rowSelectMode="checkbox" styleClass="tagsTable"
@@ -31,11 +31,17 @@
 					<h:outputText value="#{tag.tagName}" />
 				</p:column>
 				<p:column style="text-align: center">
-					<p:commandButton update="tags" icon="ui-icon-trash" title="Delete"
-						action="#{tagController.deleteSelectedTag(tag.tagName)}"
-						style="align-content: center" immediate="true" />
+					<ui:insert name="deleteTags" />
+					<p:commandButton update="@form" icon="ui-icon-plus"
+						title="AddTagToPictures" onclick="setList()"
+						actionListener="#{pictureController.addTagToPictures(tag.tagName)}"
+						style="align-content: center" immediate="true">
+						<ui:insert name="updateAddButton" />
+					</p:commandButton>
+					<p:growl id="growlAddTagsToPics" showDetail="true" />
 				</p:column>
 			</p:dataTable>
 		</h:panelGrid>
+		<input type="hidden" name="selectedPics" id="selectedPics" />
 	</h:form>
 </ui:composition>
