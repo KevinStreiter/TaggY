@@ -5,8 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-	<p:panelGrid id="detailsGrid" columnClasses="columnSize"
-		styleClass="noBorders">
+	<h:panelGrid id="detailsGrid" rows="3" rowClasses="noBorders, noBorders, tagsColumns">
 		<p:panel id="description" header="Description">
 			<h:outputText value="#{pictureController.description}" />
 		</p:panel>
@@ -19,9 +18,9 @@
 				style="display: none" />
 		</p:panel>
 		<p:panel id="tagPanel" header="Image Tags">
-			<h:panelGrid id="picTags">
 				<p:dataTable id="dataTags" value="#{pictureController.tags}"
-					var="imageTags" rowKey="#{imageTags.id}">/>
+					var="imageTags" rowKey="#{imageTags.id}" emptyMessage="No Tags available"
+					scrollable="true" scrollHeight="100%">
                     <p:column>
                         #{imageTags.tagName}
                     </p:column>
@@ -32,9 +31,8 @@
 							style="align-content: center" immediate="true" />
 					</p:column>
 				</p:dataTable>
-			</h:panelGrid>
 		</p:panel>
-	</p:panelGrid>
+	</h:panelGrid>
 
 </ui:composition>
 
