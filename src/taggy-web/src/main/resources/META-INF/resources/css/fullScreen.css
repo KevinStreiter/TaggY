@@ -52,8 +52,42 @@
     display: inline-block;
     flex: 1;
 }
-.tagsTable thead{
-	display: none;
-	
+
+.DataScroller{
+	flex: 1; height: 100%;
 }
+.ui-datascroller .ui-datascroller-content{
+	list-style-type: none;
+	height: 98%;
+	border-style: hidden !important;
+}
+ .ui-datatable-scrollable-body{
+ height: auto;
+ max-height: 100%;
+ overflow-y: scroll
+ }
+  .ui-datatable-scrollable-header{
+  width: calc(100% - 1.4em);
+  }
+ .tagsTable{
+ 	flex: 1; height: 100%;
+ }
+ .tagsTableForm{
+ 	flex: 1; height: 100%;
+ }
+ .tagsTableGrid{
+ 	flex: 1; height: 80%;
+ }
+ .tagsTableGrid tbody{
+ 	height: 100%;
+ }
+ .tagsColumns{
+ 	flex: 1; height: 70%;
+ }
+  .tagsColumns td{
+  height: 100%
+  }
+ .autoHeight{
+ 	flex: 1; height: auto;
+ }
 

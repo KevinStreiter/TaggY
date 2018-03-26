@@ -8,7 +8,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 	<h:form>
 		<p:panelGrid id ="detailsGrid" columnClasses="columnSize" styleClass="noBorders">
 			<p:panel  id="description" header="Description" >
-				<h:outputText value= "#{pictureController.description}+#{picture.id}" />
+				<h:outputText value= "#{pictureController.description}" />
 			</p:panel>
 			<p:panel  id="comment" header="Comment">
 				<p:inputText value="#{pictureController.comment}" binding="#{comment}" style="width: 100%;" />
@@ -19,14 +19,7 @@ xmlns="http://www.w3.org/1999/xhtml"
 					<h:commandButton value="save" type="submit" action="#{tagController.save}" style="display: none">
 						<f:ajax execute="@form" render="@form" />
 					</h:commandButton>
-					<p:dataTable id="tags" value="#{tagController.tags}" var="tag" selectionMode="multiple" selection="#{tagController.selectedTags}" rowKey="#{tag.id}">/>
-						<p:column>
-							#{tag.tagName}
-						</p:column>
-						<p:column style="text-align: center">
-							<p:commandButton update="tags" icon="ui-icon-trash" title="Delete" action="#{tagController.deleteSelectedTag(tag.tagName)}" style="align-content: center" immediate="true"/>
-						</p:column>
-					</p:dataTable>
+					
 				</p:panel>
 				</h:panelGrid>
 		</p:panelGrid>

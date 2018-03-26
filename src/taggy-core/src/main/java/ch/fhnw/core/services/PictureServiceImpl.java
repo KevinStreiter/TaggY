@@ -136,7 +136,9 @@ public class PictureServiceImpl implements PictureService {
 		logger.info("Search by Tag " + textQuery.split(" ").length);
 		if(textQuery.length()==0) {
 			if (andOr.equals("or")) {
-				return findPictureByTagsOr(tags);				
+				result.addAll(findPictureByTagsOr(tags)); 
+				endList.addAll(result);
+				return endList;				
 			}else {
 				return findPictureByTagsAnd(tags);
 			}
@@ -146,6 +148,7 @@ public class PictureServiceImpl implements PictureService {
 			result.addAll(findPictureByTagsOr(tags));
 			result.addAll(findByCommentOrDescription(textQuery, sort));
 			endList.addAll(result);
+			
 			return endList;
 		}else {
 			result.addAll(findByCommentOrDescription(textQuery, sort));

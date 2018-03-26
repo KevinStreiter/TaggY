@@ -43,7 +43,7 @@ public class App implements CommandLineRunner{
 		tagsRepository.save(tag2);
 		tagsRepository.save(tag3);
 		System.out.println(("generatet pk in dp"+ tag.getId()));
-		for(Long i = 1L; i <= 50; i++){
+		for(Long i = 1L; i <= 200; i++){
 			Picture p1 = new Picture( "schrecklich"+ i, i,"ich mag es","0000998");
 			picRepository.save(p1);
 		}
