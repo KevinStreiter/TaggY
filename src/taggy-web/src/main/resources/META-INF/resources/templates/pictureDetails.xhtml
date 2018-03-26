@@ -5,24 +5,32 @@ xmlns="http://www.w3.org/1999/xhtml"
 				xmlns:h="http://java.sun.com/jsf/html"
 				xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core"
 				>
-	<h:form>
+
 		<p:panelGrid id ="detailsGrid" columnClasses="columnSize" styleClass="noBorders">
 			<p:panel  id="description" header="Description" >
 				<h:outputText value= "#{pictureController.description}" />
 			</p:panel>
 			<p:panel  id="comment" header="Comment">
+            <p:growl id="growlComment" showDetail="true"/>
 				<p:inputText value="#{pictureController.comment}" binding="#{comment}" style="width: 100%;" />
-				<h:commandButton value="edit" action="#{pictureController.editComment(comment.value)}" style="display: none"/>
+            <p:commandButton update=":fullscreen:comment" value="edit"
+                             actionListener="#{pictureController.editComment(comment.value)}" style="display: none"/>
 			</p:panel>
-			<h:panelGrid >
-				<p:panel id="TaggedPics" header="Image Tags">
-					<h:commandButton value="save" type="submit" action="#{tagController.save}" style="display: none">
-						<f:ajax execute="@form" render="@form" />
-					</h:commandButton>
-					
+        <p:panel id="tagPanel" header="Image Tags">
+            <h:panelGrid id="picTags">
+                <p:dataTable id="dataTags" value="#{pictureController.tags}" var="imageTags" rowKey="#{imageTags.id}">/>
+                    <p:column>
+                        #{imageTags.tagName}
+                    </p:column>
+                    <p:column style="text-align: center">
+                        <p:commandButton update=":fullscreen" icon="ui-icon-trash" title="DeleteTagFromPicture"
+                                         actionListener="#{pictureController.deleteTagOnPicture(imageTags.id)}"
+                                         style="align-content: center" immediate="true"/>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
 				</p:panel>
-				</h:panelGrid>
 		</p:panelGrid>
-	</h:form>
+
  </ui:composition>
  

@@ -1,6 +1,8 @@
 package ch.fhnw.core.jsf.controller;
 
+import ch.fhnw.core.domain.Picture;
 import ch.fhnw.core.domain.Tag;
+import ch.fhnw.core.services.PictureService;
 import ch.fhnw.core.services.TagsService;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -13,8 +15,6 @@ import org.springframework.stereotype.Component;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +27,9 @@ public class TagController {
 
     @Autowired
     private TagsService tagsService;
+
+    @Autowired
+    PictureService pictureService;
 
     private Tag selectedTag;
    
@@ -57,21 +60,27 @@ public class TagController {
 
     public void save(){
         Tag tagTemp = new Tag (tag.getTagName());
+        tag.setTagName(null);
         List<Tag> tags = getTags();
         for(Tag tag : tags){
             if((tag.getTagName().equals(tagTemp.getTagName()))){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                        FacesMessage.SEVERITY_INFO, "Info", "Tag: "
+                        + tagTemp.getTagName() + " already exists"));
+                return "tagController";
             }
         }
         tagsService.save(tagTemp);
+        return "tagController";
     }
 
     
     public void deleteSelectedTag(String name){
         Tag tempTag = tagsService.findByName(name);
         logger.info(tempTag.toString());
-        if(tempTag != null) {
-            
+        if(tempTag.getTagName() != null) {
             tagsService.deleteTag(tempTag);
+            getTags();
         }
     }
     

@@ -19,6 +19,7 @@ function show(input,text){
 }
 function setList(){
 	document.getElementById("selectedPics").value=selected;
+	//alert(document.getElementById("selectedPics").value);
 }
 function singleClick(text) {
 	if(the_div.style.borderColor=="darkgreen"){
@@ -33,6 +34,7 @@ function singleClick(text) {
 
 function doubleClick(text) {
 	document.getElementById("selectedPic").value=text;
+    document.getElementById("selectedPics").value=text;
     goToFullScreen();
 }
 function showHiddenValue() { 

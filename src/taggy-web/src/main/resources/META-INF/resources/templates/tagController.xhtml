@@ -1,7 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
@@ -17,10 +17,9 @@
 				<f:selectItem itemValue="or" itemLabel="or" />
 				<f:selectItem itemValue="and" itemLabel="and" />
 			</h:selectOneRadio>
-
-			<h:commandButton value="save" type="submit"
-				actionListener="#{tagController.save}" style="display: none">
-				<f:ajax execute="@form" render="@form" />
+        <p:growl id="growlAddTags" showDetail="true"/>
+        <h:commandButton value="save" type="submit" actionListener="#{tagController.save}" style="display: none">
+            <f:ajax execute="@form growlAddTags" render="@form" />
 			</h:commandButton>
 			<p:dataTable id="tags" value="#{tagController.tags}" var="tag"
 				rowSelectMode="checkbox" styleClass="tagsTable"
@@ -31,11 +30,15 @@
 					<h:outputText value="#{tag.tagName}" />
 				</p:column>
 				<p:column style="text-align: center">
-					<p:commandButton update="tags" icon="ui-icon-trash" title="Delete"
-						action="#{tagController.deleteSelectedTag(tag.tagName)}"
-						style="align-content: center" immediate="true" />
+                <ui:insert name="deleteTags"/>
+                <p:commandButton update="@form" icon="ui-icon-plus" title="AddTagToPictures" onclick="setList()"
+                                 actionListener="#{pictureController.addTagToPictures(tag.tagName)}"
+                                 style="align-content: center" immediate="true">
+                    <ui:insert name="updateAddButton"/>
+                </p:commandButton>
+                <p:growl id="growlAddTagsToPics" showDetail="true"/>
 				</p:column>
 			</p:dataTable>
 		</h:panelGrid>
-	</h:form>
+    <input type="hidden" name="selectedPics" id="selectedPics"/>
 </ui:composition>

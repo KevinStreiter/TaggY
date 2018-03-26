@@ -11,11 +11,11 @@
 
 </h:head>
 <h:body>
-	<h:outputStylesheet library="css" name="fullScreen.css" />
-	<h:outputScript library="js" name="common.js" />
-	<p:layout id="main" fullPage="true">
-		<p:layoutUnit position="north" size="60">
-			<h:form id="title">
+    <h:outputStylesheet library="css" name="fullScreen.css"/>
+    <h:outputScript library="js" name="common.js"/>
+    <p:layout id="main" fullPage="true">
+        <p:layoutUnit position="north" size="60">
+            <h:form id="title">
 				<h:panelGrid columns="2" columnClasses="column1,column2"
 					style="width: 100%;">
 					<h:panelGroup>
@@ -31,10 +31,8 @@
 				<ui:insert name="tags">Tags</ui:insert>
 		</p:layoutUnit>
 
-		<p:layoutUnit id="imageview" position="center">
-			<f:view>
+        <p:layoutUnit position="center">
 				<ui:insert name="images">Images</ui:insert>
-			</f:view>
 		</p:layoutUnit>
 
 	</p:layout>
