@@ -35,7 +35,7 @@ public class App implements CommandLineRunner{
 	public void run(String... arg0) throws Exception {
 
 
-		Tag tag = new Tag("Weiblich");
+		/*Tag tag = new Tag("Weiblich");
 		Tag tag2 = new Tag("mänlich");
 		Tag tag3 = new Tag("hässlich");
 		System.out.println("Tag Id"+tag.getId());
@@ -55,7 +55,7 @@ public class App implements CommandLineRunner{
 		List<Tag> se = new ArrayList<>();
 		se.add(tag); se.add(tag2);
 		List<Picture> picstream = picService.findPictureByTagsAnd(se);
-		System.out.println(picstream);
+		System.out.println(picstream);*/
 
 	
 	}
