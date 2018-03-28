@@ -22,12 +22,12 @@ function setList(){
 	//alert(document.getElementById("selectedPics").value);
 }
 function singleClick(text) {
-	if(the_div.style.borderColor=="darkgreen"){
+	if(the_div.style.borderColor=="darkblue"){
 		var index = selected.indexOf(text);
 		selected.splice(index,1);
-		the_div.style.border = "3px solid black";		
+		the_div.style.border = "3px solid ghostwhite";
 	}else{
-		the_div.style.border = "3px solid darkGreen";
+		the_div.style.border = "3px solid darkblue";
 		selected.push(text);
 	}
 }

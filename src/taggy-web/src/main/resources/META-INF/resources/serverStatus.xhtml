@@ -1,0 +1,20 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+    <title>Server Status</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<h:outputLink value="overview.xhtml">
+    Overview
+</h:outputLink>
+<h:outputText value="pacs" style=" display:block;margin-bottom:2em;height:24px;color: #{serverController.pingHostColor('pacs.taggy', 8042, 5)}"/>
+<h:outputText value="database" style="display:block;margin-bottom:2em;height:24px;color: #{serverController.pingHostColor('service.taggy', 5432, 5)}"/>
+</body>
+</html>
