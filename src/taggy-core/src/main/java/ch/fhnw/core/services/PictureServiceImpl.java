@@ -46,7 +46,8 @@ public class PictureServiceImpl implements PictureService {
 		if(tags.size()==0){
 			return picList;
 		}else if(tags.size()==1){
-			return picRepository.findByTagsIn(tags);
+			picList.addAll(picRepository.findByTagsIn(tags));
+			return picList;
 		}
 		picList=picRepository.findByTags(tags.get(0)).collect(Collectors.toList());
 		for(int i =1; i< tags.size() ;i++){
@@ -84,7 +85,9 @@ public class PictureServiceImpl implements PictureService {
 
 	@Override
 	public List<Picture> findPictureByTagsOr(List<Tag> tags) {
-		return picRepository.findByTagsIn(tags);
+		List<Picture> pictureList = new ArrayList<>();
+		pictureList.addAll(picRepository.findByTagsIn(tags));
+		return pictureList;
 	}
 
 	@Override

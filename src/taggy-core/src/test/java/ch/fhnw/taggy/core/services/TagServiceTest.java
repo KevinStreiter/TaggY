@@ -67,7 +67,7 @@ public class TagServiceTest{
 
 		tagsToDelete.remove(0);
 		tagService.deleteTagIn(tagsToDelete);
-		assertEquals("Check if all Tags are Delete and not linked to a picture",Optional.empty(), picService.findPictureByTagsOr(tagsToDelete).get(0));
+		assertEquals("Check if all Tags are Delete and not linked to a picture",0, picService.findPictureByTagsOr(tagsToDelete).size());
 		assertEquals("Check if number of Tags is correct", allBefore-numberDeleted,tagService.findAll().size());
 	}
 

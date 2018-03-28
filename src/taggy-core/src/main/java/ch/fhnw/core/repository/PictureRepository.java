@@ -1,6 +1,7 @@
 package ch.fhnw.core.repository;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ public interface PictureRepository extends JpaRepository<Picture, Long>{
 	
   	Stream<Picture> findByComment(String pictureComment);
 	Stream<Picture> findByTags(Tag tag);
-	List<Picture> findByTagsIn(List<Tag>Tags); //Or solution
+	Set<Picture> findByTagsIn(List<Tag>Tags); //Or solution
 	Stream<Picture> deleteByIdIn(List<Long> ids);
 	Stream<Picture> findByIdIn(List<Long> ids);
 	Stream<Picture> findByIdInAndTags(List<Long> ids,Tag tag);
