@@ -63,6 +63,8 @@
 				<h:graphicImage id="picture"
 					value="http://www.proengineering.ch/images/projekte/fhnw.jpg"
 					styleClass="imageOverView" onclick="show(this,'#{picture.id}');" />
+				<p:tooltip id="toolTipFade" for="picture" value="Comment: #{picture.comment} &lt;br/&gt;
+					Description: #{picture.description}" position="bottom" escape="false"/>
 			</p:dataScroller>
 
 		</h:form>
@@ -73,9 +75,5 @@
 			<input type="hidden" name="selectedPics" id="selectedPics" />
 		</h:form>
 	</ui:define>
-
-
-
-	<ui:define name="details"></ui:define>
 </ui:composition>
 <!-- http://192.168.1.102:8042/wado?objectUID=1.2.826.0.1.3680043.8.654.50.2010.0000000000#{picture.id}&#38;requestType=WADO -->

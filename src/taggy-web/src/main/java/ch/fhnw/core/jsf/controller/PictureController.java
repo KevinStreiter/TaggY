@@ -94,6 +94,7 @@ public class PictureController {
     public void editComment(String comment){
 		picture.setComment(comment);
 		pictureService.save(picture);
+		pictures = pictureService.findAll(orderBy());
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                 FacesMessage.SEVERITY_INFO, "Info", "Comment has been saved"));
 	}
@@ -113,7 +114,7 @@ public class PictureController {
 
 	public List<Picture> getPictures() {
 		if (pictures == null) {
-			logger.info("getPictres is == null");
+			logger.info("getPictures is == null");
 			pictures = pictureService.findAll(orderBy());
 		}
 		logger.info("getPictures Number of Picutres: " + pictures.size() +"Ausgew�hlte Bilder: " + pictures.toString() );
@@ -178,7 +179,7 @@ public class PictureController {
                 }
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_INFO, "Info", "Image-Id(s): " +
-                        selectedPicturesIds + " saved to Tag: " + tagName));
+                        selectedPicturesIds + " has/have been tagged with  " + tagName));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_INFO, "Info", "No Images selected"));
@@ -190,8 +191,7 @@ public class PictureController {
             picture = pictureService.findById(selectedPictureId);
             logger.info("Image Tags: "+tagService.findByPicture(picture).toString());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-                    FacesMessage.SEVERITY_INFO, "Info", "Image-Id: " +
-                     picture.getId() + " saved to Tag: " + tagName));
+                    FacesMessage.SEVERITY_INFO, "Info", "Displayed Image has been tagged with " + tagName));
         }
 
     }
