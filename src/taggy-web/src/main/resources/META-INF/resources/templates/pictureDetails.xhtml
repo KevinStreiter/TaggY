@@ -11,8 +11,11 @@
 		</p:panel>
 		<p:panel id="comment" header="Comment">
 			<p:growl id="growlComment" showDetail="true" />
-			<p:inputText value="#{pictureController.comment}"
-				binding="#{comment}" style="width: 100%;" />
+			<p:inputText id="commentText" value="#{pictureController.comment}"
+				binding="#{comment}" style="width: 100%;"
+				title="Edit Comment, submit by hitting 'Enter'"/>
+			<p:tooltip id="toolTipFocus5" for="commentText" showEvent="focus" hideEvent="blur"
+				position="bottom"/>
 			<p:commandButton update=":fullscreen:comment" value="edit"
 				actionListener="#{pictureController.editComment(comment.value)}"
 				style="display: none" />

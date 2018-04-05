@@ -32,8 +32,6 @@ public class TagController {
     PictureService pictureService;
 
     private Tag selectedTag;
-   
-    
 
     private Tag tag = new Tag();
 
@@ -81,8 +79,10 @@ public class TagController {
             getTags();
         }
     }
-    
-    
+
+    public int getPicturesCount(String tagName) {
+        return tagsService.findByName(tagName).getPictures().size();
+    }
 
     public Tag getSelectedTag() {
         return selectedTag;

@@ -27,7 +27,8 @@
 				sortOrder="ascending" emptyMessage="No Tags available" scrollable="true">
 				<ui:insert name="searchComponent" />
 				<p:column>
-					<h:outputText value="#{tag.tagName}" />
+					<h:outputText id="tag" value="#{tag.tagName}" />
+					<p:tooltip id="toolTipFade2" for="tag" value="Images Amount: #{tagController.getPicturesCount(tag.tagName)}" position="bottom" escape="false"/>
 				</p:column>
 				<p:column style="text-align: center">
 					<ui:insert name="deleteTags" />
@@ -43,8 +44,9 @@
 </h:panelGroup>
 		</h:panelGrid>
 		<p:panel header="Tag create">
-			<p:inputText id="tagname" size="10"
+			<p:inputText id="tagname" size="10" title="Add new Tag to Taglist, submit by hitting 'Enter'"
 				value="#{tagController.tag.tagName}" required="true" maxlength="20" />
+			<p:tooltip id="toolTipFocus3" for="tagname" showEvent="focus" hideEvent="blur" position="bottom" />
 		</p:panel>
 		<input type="hidden" name="selectedPics" id="selectedPics" />
 	</h:form>
