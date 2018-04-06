@@ -70,7 +70,6 @@ public class TagController {
         tagsService.save(tagTemp);
     }
 
-    
     public void deleteSelectedTag(String name){
         Tag tempTag = tagsService.findByName(name);
         logger.info(tempTag.toString());
@@ -80,6 +79,11 @@ public class TagController {
         }
     }
 
+    public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
     public int getPicturesCount(String tagName) {
         return tagsService.findByName(tagName).getPictures().size();
     }

@@ -29,7 +29,14 @@
     <ui:define name="deleteTags">
         <p:commandButton update="tags" icon="ui-icon-trash" title="Delete"
                          action="#{tagController.deleteSelectedTag(tag.tagName)}"
-                         style="align-content: center" immediate="true"/>
+                         style="align-content: center" immediate="true">
+            <p:confirm header="Confirmation" message= "This action will delete the Tag: '#{tag.tagName}' in every Image!
+                       Are you sure to delete the selected Tag?" icon="ui-icon-alert"/>
+        </p:commandButton>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
     </ui:define>
 
     <ui:define name="systemButtons">
