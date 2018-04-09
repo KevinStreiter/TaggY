@@ -92,12 +92,12 @@ public class PictureServiceImpl implements PictureService {
 
 	@Override
 	public List<Picture> findByCommentContaining(String partComment) {
-		return picRepository.findByCommentContaining(partComment);
+		return picRepository.findByCommentIgnoreCaseContaining(partComment);
 	}
 
 	@Override
 	public List<Picture> findByDescriptionContaining(String partDescription) {
-		return picRepository.findByDescriptionContaining(partDescription);
+		return picRepository.findByDescriptionIgnoreCaseContaining(partDescription);
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class PictureServiceImpl implements PictureService {
 		logger.info("Length of splited query: "+queryParts.length+" "+queryParts.toString());
 		List<Picture> pictures = null;
 		for (String part:queryParts) {
-			List<Picture> picturesTmp = picRepository.findByCommentContainingOrDescriptionContaining(part, part, sort);
+			List<Picture> picturesTmp = picRepository.findByCommentIgnoreCaseContainingOrDescriptionIgnoreCaseContaining(part, part, sort);
 			if(pictures==null) {
 				pictures=picturesTmp;
 			}else {

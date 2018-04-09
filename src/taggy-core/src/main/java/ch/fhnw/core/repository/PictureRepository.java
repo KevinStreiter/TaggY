@@ -28,9 +28,9 @@ public interface PictureRepository extends JpaRepository<Picture, Long>{
 	Stream<Picture> findByIdInAndTags(List<Long> ids,Tag tag);
 	Picture findById(Long id);
 	Stream<Picture> findByTags_id(Long id);
-	List<Picture> findByCommentContaining(String partComment);
-	List<Picture> findByDescriptionContaining(String partDescription);
-	List<Picture> findByCommentContainingOrDescriptionContaining(String domment, String description, Sort sort);
+	List<Picture> findByCommentIgnoreCaseContaining(String partComment);
+	List<Picture> findByDescriptionIgnoreCaseContaining(String partDescription);
+	List<Picture> findByCommentIgnoreCaseContainingOrDescriptionIgnoreCaseContaining(String domment, String description, Sort sort);
 	List<Picture> findAll(Sort sort);
 
 }
