@@ -5,6 +5,7 @@ import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.services.PictureService;
 import ch.fhnw.core.services.TagsService;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.slf4j.Logger;
@@ -14,12 +15,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
@@ -40,10 +38,10 @@ public class PictureController {
 	private List<Tag> selectedTags = new ArrayList<>();
 	private String searchText = "";
 	private List<Tag> tags;
-	private String previousPage = null;
 
 	private void pictureQuery() {
 		pictures = pictureService.searchByTextCombinedTag(searchText, selectedTags, orderBy(), andOrChose);
+		logger.info("Picture Querry: "+pictures.size());
 
 	}
 	private Sort orderBy() {
@@ -53,6 +51,8 @@ public class PictureController {
 
 	public void changeChose(ValueChangeEvent e) {
 		andOrChose = e.getNewValue().toString();
+		logger.info("RadioButton Changesed, value: "+andOrChose);
+		pictureQuery();
 	}
 
 	public void textQuery() {
@@ -66,7 +66,7 @@ public class PictureController {
 
 	public void onRowSelect(SelectEvent event) {
 		pictureQuery();
-		logger.info("row Select " + ((Tag) event.getObject()).getTagName() + " " + getSelectedTags().toString());
+		logger.info("row Select " + ((Tag) event.getObject()).getTagName());
 	}
 
 	public void onRowUnselect(UnselectEvent event) {
@@ -199,14 +199,8 @@ public class PictureController {
     }
 
     public void onReload() {
-        UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-        String id = viewRoot.getViewId();
-        if (previousPage != null && (previousPage.equals(id))) {
-        	pictures = null;
-        	selectedTags = new ArrayList<>();
-           // It's a reload event
-        }
-        previousPage = id;
+        logger.info("onReload:");
+        pictureQuery();
     }
    
 

@@ -6,48 +6,48 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<h:form id="tagsTable" styleClass="tagsTableForm">
-		
+
 		<h:panelGrid rows="2" rowClasses=" tagsColumns"
 			styleClass="tagsTableGrid">
 			<h:panelGroup>
-				<h:selectOneRadio required="true" value="#{pictureController.chose}"
-					valueChangeListener="#{pictureController.changeChose}">
-					<f:ajax />
-					<f:selectItem itemValue="or" itemLabel="or" />
-					<f:selectItem itemValue="and" itemLabel="and" />
-				</h:selectOneRadio>
+				<ui:insert name="radioButton" />
 				<p:growl id="growlAddTags" showDetail="true" />
 				<h:commandButton value="save" type="submit"
 					actionListener="#{tagController.save}" style="display: none">
 					<f:ajax execute="@form growlAddTags" render="@form" />
 				</h:commandButton>
-			
-			<p:dataTable id="tags" value="#{tagController.tags}" var="tag"
-				rowSelectMode="checkbox" styleClass="tagsTable"
-				selection="#{pictureController.selectedTags}" rowKey="#{tag.id}"
-				sortOrder="ascending" emptyMessage="No Tags available" scrollable="true">
-				<ui:insert name="searchComponent" />
-				<p:column>
-					<h:outputText id="tag" value="#{tag.tagName}" />
-					<p:tooltip id="toolTipFade2" for="tag" value="Images with this tag: #{TagController.getPicturesCount(tag.tagName)}" position="bottom" escape="false"/>
-				</p:column>
-				<p:column style="text-align: center">
-					<ui:insert name="deleteTags" />
-					<p:commandButton update="@form" icon="ui-icon-plus"
-						title="AddTagToPictures" onclick="setList()"
-						actionListener="#{pictureController.addTagToPictures(tag.tagName)}"
-						style="align-content: center" immediate="true">
-						<ui:insert name="updateAddButton" />
-					</p:commandButton>
-					<p:growl id="growlAddTagsToPics" showDetail="true" />
-				</p:column>
-			</p:dataTable>
-</h:panelGroup>
+
+				<p:dataTable id="tags" value="#{tagController.tags}" var="tag"
+					rowSelectMode="checkbox" styleClass="tagsTable"
+					selection="#{pictureController.selectedTags}" rowKey="#{tag.id}"
+					sortOrder="ascending" emptyMessage="No Tags available"
+					scrollable="true">
+					<ui:insert name="searchComponent" />
+					<p:column>
+						<h:outputText id="tag" value="#{tag.tagName}" />
+						<p:tooltip id="toolTipFade2" for="tag"
+							value="Images with this tag: #{tagController.getPicturesCount(tag.tagName)}"
+							position="bottom" escape="false" />
+					</p:column>
+					<p:column style="text-align: center">
+						<ui:insert name="deleteTags" />
+						<p:commandButton update="@form" icon="ui-icon-plus"
+							title="AddTagToPictures" onclick="setList()"
+							actionListener="#{pictureController.addTagToPictures(tag.tagName)}"
+							style="align-content: center" immediate="true">
+							<ui:insert name="updateAddButton" />
+						</p:commandButton>
+						<p:growl id="growlAddTagsToPics" showDetail="true" />
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
 		</h:panelGrid>
 		<p:panel header="Tag create">
-			<p:inputText id="tagname" size="10" title="Add new Tag to Taglist, submit by hitting 'Enter'"
+			<p:inputText id="tagname" size="10"
+				title="Add new Tag to Taglist, submit by hitting 'Enter'"
 				value="#{tagController.tag.tagName}" required="true" maxlength="20" />
-			<p:tooltip id="toolTipFocus3" for="tagname" showEvent="focus" hideEvent="blur" position="bottom" />
+			<p:tooltip id="toolTipFocus3" for="tagname" showEvent="focus"
+				hideEvent="blur" position="bottom" />
 		</p:panel>
 		<input type="hidden" name="selectedPics" id="selectedPics" />
 	</h:form>
