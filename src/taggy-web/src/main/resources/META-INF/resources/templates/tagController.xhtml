@@ -6,6 +6,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<h:form id="tagsTable" styleClass="tagsTableForm">
+		
 		<h:panelGrid rows="2" rowClasses=" tagsColumns"
 			styleClass="tagsTableGrid">
 			<h:panelGroup>
@@ -28,7 +29,7 @@
 				<ui:insert name="searchComponent" />
 				<p:column>
 					<h:outputText id="tag" value="#{tag.tagName}" />
-					<p:tooltip id="toolTipFade2" for="tag" value="Images Amount: #{tagController.getPicturesCount(tag.tagName)}" position="bottom" escape="false"/>
+					<p:tooltip id="toolTipFade2" for="tag" value="Images with this tag: #{TagController.getPicturesCount(tag.tagName)}" position="bottom" escape="false"/>
 				</p:column>
 				<p:column style="text-align: center">
 					<ui:insert name="deleteTags" />

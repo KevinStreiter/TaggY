@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
@@ -39,6 +40,7 @@ public class PictureController {
 	private List<Tag> selectedTags = new ArrayList<>();
 	private String searchText = "";
 	private List<Tag> tags;
+	private String previousPage = null;
 
 	private void pictureQuery() {
 		pictures = pictureService.searchByTextCombinedTag(searchText, selectedTags, orderBy(), andOrChose);
@@ -117,7 +119,7 @@ public class PictureController {
 			logger.info("getPictures is == null");
 			pictures = pictureService.findAll(orderBy());
 		}
-		logger.info("getPictures Number of Picutres: " + pictures.size() +"Ausgew�hlte Bilder: " + pictures.toString() );
+		logger.info("getPictures Number of Picutres: " + pictures.size() +"Ausgewählte Bilder: " + pictures.toString() );
 		picture=null;
 		return pictures;
 	}
@@ -196,7 +198,17 @@ public class PictureController {
 
     }
 
-
+    public void onReload() {
+        UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
+        String id = viewRoot.getViewId();
+        if (previousPage != null && (previousPage.equals(id))) {
+        	pictures = null;
+        	selectedTags = new ArrayList<>();
+           // It's a reload event
+        }
+        previousPage = id;
+    }
+   
 
 	public String getSearchText() {
 		return searchText;

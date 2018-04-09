@@ -1,91 +1,98 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
-                template="templates/main.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="templates/main.xhtml">
 
-    <ui:define name="tags">
-        <ui:include src="/templates/tagController.xhtml"/>
-    </ui:define>
+	<ui:define name="tags">
+		<ui:include src="/templates/tagController.xhtml" />
+	</ui:define>
 
-    <ui:define name="searchComponent">
-        <p:ajax event="rowSelectCheckbox"
-                listener="#{pictureController.onRowSelect}"
-                update=":hfrom:pictureGrid"/>
-        <p:ajax event="rowUnselectCheckbox"
-                listener="#{pictureController.onRowUnselect}"
-                update=":hfrom:pictureGrid"/>
-        <p:ajax event="toggleSelect" listener="#{pictureController.toggleAll}"
-                update=":hfrom:pictureGrid"/>
-        <p:column selectionMode="multiple"
-                  style="width:16px;text-align:center"/>
-    </ui:define>
+	<ui:define name="searchComponent">
+		<p:ajax event="rowSelectCheckbox"
+			listener="#{pictureController.onRowSelect}"
+			update=":hfrom:pictureGrid" />
+		<p:ajax event="rowUnselectCheckbox"
+			listener="#{pictureController.onRowUnselect}"
+			update=":hfrom:pictureGrid" />
+		<p:ajax event="toggleSelect" listener="#{pictureController.toggleAll}"
+			update=":hfrom:pictureGrid" />
+		<p:column selectionMode="multiple"
+			style="width:16px;text-align:center" />
+	</ui:define>
 
-    <ui:define name="details">
-    </ui:define>
+	<ui:define name="details">
+	</ui:define>
 
-    <ui:define name="deleteTags">
-        <p:commandButton update="tags" icon="ui-icon-trash" title="Delete"
-                         action="#{tagController.deleteSelectedTag(tag.tagName)}"
-                         style="align-content: center" immediate="true">
-            <p:confirm header="Confirmation" message= "This action will delete the Tag: '#{tag.tagName}' in every Image!
-                       Are you sure to delete the selected Tag?" icon="ui-icon-alert"/>
-        </p:commandButton>
-        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-        </p:confirmDialog>
-    </ui:define>
+	<ui:define name="deleteTags">
+		<p:commandButton update="tags" icon="ui-icon-trash" title="Delete"
+			action="#{tagController.deleteSelectedTag(tag.tagName)}"
+			style="align-content: center" immediate="true">
+			<p:confirm header="Confirmation"
+				message="This action will delete the Tag: '#{tag.tagName}' in every Image!
+                       Are you sure to delete the selected Tag?"
+				icon="ui-icon-alert" />
+		</p:commandButton>
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+	</ui:define>
 
-    <ui:define name="systemButtons">
-        <h:commandLink action="#{pictureController.resetSearch}">
-            <span>Reset</span>
-        </h:commandLink>
-    </ui:define>
+	<ui:define name="systemButtons">
+		<h:commandLink action="#{pictureController.resetSearch}">
+			<span>Reset</span>
+		</h:commandLink>
+	</ui:define>
 
-    <ui:define name="searchHeader">
-        <h:panelGroup>
-            <h:panelGrid columns="2" style=" width: 100%;"
-                         columnClasses="textRight">
-                <h:outputText value="Text search"/>
-                <p:inputText id="queryInput" style="width: 99%;"
-                             title="Search in Description/Comment,
+	<ui:define name="searchHeader">
+		<h:panelGroup>
+			<h:panelGrid columns="2" style=" width: 100%;"
+				columnClasses="textRight">
+				<h:outputText value="Text search" />
+				<p:inputText id="queryInput" style="width: 99%;"
+					title="Search in Description/Comment,
 				                    use space to search for multiple inputs,
 				                    submit by hitting 'Enter'"
-                             value="#{pictureController.searchText}"/>
-                <p:tooltip id="toolTipFocus4" for="queryInput" showEvent="focus" hideEvent="blur" position="bottom"/>
-                <h:commandButton value="quer"
-                                 actionListener="#{pictureController.textQuery}"
-                                 style="display: none">
-                    <f:ajax execute="@form" render="hfrom:pictureGrid"/>
-                </h:commandButton>
-            </h:panelGrid>
-        </h:panelGroup>
-    </ui:define>
+					value="#{pictureController.searchText}" />
+				<p:tooltip id="toolTipFocus4" for="queryInput" showEvent="focus"
+					hideEvent="blur" position="bottom" />
+				<h:commandButton value="quer"
+					actionListener="#{pictureController.textQuery}"
+					style="display: none">
+					<f:ajax execute="@form" render="hfrom:pictureGrid" />
+				</h:commandButton>
+			</h:panelGrid>
+		</h:panelGroup>
+	</ui:define>
 
-    <ui:define name="images">
-        <h:form id="hfrom" styleClass="ui-noborder">
-            <p:dataScroller id="pictureGrid"
-                            value="#{pictureController.pictures}" var="picture" chunkSize="150"
-                            scrollable="true" styleClass="DataScroller" mode="inline"
-                            liveScroll="true">
-                <h:graphicImage id="picture"
-                                value="http://www.proengineering.ch/images/projekte/fhnw.jpg"
-                                styleClass="imageOverView" onclick="show(this,'#{picture.id}');"/>
-                <p:tooltip id="toolTipFade" for="picture" value="Comment: #{picture.comment} &lt;br/&gt;
-				    Description: #{picture.description}" position="bottom" escape="false"
-                           hideEvent="click mouseleave"/>
-            </p:dataScroller>
+	<ui:define name="images">
+		<f:viewAction action="#{pictureController.onReload}" onPostBack="true" />
+		<h:form id="hfrom" styleClass="ui-noborder">
+			<p:dataScroller id="pictureGrid"
+				value="#{pictureController.pictures}" var="picture" chunkSize="150"
+				scrollable="true" styleClass="DataScroller" mode="inline"
+				liveScroll="true">
+				<h:graphicImage id="picture"
+					value="http://www.proengineering.ch/images/projekte/fhnw.jpg"
+					styleClass="imageOverView" onclick="show(this,'#{picture.id}');" />
+				<p:tooltip id="toolTipFade" for="picture"
+					value="Comment: #{picture.comment} &lt;br/&gt;
+				    Description: #{picture.description}"
+					position="bottom" escape="false" hideEvent="click mouseleave" />
+			</p:dataScroller>
 
-        </h:form>
-        <h:form id="hidden">
-            <input type="hidden" name="selectedPic" id="selectedPic"/>
-            <p:remoteCommand name="goToFullScreen"
-                             action="#{pictureController.selectImage}" immediate="true"/>
-            <input type="hidden" name="selectedPics" id="selectedPics"/>
-        </h:form>
-    </ui:define>
+		</h:form>
+		<h:form id="hidden">
+			<input type="hidden" name="selectedPic" id="selectedPic" />
+			<p:remoteCommand name="goToFullScreen"
+				action="#{pictureController.selectImage}" immediate="true" />
+			<input type="hidden" name="selectedPics" id="selectedPics" />
+		</h:form>
+	</ui:define>
 </ui:composition>
-        <!-- http://192.168.1.102:8042/wado?objectUID=1.2.826.0.1.3680043.8.654.50.2010.0000000000#{picture.id}&#38;requestType=WADO -->
+<!-- http://192.168.1.102:8042/wado?objectUID=1.2.826.0.1.3680043.8.654.50.2010.0000000000#{picture.id}&#38;requestType=WADO -->
