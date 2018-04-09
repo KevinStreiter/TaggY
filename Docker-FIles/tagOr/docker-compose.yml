@@ -1,0 +1,5 @@
+version: "2"
+services:
+          tag:
+                  build: Taggy-Or
+                  ports: ["8042:8042"]

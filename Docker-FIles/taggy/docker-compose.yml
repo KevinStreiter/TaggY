@@ -1,0 +1,22 @@
+version: "3"
+services:
+    taggyweb:
+        build: ./taggyweb
+        ports:
+            - "8080:8080"
+        depends_on:
+            - taggydb
+        command: ["./wait-for-it.sh", "db:5432"]
+        
+    taggydb: 
+        image: postgres:9.4
+        environment:
+            - POSTGRES_USER=taggy
+            - POSTGRES_PASSWORD=taggytaggy
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+            - postgres-data:/var/lib/postgresql/data
+volumes:
+  postgres-data: {}
