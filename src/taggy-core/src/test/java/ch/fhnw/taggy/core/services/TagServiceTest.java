@@ -60,6 +60,7 @@ public class TagServiceTest{
 		int allBefore = tagService.findAll().size();
 		int numberDeleted = tagsToDelete.size();
 		Tag tagToDelete = tagsToDelete.get(0);
+		System.out.println(tagToDelete.toString());
 		tagService.deleteTag(tagToDelete);
 		assertNull("looks if deleted tag excists",tagService.findByName(tagToDelete.getTagName()));
 		assertEquals("check if you not able to find pic with deleted Tag",Optional.empty(),picService.findPictureByTag(tagToDelete).findFirst());
