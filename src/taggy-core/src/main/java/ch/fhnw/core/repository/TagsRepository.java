@@ -11,9 +11,10 @@ import ch.fhnw.core.domain.Tag;
 
 @Repository
 @Transactional
-public interface TagsRepository extends JpaRepository<Tag, Long>{
+public interface TagsRepository extends JpaRepository<Tag, Long> {
 
 	Tag findByName(String tagName);
+
 	List<Tag> findByPictures(Picture picture);
 
 }

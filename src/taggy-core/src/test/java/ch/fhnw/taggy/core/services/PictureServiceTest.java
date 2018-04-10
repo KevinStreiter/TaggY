@@ -17,7 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.fhnw.core.App;
+import ch.fhnw.core.TaggyCore;
 import ch.fhnw.core.domain.Picture;
 import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.services.PictureService;
@@ -26,7 +26,7 @@ import ch.fhnw.taggy.core.config.TestDataBuilder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@SpringBootTest(classes = App.class)
+@SpringBootTest(classes = TaggyCore.class)
 @AutoConfigureTestDatabase
 public class PictureServiceTest {
 	@Autowired
@@ -58,13 +58,13 @@ public class PictureServiceTest {
 
 	@Test
 	public void testFindPictureByTagsOR() {
-		
+
 		Picture testPic = testData.getTestPics().get(1);
 		List<Tag> tags = tagService.findByPicture(testPic);
 		tags.remove(1);
-		logger.info("Test Pics find Or tags: " +tags.toString());
+		logger.info("Test Pics find Or tags: " + tags.toString());
 		List<Picture> istPics = picService.findPictureByTagsOr(tags);
-		logger.info("test find Picrue Or"+istPics.toString()+"\t"+testPic.toString());
+		logger.info("test find Picrue Or" + istPics.toString() + "\t" + testPic.toString());
 		assertEquals("find Pics by Tags Or function", 2, istPics.size());
 	}
 
@@ -81,22 +81,27 @@ public class PictureServiceTest {
 		pics = picService.findByCommentOrDescription("L x d L", new Sort(Sort.Direction.DESC, "Id"));
 		assertTrue("checks if multiple search is working", pics.isEmpty());
 	}
-	
+
 	@Test
 	public void testSearchByTextCombinedTag() {
-		List<Picture> testPic= picService.findByCommentOrDescription("Leber", new Sort(Sort.Direction.DESC, "Id"));
-		List<Picture> foundPics = picService.searchByTextCombinedTag("leber", testPic.get(0).getTags(), new Sort(Sort.Direction.DESC, "Id"), "or");
+		List<Picture> testPic = picService.findByCommentOrDescription("Leber", new Sort(Sort.Direction.DESC, "Id"));
+		List<Picture> foundPics = picService.searchByTextCombinedTag("leber", testPic.get(0).getTags(),
+				new Sort(Sort.Direction.DESC, "Id"), "or");
 		List<Tag> tags = tagService.findAll();
 		assertEquals("search combine, 1 Result from text search or tags ", 1, foundPics.size());
-		foundPics=picService.searchByTextCombinedTag("", testPic.get(0).getTags(), new Sort(Sort.Direction.DESC, "Id"), "and");
+		foundPics = picService.searchByTextCombinedTag("", testPic.get(0).getTags(),
+				new Sort(Sort.Direction.DESC, "Id"), "and");
 		assertEquals("search by tags, same in 2 Pictures, with and", 2, foundPics.size());
-		foundPics=picService.searchByTextCombinedTag("", tags.subList(2, 4), new Sort(Sort.Direction.DESC, "Id"), "or");
-		assertEquals("Search images with tags from all 3 with or",3,foundPics.size());
-		foundPics=picService.searchByTextCombinedTag("", tags.subList(2, 4), new Sort(Sort.Direction.DESC, "Id"), "and");
+		foundPics = picService.searchByTextCombinedTag("", tags.subList(2, 4), new Sort(Sort.Direction.DESC, "Id"),
+				"or");
+		assertEquals("Search images with tags from all 3 with or", 3, foundPics.size());
+		foundPics = picService.searchByTextCombinedTag("", tags.subList(2, 4), new Sort(Sort.Direction.DESC, "Id"),
+				"and");
 		assertEquals("Search imgaes with tags from all 3 with or, should find nothing", 0, foundPics.size());
-		foundPics=picService.searchByTextCombinedTag("Pick Lunge", tags.subList(2, 4), new Sort(Sort.Direction.DESC, "Id"), "or");
-		assertEquals("search imgaes by text with two words and tags from all with or", 2,foundPics.size());
-		
+		foundPics = picService.searchByTextCombinedTag("Pick Lunge", tags.subList(2, 4),
+				new Sort(Sort.Direction.DESC, "Id"), "or");
+		assertEquals("search imgaes by text with two words and tags from all with or", 2, foundPics.size());
+
 	}
 
 }

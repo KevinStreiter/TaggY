@@ -28,16 +28,6 @@ public class PictureServiceImpl implements PictureService {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
-	public Stream<Picture> findByComment(String pictureComment) {
-		return picRepository.findByComment(pictureComment);
-	}
-
-	@Override
-	public Picture findById(Long id) {
-		return picRepository.findById(id);
-	}
-
-	@Override
 	public List<Picture> findPictureByTagsAnd(List<Tag> tags) {
 		List<Picture> picList = new ArrayList<>();
 		if (tags.size() == 0) {
@@ -59,28 +49,6 @@ public class PictureServiceImpl implements PictureService {
 	}
 
 	@Override
-	public PictureService save(Picture pic) {
-		picRepository.save(pic);
-		return this;
-
-	}
-
-	@Override
-	public List<Picture> findAll() {
-		return picRepository.findAll();
-	}
-
-	@Override
-	public Stream<Picture> findByTag_id(Long id) {
-		return picRepository.findByTags_id(id);
-	}
-
-	@Override
-	public Stream<Picture> findPictureByTag(Tag tag) {
-		return picRepository.findByTags(tag);
-	}
-
-	@Override
 	public List<Picture> findPictureByTagsOr(List<Tag> tags) {
 		List<Picture> pictureList = new ArrayList<>();
 		pictureList.addAll(picRepository.findByTagsIn(tags));
@@ -98,14 +66,10 @@ public class PictureServiceImpl implements PictureService {
 	}
 
 	@Override
-	public List<Picture> findAll(Sort sort) {
-		return picRepository.findAll(sort);
-	}
-
-	@Override
 	public List<Picture> findByCommentOrDescription(String query, Sort sort) {
 		String[] queryParts = query.split(" ");
-		logger.info("Find by Comment, possible mutltiple words Number of Words:  " + queryParts.length + " Words: " + queryParts.toString());
+		logger.info("Find by Comment, possible mutltiple words Number of Words:  " + queryParts.length + " Words: "
+				+ queryParts.toString());
 		List<Picture> pictures = null;
 		for (String part : queryParts) {
 			List<Picture> picturesTmp = picRepository
@@ -159,6 +123,43 @@ public class PictureServiceImpl implements PictureService {
 		}
 		return mergedList;
 
+	}
+
+	@Override
+	public Stream<Picture> findPictureByTag(Tag tag) {
+		return picRepository.findByTags(tag);
+	}
+
+	@Override
+	public Stream<Picture> findByTag_id(Long id) {
+		return picRepository.findByTags_id(id);
+	}
+
+	@Override
+	public List<Picture> findAll(Sort sort) {
+		return picRepository.findAll(sort);
+	}
+
+	@Override
+	public List<Picture> findAll() {
+		return picRepository.findAll();
+	}
+
+	@Override
+	public PictureService save(Picture pic) {
+		picRepository.save(pic);
+		return this;
+	
+	}
+
+	@Override
+	public Stream<Picture> findByComment(String pictureComment) {
+		return picRepository.findByComment(pictureComment);
+	}
+
+	@Override
+	public Picture findById(Long id) {
+		return picRepository.findById(id);
 	}
 
 }
