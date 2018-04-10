@@ -76,10 +76,27 @@ public class PictureServiceTest {
 		List<Picture> pics = picService.findByCommentOrDescription(comment1, new Sort(Sort.Direction.DESC, "Id"));
 		logger.info("Test find By Comment" + pics.get(0));
 		assertEquals("Find comment like", 2, pics.size());
-		pics = picService.findByCommentOrDescription("L d", new Sort(Sort.Direction.DESC, "Id"));
+		pics = picService.findByCommentOrDescription("Leber d", new Sort(Sort.Direction.DESC, "Id"));
 		assertEquals("multiple word query", 1, pics.size());
 		pics = picService.findByCommentOrDescription("L x d L", new Sort(Sort.Direction.DESC, "Id"));
 		assertTrue("checks if multiple search is working", pics.isEmpty());
+	}
+	
+	@Test
+	public void testSearchByTextCombinedTag() {
+		List<Picture> testPic= picService.findByCommentOrDescription("Leber", new Sort(Sort.Direction.DESC, "Id"));
+		List<Picture> foundPics = picService.searchByTextCombinedTag("leber", testPic.get(0).getTags(), new Sort(Sort.Direction.DESC, "Id"), "or");
+		List<Tag> tags = tagService.findAll();
+		assertEquals("search combine, 1 Result from text search or tags ", 1, foundPics.size());
+		foundPics=picService.searchByTextCombinedTag("", testPic.get(0).getTags(), new Sort(Sort.Direction.DESC, "Id"), "and");
+		assertEquals("search by tags, same in 2 Pictures, with and", 2, foundPics.size());
+		foundPics=picService.searchByTextCombinedTag("", tags.subList(2, 4), new Sort(Sort.Direction.DESC, "Id"), "or");
+		assertEquals("Search images with tags from all 3 with or",3,foundPics.size());
+		foundPics=picService.searchByTextCombinedTag("", tags.subList(2, 4), new Sort(Sort.Direction.DESC, "Id"), "and");
+		assertEquals("Search imgaes with tags from all 3 with or, should find nothing", 0, foundPics.size());
+		foundPics=picService.searchByTextCombinedTag("Pick Lunge", tags.subList(2, 4), new Sort(Sort.Direction.DESC, "Id"), "or");
+		assertEquals("search imgaes by text with two words and tags from all with or", 2,foundPics.size());
+		
 	}
 
 }

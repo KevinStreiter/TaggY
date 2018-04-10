@@ -106,8 +106,8 @@ public class Picture {
 		if(getTags().contains(tag)){
 			getTags().remove(tag);
 		}
-		if(tag.getPictures().contains(tag)){
-			tag.getPictures().remove(tag);
+		if(tag.getPictures().contains(this)){
+			tag.getPictures().remove(this);
 		}
 	}
 

@@ -11,9 +11,9 @@ import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.services.PictureService;
 import ch.fhnw.core.services.TagsService;
 /**
- * pic1 and pic2 has the same Tags the first Three of the list
- * pic3 has the other 3 Tags
- * @author 7977.667
+ * pic1 and pic2 has the same Tags the first Three of the list Tags: Schön, Brutal, Komisch
+ * pic3 has the other 3 Tags: Blutig grün rot
+ * @author Joel Zimmerli
  *
  */
 @Transactional

@@ -105,7 +105,7 @@ public class PictureServiceImpl implements PictureService {
 	@Override
 	public List<Picture> findByCommentOrDescription(String query, Sort sort) {
 		String[] queryParts = query.split(" ");
-		logger.info("Length of splited query: " + queryParts.length + " " + queryParts.toString());
+		logger.info("Find by Comment, possible mutltiple words Number of Words:  " + queryParts.length + " Words: " + queryParts.toString());
 		List<Picture> pictures = null;
 		for (String part : queryParts) {
 			List<Picture> picturesTmp = picRepository
@@ -114,14 +114,12 @@ public class PictureServiceImpl implements PictureService {
 				pictures = picturesTmp;
 			} else {
 				List<Picture> result = new ArrayList<>();
-				logger.info("Comparation: " + picturesTmp.toString() + " has list " + pictures.toString());
 				for (Picture pic : picturesTmp) {
 					if (pictures.contains(pic)) {
 						result.add(pic);
 					}
 				}
 				pictures = result;
-				logger.info("Query Text-Search: " + pictures.toString() + query);
 			}
 		}
 		return pictures;
@@ -129,14 +127,13 @@ public class PictureServiceImpl implements PictureService {
 
 	@Override
 	public List<Picture> searchByTextCombinedTag(String textQuery, List<Tag> tags, Sort sort, String andOr) {
-		logger.info("Search for Picture: ");
+		logger.info("Search for Picture combined querry Text and Tags ");
 		Set<Picture> result = new HashSet<>();
 		List<Picture> endList = new ArrayList<>();
 		if (tags.size() == 0) {
 			return findByCommentOrDescription(textQuery, sort);
 		}
 		if (textQuery.length() == 0) {
-			logger.info("text is 0");
 			if (andOr.equals("or")) {
 				result.addAll(findPictureByTagsOr(tags));
 				endList.addAll(result);
@@ -153,16 +150,13 @@ public class PictureServiceImpl implements PictureService {
 		}
 	}
 
-	private List<Picture> mergeLists(List<Picture> list1, List<Picture> list2) { 
-		logger.info("merger both list: "+list1.toString()+"\t "+list2.toString());
+	private List<Picture> mergeLists(List<Picture> list1, List<Picture> list2) {
 		List<Picture> mergedList = new ArrayList<>();
 		for (Picture picList1 : list1) {
-			logger.info("contains: " + list2.contains(picList1));
 			if (list2.contains(picList1)) {
 				mergedList.add(picList1);
 			}
 		}
-		logger.info("merge List and:" + mergedList.toString());
 		return mergedList;
 
 	}
