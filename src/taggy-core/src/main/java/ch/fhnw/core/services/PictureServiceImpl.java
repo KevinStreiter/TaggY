@@ -1,7 +1,5 @@
 package ch.fhnw.core.services;
 
-
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +24,7 @@ import ch.fhnw.core.domain.Tag;
 public class PictureServiceImpl implements PictureService {
 	@Autowired
 	PictureRepository picRepository;
-	
+
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
@@ -39,33 +37,32 @@ public class PictureServiceImpl implements PictureService {
 		return picRepository.findById(id);
 	}
 
-
 	@Override
 	public List<Picture> findPictureByTagsAnd(List<Tag> tags) {
-		List<Picture> picList=new ArrayList<>();
-		if(tags.size()==0){
+		List<Picture> picList = new ArrayList<>();
+		if (tags.size() == 0) {
 			return picList;
-		}else if(tags.size()==1){
+		} else if (tags.size() == 1) {
 			picList.addAll(picRepository.findByTagsIn(tags));
 			return picList;
 		}
-		picList=picRepository.findByTags(tags.get(0)).collect(Collectors.toList());
-		for(int i =1; i< tags.size() ;i++){
+		picList = picRepository.findByTags(tags.get(0)).collect(Collectors.toList());
+		for (int i = 1; i < tags.size(); i++) {
 			List<Long> ids = new ArrayList<>();
-			for (Picture pic : picList){
+			for (Picture pic : picList) {
 				ids.add(pic.getId());
 			}
-			picList=picRepository.findByIdInAndTags(ids, tags.get(i)).collect(Collectors.toList());
+			picList = picRepository.findByIdInAndTags(ids, tags.get(i)).collect(Collectors.toList());
 		}
 		return picList;
-		
+
 	}
 
 	@Override
 	public PictureService save(Picture pic) {
 		picRepository.save(pic);
 		return this;
-		
+
 	}
 
 	@Override
@@ -108,22 +105,23 @@ public class PictureServiceImpl implements PictureService {
 	@Override
 	public List<Picture> findByCommentOrDescription(String query, Sort sort) {
 		String[] queryParts = query.split(" ");
-		logger.info("Length of splited query: "+queryParts.length+" "+queryParts.toString());
+		logger.info("Length of splited query: " + queryParts.length + " " + queryParts.toString());
 		List<Picture> pictures = null;
-		for (String part:queryParts) {
-			List<Picture> picturesTmp = picRepository.findByCommentIgnoreCaseContainingOrDescriptionIgnoreCaseContaining(part, part, sort);
-			if(pictures==null) {
-				pictures=picturesTmp;
-			}else {
-				List<Picture> result=new ArrayList<>();
-				logger.info("Comparation: "+picturesTmp.toString()+" has list "+pictures.toString());
-				for (Picture pic :picturesTmp) {
+		for (String part : queryParts) {
+			List<Picture> picturesTmp = picRepository
+					.findByCommentIgnoreCaseContainingOrDescriptionIgnoreCaseContaining(part, part, sort);
+			if (pictures == null) {
+				pictures = picturesTmp;
+			} else {
+				List<Picture> result = new ArrayList<>();
+				logger.info("Comparation: " + picturesTmp.toString() + " has list " + pictures.toString());
+				for (Picture pic : picturesTmp) {
 					if (pictures.contains(pic)) {
-					result.add(pic);
+						result.add(pic);
 					}
 				}
-				pictures=result;
-				logger.info("Query Text-Search: "+pictures.toString()+query);
+				pictures = result;
+				logger.info("Query Text-Search: " + pictures.toString() + query);
 			}
 		}
 		return pictures;
@@ -131,35 +129,42 @@ public class PictureServiceImpl implements PictureService {
 
 	@Override
 	public List<Picture> searchByTextCombinedTag(String textQuery, List<Tag> tags, Sort sort, String andOr) {
-		Set<Picture> result= new HashSet<>();
-		List<Picture> endList= new ArrayList<>();
-		if(tags.size()==0) {
+		logger.info("Search for Picture: ");
+		Set<Picture> result = new HashSet<>();
+		List<Picture> endList = new ArrayList<>();
+		if (tags.size() == 0) {
 			return findByCommentOrDescription(textQuery, sort);
 		}
-		logger.info("Search by Tag " + textQuery.split(" ").length);
-		if(textQuery.length()==0) {
+		if (textQuery.length() == 0) {
+			logger.info("text is 0");
 			if (andOr.equals("or")) {
-				result.addAll(findPictureByTagsOr(tags)); 
+				result.addAll(findPictureByTagsOr(tags));
 				endList.addAll(result);
-				return endList;				
-			}else {
+				return endList;
+			} else {
 				return findPictureByTagsAnd(tags);
 			}
 		}
-		
+
 		if (andOr.equals("or")) {
-			result.addAll(findPictureByTagsOr(tags));
-			result.addAll(findByCommentOrDescription(textQuery, sort));
-			endList.addAll(result);
-			
-			return endList;
-		}else {
-			result.addAll(findByCommentOrDescription(textQuery, sort));
-			result.addAll(findPictureByTagsAnd(tags));
-			endList.addAll(result);
-			return endList;
+			return mergeLists(findPictureByTagsOr(tags), findByCommentOrDescription(textQuery, sort));
+		} else {
+			return mergeLists(findByCommentOrDescription(textQuery, sort), findPictureByTagsAnd(tags));
 		}
 	}
 
+	private List<Picture> mergeLists(List<Picture> list1, List<Picture> list2) { 
+		logger.info("merger both list: "+list1.toString()+"\t "+list2.toString());
+		List<Picture> mergedList = new ArrayList<>();
+		for (Picture picList1 : list1) {
+			logger.info("contains: " + list2.contains(picList1));
+			if (list2.contains(picList1)) {
+				mergedList.add(picList1);
+			}
+		}
+		logger.info("merge List and:" + mergedList.toString());
+		return mergedList;
+
+	}
 
 }

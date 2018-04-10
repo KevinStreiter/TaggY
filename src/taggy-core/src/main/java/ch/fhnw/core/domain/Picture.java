@@ -116,7 +116,6 @@ public class Picture {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
 		return result;
 	}
 
@@ -129,12 +128,13 @@ public class Picture {
 		if (getClass() != obj.getClass())
 			return false;
 		Picture other = (Picture) obj;
-		if (uid == null) {
-			if (other.uid != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!uid.equals(other.uid))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
+
 	
 }

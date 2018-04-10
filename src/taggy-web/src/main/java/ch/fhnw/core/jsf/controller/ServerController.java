@@ -1,7 +1,6 @@
 package ch.fhnw.core.jsf.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +8,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-@Scope(value = "session")
+@Scope(value = "request")
 @Component(value = "serverController")
 public class ServerController {
 

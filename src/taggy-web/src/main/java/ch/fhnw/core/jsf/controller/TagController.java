@@ -1,11 +1,8 @@
 package ch.fhnw.core.jsf.controller;
 
-import ch.fhnw.core.domain.Picture;
 import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.services.PictureService;
 import ch.fhnw.core.services.TagsService;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +12,9 @@ import org.springframework.stereotype.Component;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-@Scope(value = "session")
+@Scope("view")
 @Component(value = "tagController")
 public class TagController {
 

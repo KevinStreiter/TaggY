@@ -33,7 +33,7 @@
 	<ui:define name="radioButton">
 		<h:selectOneRadio required="true" value="#{pictureController.chose}"
 			valueChangeListener="#{pictureController.changeChose}">
-			<f:ajax render=":hfrom:pictureGrid" onevent="resetList()"/>
+			<f:ajax render=":hfrom:pictureGrid" onevent="resetList()" />
 			<f:selectItem itemValue="or" itemLabel="or" />
 			<f:selectItem itemValue="and" itemLabel="and" />
 		</h:selectOneRadio>
@@ -78,7 +78,8 @@
 				<h:commandButton value="quer"
 					actionListener="#{pictureController.textQuery}"
 					style="display: none">
-					<f:ajax execute="@form" render="hfrom:pictureGrid" onevent="resetList()"/>
+					<f:ajax execute="@form" render="hfrom:pictureGrid"
+						onevent="resetList()" />
 				</h:commandButton>
 			</h:panelGrid>
 		</h:panelGroup>

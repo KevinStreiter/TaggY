@@ -87,7 +87,7 @@ public class PictureController {
     	Long id = Long.parseLong( selected);
 		picture = pictureService.findById(id);
 		tags = tagService.findByPicture(picture);
-		logger.info("Seleceted Image given id: ");
+		logger.info("Seleceted Image given id: "+picture.toString());
 		
 		return "fullScreen?faces-redirect=true";
 	}
@@ -119,7 +119,7 @@ public class PictureController {
 			logger.info("getPictures is == null");
 			pictures = pictureService.findAll(orderBy());
 		}
-		logger.info("getPictures Number of Picutres: " + pictures.size() +"Ausgewählte Bilder: " + pictures.toString() );
+		logger.info("getPictures Number of Picutres: " + pictures.size() +"found Pictures: " + pictures.toString() );
 		picture=null;
 		return pictures;
 	}
