@@ -85,7 +85,7 @@ public class PictureController {
     	Long id = Long.parseLong( selected);
 		picture = pictureService.findById(id);
 		tags = tagService.findByPicture(picture);
-		logger.info("Selected Image given id: "+picture.toString());
+		logger.info("Selected Image given id: "+picture.getId());
 		
 		return "fullScreen?faces-redirect=true";
 	}

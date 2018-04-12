@@ -68,8 +68,7 @@ public class PictureServiceImpl implements PictureService {
 	@Override
 	public List<Picture> findByCommentOrDescription(String query, Sort sort) {
 		String[] queryParts = query.split(" ");
-		logger.info("Find by Comment, possible mutltiple words Number of Words:  " + queryParts.length + " Words: "
-				+ queryParts.toString());
+		logger.info("Find by Comment, possible mutltiple words Number of Words:  " + queryParts.length);
 		List<Picture> pictures = null;
 		for (String part : queryParts) {
 			List<Picture> picturesTmp = picRepository
