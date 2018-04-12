@@ -12,7 +12,7 @@ import java.net.Socket;
 @Component(value = "serverController")
 public class ServerController {
 
-    public boolean pingHost(String host, int port, int timeout) {
+    private boolean isPortAvailable(String host, int port, int timeout) {
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(host, port), timeout);
             return true;
@@ -21,14 +21,9 @@ public class ServerController {
         }
     }
 
-    public String pingHostColor(String host, int port, int timeout){
-        boolean serverOnline = pingHost(host, port, timeout);
+    public String isPortAvilableColor(String host, int port, int timeout){
+        boolean serverOnline = isPortAvailable(host, port, timeout);
         if (serverOnline){ return "green";}
         else return "red";
-    }
-    public String callErrorPage(String host, int port, int timeout){
-        boolean serverOnline = pingHost(host, port, timeout);
-        if (!serverOnline){ return "serverStatus";}
-        return "";
     }
 }

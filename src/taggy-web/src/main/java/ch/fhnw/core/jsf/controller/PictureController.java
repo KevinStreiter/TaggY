@@ -5,7 +5,6 @@ import ch.fhnw.core.domain.Tag;
 import ch.fhnw.core.services.PictureService;
 import ch.fhnw.core.services.TagsService;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.slf4j.Logger;
@@ -33,15 +32,14 @@ public class PictureController {
 	TagsService tagService;
 	private Picture picture =null;
 	private List<Picture> pictures;
-	private String selectedPicturesList;
-	private String andOrChose = "or";
+	private String andOrChoice = "or";
 	private List<Tag> selectedTags = new ArrayList<>();
 	private String searchText = "";
 	private List<Tag> tags;
 
 	private void pictureQuery() {
-		pictures = pictureService.searchByTextCombinedTag(searchText, selectedTags, orderBy(), andOrChose);
-		logger.info("Picture Querry: "+pictures.size());
+		pictures = pictureService.searchByTextCombinedTag(searchText, selectedTags, orderBy(), andOrChoice);
+		logger.info("Picture Query: "+pictures.size());
 
 	}
 	private Sort orderBy() {
@@ -49,9 +47,9 @@ public class PictureController {
 	}
 
 
-	public void changeChose(ValueChangeEvent e) {
-		andOrChose = e.getNewValue().toString();
-		logger.info("RadioButton Changesed, value: "+andOrChose);
+	public void changeChoice(ValueChangeEvent e) {
+		andOrChoice = e.getNewValue().toString();
+		logger.info("RadioButton Changed, value: "+ andOrChoice);
 		pictureQuery();
 	}
 
@@ -87,7 +85,7 @@ public class PictureController {
     	Long id = Long.parseLong( selected);
 		picture = pictureService.findById(id);
 		tags = tagService.findByPicture(picture);
-		logger.info("Seleceted Image given id: "+picture.toString());
+		logger.info("Selected Image given id: "+picture.toString());
 		
 		return "fullScreen?faces-redirect=true";
 	}
@@ -119,7 +117,6 @@ public class PictureController {
 			logger.info("getPictures is == null");
 			pictures = pictureService.findAll(orderBy());
 		}
-		logger.info("getPictures Number of Picutres: " + pictures.size() +"found Pictures: " + pictures.toString() );
 		picture=null;
 		return pictures;
 	}
@@ -128,20 +125,12 @@ public class PictureController {
 		return picture.getDescription();
 	}
 
-	public void setSelectedList(String selectedList) {
-		this.selectedPicturesList = selectedList;
+	public String getChoice() {
+		return andOrChoice;
 	}
 
-	public String getSelectedList() {
-		return selectedPicturesList;
-	}
-
-	public String getChose() {
-		return andOrChose;
-	}
-
-	public void setChose(String chose) {
-		this.andOrChose = chose;
+	public void setChoice(String choice) {
+		this.andOrChoice = choice;
 	}
 
 

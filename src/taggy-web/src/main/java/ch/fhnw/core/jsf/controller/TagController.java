@@ -90,14 +90,11 @@ public class TagController {
     public void setSelectedTag(Tag selectedTag) {
         this.selectedTag = selectedTag;
     }
-    
+
 
     public void setService(TagsService tagsService) {
         this.tagsService = tagsService;
     }
 
-    public void buttonAction(ActionEvent actionEvent) {
-        logger.info("Welcome to Primefaces!!");
-    }
 }
 

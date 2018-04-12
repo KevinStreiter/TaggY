@@ -31,8 +31,8 @@
 	</ui:define>
 
 	<ui:define name="radioButton">
-		<h:selectOneRadio required="true" value="#{pictureController.chose}"
-			valueChangeListener="#{pictureController.changeChose}">
+		<h:selectOneRadio required="true" value="#{pictureController.choice}"
+			valueChangeListener="#{pictureController.changeChoice}">
 			<f:ajax render=":hfrom:pictureGrid" onevent="resetList()" />
 			<f:selectItem itemValue="or" itemLabel="or" />
 			<f:selectItem itemValue="and" itemLabel="and" />
@@ -93,7 +93,7 @@
 				scrollable="true" styleClass="DataScroller" mode="inline"
 				liveScroll="true">
 				<h:graphicImage id="picture"
-					value="http://www.proengineering.ch/images/projekte/fhnw.jpg"
+					value="http://192.168.1.102:8042/wado?objectUID=1.2.826.0.1.3680043.8.654.50.2010.0000000000#{picture.id}&#38;requestType=WADO"
 					styleClass="imageOverView" onclick="show(this,'#{picture.id}');" />
 				<p:tooltip id="toolTipFade" for="picture"
 					value="Comment: #{picture.comment} &lt;br/&gt;
