@@ -14,7 +14,7 @@
 <h:outputLink value="overview.xhtml">
     Overview
 </h:outputLink>
-<h:outputText value="pacs" style=" display:block;margin-bottom:2em;height:24px;color: #{serverController.portAvilableColor('pacs.taggy', 8042, 5)}"/>
-<h:outputText value="database" style="display:block;margin-bottom:2em;height:24px;color: #{serverController.portAvilableColor('service.taggy', 5432, 5)}"/>
+<h:outputText value="pacs" style=" display:block;margin-bottom:2em;height:24px;color: #{serverController.isPortAvailableColor('pacs.taggy', 8042, 5)}"/>
+<h:outputText value="database" style="display:block;margin-bottom:2em;height:24px;color: #{serverController.isPortAvailableColor('service.taggy', 5432, 5)}"/>
 </body>
 </html>

@@ -155,18 +155,15 @@ public class PictureController {
     }
 
     public void addTagToPictures(String tagName){
-        logger.info(tagName);
+        logger.info("addTagToPicture: added " + tagName + " to picture");
         if(picture == null) {
             String selectedPicturesIds = FacesContext.getCurrentInstance().
                     getExternalContext().getRequestParameterMap().get("selectedPics");
             if (selectedPicturesIds.length() != 0) {
                 String[] pictureIds = selectedPicturesIds.split(",");
-                logger.info("SelectedPics: " + selectedPicturesIds);
 
                 for (String pictureId : pictureIds) {
-                    logger.info(pictureId);
                     tagService.addTagToPicture(Long.parseLong(pictureId), tagName);
-                    logger.info(tagService.findByName(tagName).getPictures().toString());
                 }
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                         FacesMessage.SEVERITY_INFO, "Info", "Image-Id(s): " +
@@ -180,7 +177,6 @@ public class PictureController {
             tagService.addTagToPicture(selectedPictureId,tagName);
             tags = tagService.findByPicture(picture);
             picture = pictureService.findById(selectedPictureId);
-            logger.info("Image Tags: "+tagService.findByPicture(picture).toString());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                     FacesMessage.SEVERITY_INFO, "Info", "Displayed Image has been tagged with " + tagName));
         }
@@ -188,7 +184,7 @@ public class PictureController {
     }
 
     public void onReload() {
-        logger.info("onReload:");
+        logger.info("onReload: page reloaded");
         pictureQuery();
     }
    

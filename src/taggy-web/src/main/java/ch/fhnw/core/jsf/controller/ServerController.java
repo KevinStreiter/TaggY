@@ -21,7 +21,7 @@ public class ServerController {
         }
     }
 
-    public String isPortAvilableColor(String host, int port, int timeout){
+    public String isPortAvailableColor(String host, int port, int timeout){
         boolean serverOnline = isPortAvailable(host, port, timeout);
         if (serverOnline){ return "green";}
         else return "red";
