@@ -67,7 +67,7 @@ public class TagController {
 
     public void deleteSelectedTag(String name){
         Tag tempTag = tagsService.findByName(name);
-        logger.info(tempTag.toString());
+        logger.info("Delete selected Tag: " + tempTag.toString());
         if(tempTag.getTagName() != null) {
             tagsService.deleteTag(tempTag);
             getTags();
