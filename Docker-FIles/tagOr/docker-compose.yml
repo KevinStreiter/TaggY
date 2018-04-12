@@ -1,5 +1,11 @@
-version: "2"
+version: "2"    
 services:
-          tag:
-                  build: Taggy-Or
-                  ports: ["8042:8042"]
+    tagor:
+        build: ./tac_slim
+        restart: always
+        ports: 
+            - 8042:8042
+            - 4242:4242
+        volumes:
+            - /user/orthanc/orthanc-db:/var/lib/orthanc/db
+        
