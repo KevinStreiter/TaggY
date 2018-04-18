@@ -13,7 +13,7 @@
 				<ui:insert name="radioButton" />
 				<p:growl id="growlAddTags" showDetail="true" />
 				<h:commandButton value="save" type="submit"
-					actionListener="#{tagController.save}" style="display: none">
+					actionListener="#{tagController.saveTag}" style="display: none">
 					<f:ajax execute="@form growlAddTags" render="@form" />
 				</h:commandButton>
 
