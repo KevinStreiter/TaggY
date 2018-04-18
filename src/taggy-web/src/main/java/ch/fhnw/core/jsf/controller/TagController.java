@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import java.util.List;
 
 @Scope("view")
@@ -51,7 +50,7 @@ public class TagController {
         return "overview?faces-redirect=true";
     }
 
-    public void save(){
+    public void saveTag(){
         Tag tagTemp = new Tag (tag.getTagName());
         tag.setTagName(null);
         List<Tag> tags = getTags();
